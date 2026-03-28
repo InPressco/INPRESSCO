@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Pipeline complet",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Debug Flux A uniquement",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/debug_flux_a.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}

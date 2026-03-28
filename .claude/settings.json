@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "dolibarr-inpressco": {
+      "command": "/Users/nicolasbompois/Desktop/Bureau - MacBook Pro de nicolas/inpressco-mwp/.venv/bin/python",
+      "args": ["mcp_dolibarr.py"],
+      "cwd": "/Users/nicolasbompois/Desktop/Bureau - MacBook Pro de nicolas/inpressco-mwp",
+      "env": {
+        "DOLIBARR_API_KEY": "N8n2jedK6Txw0r3M0w92GN0ThNL0CqR4",
+        "DOLIBARR_BASE_URL": "https://in-pressco.crm.freshprocess.eu/api/index.php"
+      }
+    }
+  }
+}

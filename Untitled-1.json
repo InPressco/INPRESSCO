@@ -1,0 +1,176 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { ok: true } }];"
+      },
+      "id": "93b2ca46-d176-4c7c-8f3c-23b396a63b44",
+      "name": "Construire URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2896,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const url = $input.first().json.url;\nconst apiKey = $input.first().json.apiKey;\n\nconst response = await this.helpers.httpRequest({\n  method: 'GET',\n  url: url,\n  headers: {\n    'DOLAPIKEY': apiKey\n  },\n  returnFullResponse: false\n});\n\nreturn [{ json: { result: response } }];"
+      },
+      "id": "406aed0f-35dc-48d1-99ea-ecd20b9fb9de",
+      "name": "Appel Dolibarr",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3136,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, DOLAPIKEY"
+              }
+            ]
+          }
+        }
+      },
+      "id": "2603e60a-e564-4e6f-8b78-ff62c2edaefe",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3376,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "path": "dolibarr-proxy",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "5c7527cd-ee7f-4691-a3c1-6a42862cb1f3",
+      "name": "Webhook GET1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        2656,
+        544
+      ],
+      "webhookId": "dolibarr-proxy"
+    },
+    {
+      "parameters": {
+        "httpMethod": "OPTIONS",
+        "path": "dolibarr-proxy",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "016afe7d-1c2f-4c62-ab3c-81882c3bd17d",
+      "name": "Webhook OPTIONS1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        2656,
+        752
+      ],
+      "webhookId": "dolibarr-proxy"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={}",
+        "options": {
+          "responseCode": 204,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, DOLAPIKEY"
+              }
+            ]
+          }
+        }
+      },
+      "id": "a57b1418-5d4a-4ad5-84af-c6b388ef9eb8",
+      "name": "Répondre OPTIONS1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2896,
+        752
+      ]
+    }
+  ],
+  "connections": {
+    "Construire URL": {
+      "main": [
+        [
+          {
+            "node": "Appel Dolibarr",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appel Dolibarr": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook GET1": {
+      "main": [
+        [
+          {
+            "node": "Construire URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook OPTIONS1": {
+      "main": [
+        [
+          {
+            "node": "Répondre OPTIONS1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "70d301a63c0e56640c34bb8ae8d0cbd592d4792974ce1d8167cdd3ef5e7b8d1f"
+  }
+}

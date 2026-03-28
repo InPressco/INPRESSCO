@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "id": "01",
+    "description": "Brochure A5 simple — client externe, domaine custom, 1 composant, 1 quantité",
+    "scenario": "Cas le plus fréquent. Email HTML Outlook standard. Tout est renseigné correctement.",
+    "expected_score": 9.5,
+    "expected_nb_composants": 1,
+    "expected_nb_lines_devis": 3
+  },
+
+  "email": {
+    "id": "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZ-FAKE-DATASET-01",
+    "subject": "Demande de devis — Brochure programme saison 2026",
+    "sender": {
+      "name": "Marie Durand",
+      "address": "m.durand@theatre-aix.fr"
+    },
+    "receivedDateTime": "2026-03-25T09:14:22Z",
+    "bodyPreview": "Bonjour, Je reviens vers vous pour un devis concernant notre programme de saison...",
+    "hasAttachments": false,
+    "toRecipients": [
+      {"emailAddress": {"address": "devis@in-pressco.com"}}
+    ],
+    "body": {
+      "contentType": "html",
+      "content": "<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">body{font-family:Calibri,sans-serif;font-size:11pt;}.MsoNormal{margin:0}</style></head><body><div class=\"WordSection1\"><p class=\"MsoNormal\">Bonjour,</p><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\">Je reviens vers vous pour un devis concernant notre programme de saison 2026/2027.</p><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\">Voici les caract&eacute;ristiques :</p><ul><li>Format ferm&eacute; : A5 (148 x 210 mm)</li><li>Nombre de pages : 32 pages</li><li>Impression : Quadrichromie recto-verso</li><li>Papier : Couché brillant 135g</li><li>Finition : Pelliculage mat recto sur couverture, agrafage 2 points</li><li>Quantit&eacute; : 1 000 exemplaires</li><li>Livraison souhait&eacute;e : avant le 15 juin 2026</li></ul><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\">Les fichiers seront fournis pr&ecirc;ts &agrave; imprimer en PDF/X-1a.</p><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\">Cordialement,</p><p class=\"MsoNormal\">Marie Durand</p><p class=\"MsoNormal\">Directrice Administrative</p><p class=\"MsoNormal\">Th&eacute;&acirc;tre d'Aix-les-Bains</p><p class=\"MsoNormal\">04 79 35 XX XX</p></div></body></html>"
+    }
+  },
+
+  "mock_ai_client": {
+    "soc_nom": "Théâtre Aix Les Bains",
+    "type": "client",
+    "contact_nom": "Durand",
+    "contact_prenom": "Marie",
+    "email": "m.durand@theatre-aix.fr",
+    "nom_projet": "Programme saison 2026/2027",
+    "phone": "04 79 35 XX XX",
+    "town": "Aix-les-Bains"
+  },
+
+  "mock_ai_impression": {
+    "synthese_contexte": "Le Théâtre d'Aix-les-Bains commande un programme de saison 2026/2027 au format A5 agrafé, impression quadrichromie recto-verso, pelliculage mat sur la couverture. Quantité de 1 000 exemplaires, livraison souhaitée avant le 15 juin 2026. Les fichiers seront fournis prêts à imprimer.",
+    "date_livraison_souhaitee": "2026-06-15",
+    "composants_isoles": [
+      {
+        "intitule_maitre": "Programme Saison 2026/2027",
+        "produit": "Brochure",
+        "nombre_pages": 32,
+        "format_ferme_mm": {"largeur": 148, "hauteur": 210},
+        "format_ouvert_mm": {"largeur": 296, "hauteur": 210},
+        "type_impression": "Quadrichromie recto-verso",
+        "support_grammage": "Couché brillant 135g",
+        "type_finition": "Pelliculage mat recto sur couverture",
+        "type_reliure": "Agrafage 2 points",
+        "conditionnement": null,
+        "franco_port": null,
+        "quantite": 1000,
+        "SCORE_DEVIS": {
+          "alertes": ["Franco de port non précisé", "Conditionnement non précisé"]
+        },
+        "TRACE": "Format fermé : A5 (148 x 210 mm) / Nombre de pages : 32 pages / Quantité : 1 000 exemplaires"
+      }
+    ]
+  },
+
+  "expected": {
+    "soc_nom": "Théâtre Aix Les Bains",
+    "client_crm": "à créer (non existant)",
+    "nb_composants": 1,
+    "nb_lines_devis": 3,
+    "imposition_700x1000": {
+      "poses_total": 3,
+      "feuilles": 334,
+      "note": "296×210 sur 690×990 : 2×4=8 en normal, 3×3=9 en rotated → 9 poses... attendu: vérifier"
+    },
+    "score_attendu": "entre 7 et 9 (grammage OK, format OK, impression OK, quantite OK)"
+  }
+}

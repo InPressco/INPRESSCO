@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "id": "03",
+    "description": "Email interne @in-pressco.com — client nommé dans le corps, données manquantes",
+    "scenario": "Cas piège : expéditeur interne. Le nom client doit être extrait du CORPS du mail (pas de l'expéditeur). Email incomplet : grammage absent, quantité floue. Teste les alertes, le score bas, et le fallback soc_nom.",
+    "expected_score": 4.5,
+    "expected_nb_composants": 1,
+    "expected_nb_lines_devis": 3
+  },
+
+  "email": {
+    "id": "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZ-FAKE-DATASET-03",
+    "subject": "Devis flyers — client Maison Bouvet",
+    "sender": {
+      "name": "Nicolas Bompois",
+      "address": "nicolas@in-pressco.com"
+    },
+    "receivedDateTime": "2026-03-25T16:20:00Z",
+    "bodyPreview": "Pour Maison Bouvet, devis flyers A5 recto simple...",
+    "hasAttachments": false,
+    "toRecipients": [
+      {"emailAddress": {"address": "devis@in-pressco.com"}}
+    ],
+    "body": {
+      "contentType": "html",
+      "content": "<!DOCTYPE html><html><body><div><p>Pour Maison Bouvet (restauration, Aix-les-Bains),</p><p>Devis flyers :<br>- Format : A5<br>- Recto simple (quadri)<br>- Quantit&eacute; : environ 2 000<br>- Livraison sur place</p><p>Pas de grammage pr&eacute;cis&eacute; par le client, &agrave; proposer.</p><p>NB</p></div></body></html>"
+    }
+  },
+
+  "mock_ai_client": {
+    "soc_nom": "Maison Bouvet",
+    "type": "client",
+    "contact_nom": "",
+    "contact_prenom": "",
+    "email": null,
+    "nom_projet": "Flyers Maison Bouvet",
+    "town": "Aix-les-Bains"
+  },
+
+  "mock_ai_impression": {
+    "synthese_contexte": "Demande de devis pour Maison Bouvet, restauration à Aix-les-Bains. Flyers A5 recto simple quadrichromie, quantité d'environ 2 000 exemplaires, livraison sur place. Grammage non précisé par le client.",
+    "date_livraison_souhaitee": null,
+    "composants_isoles": [
+      {
+        "intitule_maitre": "Flyers Maison Bouvet",
+        "produit": "Flyer",
+        "nombre_pages": 1,
+        "format_ferme_mm": {"largeur": 148, "hauteur": 210},
+        "format_ouvert_mm": {"largeur": 148, "hauteur": 210},
+        "type_impression": "Quadrichromie recto",
+        "support_grammage": null,
+        "type_finition": null,
+        "type_reliure": null,
+        "conditionnement": null,
+        "franco_port": "Livraison sur place",
+        "quantite": 2000,
+        "SCORE_DEVIS": {
+          "alertes": [
+            "Grammage non précisé — à demander ou proposer (ex: 135g couché)",
+            "Quantité approximative (environ 2000) — confirmer avant mise en fabrication"
+          ]
+        },
+        "TRACE": "Format : A5 / Recto simple (quadri) / Quantité : environ 2 000"
+      }
+    ]
+  },
+
+  "expected": {
+    "soc_nom": "Maison Bouvet",
+    "client_crm": "à créer (email=null → seulement si soc_nom présent, sinon fallback socid=16)",
+    "email_client": null,
+    "nb_composants": 1,
+    "nb_lines_devis": 3,
+    "exclusions_verifiees": [
+      "soc_nom ne doit PAS contenir InPressco/Nicolas Bompois",
+      "email doit être null (expéditeur @in-pressco.com filtré)"
+    ],
+    "notes_score": "Score bas attendu : grammage null, finition null, reliure null → beaucoup d'alertes"
+  }
+}

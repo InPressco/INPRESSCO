@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "id": "02",
+    "description": "Brochure dos carré collé — couverture + intérieur séparés, 2 quantités, pièce jointe",
+    "scenario": "Cas complexe fréquent : 2 composants distincts sous le même intitule_maitre, quantités multiples (500 et 1000 ex). Teste le tri couverture-en-premier, les lignes B multiples, et la fusion des alertes.",
+    "expected_score": 8.5,
+    "expected_nb_composants": 2,
+    "expected_nb_lines_devis": 4
+  },
+
+  "email": {
+    "id": "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZ-FAKE-DATASET-02",
+    "subject": "Devis catalogue produits printemps 2026",
+    "sender": {
+      "name": "Julien Moreau",
+      "address": "j.moreau@alpesdeco.com"
+    },
+    "receivedDateTime": "2026-03-25T14:05:11Z",
+    "bodyPreview": "Bonjour, Nous souhaitons faire imprimer notre catalogue produits printemps...",
+    "hasAttachments": true,
+    "toRecipients": [
+      {"emailAddress": {"address": "devis@in-pressco.com"}}
+    ],
+    "attachments_meta": [
+      {
+        "id": "FAKE-ATTACH-001",
+        "name": "Cahier_des_charges_catalogue.pdf",
+        "contentType": "application/pdf",
+        "size": 245760,
+        "isInline": false
+      }
+    ],
+    "body": {
+      "contentType": "html",
+      "content": "<!DOCTYPE html><html><head><style>body{font-family:Arial;font-size:10pt}</style></head><body><div><p>Bonjour,</p><p>Nous souhaitons faire imprimer notre catalogue produits printemps 2026. Voici les sp&eacute;cifications :</p><p><strong>Catalogue Printemps 2026</strong><br>Format ferm&eacute; : 210 x 297 mm (A4)<br>Reliure : Dos carr&eacute; coll&eacute;<br>Livraison : franco de port, livraison &agrave; notre d&eacute;p&ocirc;t &agrave; Chamb&eacute;ry<br>Conditionnement : cartons de 50 exemplaires</p><p><strong>Couverture (4 pages)</strong><br>Papier : Couché brillant 300g<br>Impression : Quadrichromie recto-verso<br>Finition : Pelliculage mat + vernis s&eacute;lectif recto</p><p><strong>Int&eacute;rieur</strong><br>Nombre de pages : 48 pages<br>Papier : Couché mat 135g<br>Impression : Quadrichromie recto-verso<br>Finition : aucune</p><p>Quantit&eacute;s souhait&eacute;es : 500 et 1 000 exemplaires (devis pour les 2 quantit&eacute;s).</p><p>D&eacute;lai souhait&eacute; : 3 semaines &agrave; r&eacute;ception des fichiers.</p><p>Le cahier des charges complet est joint &agrave; ce mail.</p><p>Cordialement,<br>Julien Moreau<br>Responsable Marketing<br>Alpes D&eacute;co<br>06 12 34 56 78</p></div></body></html>"
+    }
+  },
+
+  "mock_ai_client": {
+    "soc_nom": "Alpes Deco",
+    "type": "client",
+    "contact_nom": "Moreau",
+    "contact_prenom": "Julien",
+    "email": "j.moreau@alpesdeco.com",
+    "nom_projet": "Catalogue Printemps 2026",
+    "phone": "06 12 34 56 78"
+  },
+
+  "mock_ai_impression": {
+    "synthese_contexte": "Alpes Déco commande un catalogue A4 dos carré collé pour le printemps 2026. La couverture 4 pages est en couché brillant 300g avec pelliculage mat et vernis sélectif ; l'intérieur 48 pages en couché mat 135g quadri recto-verso. Deux quantités demandées : 500 et 1 000 exemplaires, livraison franco à Chambéry en cartons de 50.",
+    "date_livraison_souhaitee": null,
+    "composants_isoles": [
+      {
+        "intitule_maitre": "Catalogue Printemps 2026",
+        "produit": "Couverture",
+        "nombre_pages": 4,
+        "format_ferme_mm": {"largeur": 210, "hauteur": 297},
+        "format_ouvert_mm": {"largeur": 420, "hauteur": 297},
+        "type_impression": "Quadrichromie recto-verso",
+        "support_grammage": "Couché brillant 300g",
+        "type_finition": "Pelliculage mat + vernis sélectif recto",
+        "type_reliure": "Dos carré collé",
+        "conditionnement": "Cartons de 50 exemplaires",
+        "franco_port": "Franco de port, livraison Chambéry",
+        "quantite": 500,
+        "SCORE_DEVIS": {
+          "alertes": []
+        },
+        "TRACE": "Couverture (4 pages) / Papier : Couché brillant 300g / Quantités : 500 et 1 000 exemplaires"
+      },
+      {
+        "intitule_maitre": "Catalogue Printemps 2026",
+        "produit": "Intérieur",
+        "nombre_pages": 48,
+        "format_ferme_mm": {"largeur": 210, "hauteur": 297},
+        "format_ouvert_mm": {"largeur": 420, "hauteur": 297},
+        "type_impression": "Quadrichromie recto-verso",
+        "support_grammage": "Couché mat 135g",
+        "type_finition": "Aucune",
+        "type_reliure": "Dos carré collé",
+        "conditionnement": "Cartons de 50 exemplaires",
+        "franco_port": "Franco de port, livraison Chambéry",
+        "quantite": 1000,
+        "SCORE_DEVIS": {
+          "alertes": ["Date de livraison non précisée — délai estimé à 3 semaines à réception des fichiers"]
+        },
+        "TRACE": "Intérieur / Nombre de pages : 48 pages / Papier : Couché mat 135g"
+      }
+    ]
+  },
+
+  "expected": {
+    "soc_nom": "Alpes Deco",
+    "client_crm": "à créer ou trouver",
+    "nb_composants": 2,
+    "nb_lines_devis": 4,
+    "structure_devis": [
+      "Ligne 0 : contexte (synthese_contexte)",
+      "Ligne A : descriptif fusionné Couverture + Intérieur",
+      "Ligne B : prix 500 ex (ref = Couverture, la première du tri)",
+      "Ligne B' : prix 1000 ex",
+      "Note: quantites = {500, 1000} car composants ont quantites différentes"
+    ],
+    "imposition_attendue": "420×297 sur 690×990 : 1 colonne × 3 rangées = 3 poses, ou rotated 297→690/297=2, 420→990/420=2 = 4 poses → 4 poses par feuille"
+  }
+}

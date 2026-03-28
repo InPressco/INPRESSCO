@@ -1,0 +1,3 @@
+-- dashboard interactif avec suivi de clients
+-- CRM avec resumé liste par client 
+-- tous les futurs tests dolibar sont identifiés, pour eviter les erreurs car nous sommes en production.

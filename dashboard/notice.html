@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notice Dashboard — InPressco MWP</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
+
+    :root {
+      --bg0: #141414; --bg1: #1a1a1a; --bg2: #1e1e1e; --bg3: #242424; --bg4: #2a2a2a;
+      --amber: #C99E67; --amber-dim: #A07840;
+      --amber-faint: rgba(201,158,103,0.06);
+      --amber-border: rgba(201,158,103,0.2);
+      --text-primary: #f0e8dd; --text-secondary: #a09080; --text-muted: #585044;
+      --green: #97C459; --red: #F09595; --blue: #7EB8E8;
+      --mono: 'IBM Plex Mono', monospace;
+      --display: 'Syne', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg0);
+      color: var(--text-primary);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 0 0 80px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a1a 0%, #1e1810 100%);
+      border-bottom: 1px solid var(--amber-border);
+      padding: 48px 40px 36px;
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .hero-text h1 {
+      font-family: var(--display);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--amber);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .hero-text p {
+      color: var(--text-secondary);
+      font-size: 13px;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--amber-faint);
+      border: 1px solid var(--amber-border);
+      color: var(--amber);
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--bg1);
+      border-bottom: 1px solid rgba(90,80,64,0.25);
+      padding: 16px 40px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .toc a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 11px;
+      padding: 4px 10px;
+      border: 0.5px solid rgba(90,80,64,0.3);
+      border-radius: 4px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .toc a:hover { color: var(--amber); border-color: var(--amber-border); }
+
+    /* ── MAIN LAYOUT ── */
+    .shell { max-width: 960px; margin: 0 auto; padding: 40px 24px; display: flex; flex-direction: column; gap: 48px; }
+
+    /* ── SECTION ── */
+    .section { display: flex; flex-direction: column; gap: 20px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(90,80,64,0.25);
+    }
+    .section-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--amber-faint);
+      border: 1px solid var(--amber-border);
+      color: var(--amber);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .section-anchor { color: var(--text-muted); font-size: 11px; margin-left: auto; }
+
+    /* ── FEATURE CARD ── */
+    .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .feature {
+      background: var(--bg2);
+      border: 0.5px solid rgba(90,80,64,0.25);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .feature:hover { border-color: var(--amber-border); }
+    .feature-icon { font-size: 22px; margin-bottom: 8px; }
+    .feature-name {
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 6px;
+    }
+    .feature-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+    .feature-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+    .tag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 99px;
+      font-family: var(--mono);
+    }
+    .tag-read  { background: rgba(126,184,232,0.12); color: var(--blue); border: 0.5px solid rgba(126,184,232,0.3); }
+    .tag-write { background: rgba(201,158,103,0.12); color: var(--amber); border: 0.5px solid var(--amber-border); }
+    .tag-ai    { background: rgba(151,196,89,0.12); color: var(--green); border: 0.5px solid rgba(151,196,89,0.3); }
+    .tag-auto  { background: rgba(240,149,149,0.12); color: var(--red); border: 0.5px solid rgba(240,149,149,0.3); }
+
+    /* ── VISUAL MOCK ── */
+    .mock {
+      background: var(--bg1);
+      border: 1px solid rgba(90,80,64,0.25);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .mock::before {
+      content: attr(data-label);
+      position: absolute;
+      top: 10px; right: 14px;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .mock-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+    .mock-bar {
+      height: 8px;
+      border-radius: 99px;
+      background: var(--bg3);
+    }
+    .mock-bar.amber { background: linear-gradient(90deg, var(--amber-dim), var(--amber)); }
+    .mock-bar.green { background: rgba(151,196,89,0.5); }
+    .mock-bar.red   { background: rgba(240,149,149,0.4); }
+    .mock-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .mock-kpi {
+      background: var(--bg3);
+      border-radius: 6px;
+      padding: 10px;
+      text-align: center;
+    }
+    .mock-kpi-val { font-size: 16px; font-weight: 700; color: var(--amber); font-family: var(--display); }
+    .mock-kpi-lbl { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+    .mock-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .mock-stat {
+      background: var(--bg3);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+    .mock-stat-val { font-size: 20px; font-weight: 700; color: var(--amber); font-family: var(--display); }
+    .mock-stat-lbl { font-size: 9px; color: var(--text-muted); }
+    .mock-chat {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .mock-msg {
+      max-width: 80%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .mock-msg.user { background: var(--bg4); align-self: flex-end; color: var(--text-secondary); }
+    .mock-msg.ai { background: var(--amber-faint); border: 0.5px solid var(--amber-border); color: var(--text-primary); }
+    .mock-tool { font-size: 10px; color: var(--amber); font-style: italic; padding: 2px 8px; background: rgba(201,158,103,0.08); border: 0.5px solid var(--amber-border); border-radius: 4px; display: inline-block; margin: 2px 0; }
+    .mock-alert { background: rgba(240,149,149,0.08); border: 0.5px solid rgba(240,149,149,0.3); border-radius: 6px; padding: 8px 12px; font-size: 11px; display: flex; align-items: center; gap: 8px; }
+    .mock-devis-row { display: grid; grid-template-columns: 110px 1fr 60px 80px; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid rgba(90,80,64,0.2); font-size: 11px; align-items: center; }
+    .mock-devis-ref { color: var(--amber); font-weight: 700; }
+    .mock-devis-montant { text-align: right; }
+    .mock-chart { display: flex; align-items: flex-end; gap: 4px; height: 80px; padding-top: 8px; }
+    .mock-bar-chart { flex: 1; border-radius: 3px 3px 0 0; background: var(--amber-faint); border: 0.5px solid var(--amber-border); transition: height 0.3s; }
+    .mock-bar-chart.current { background: linear-gradient(180deg, var(--amber), var(--amber-dim)); border-color: var(--amber); }
+    .mock-gauge-wrap { display: flex; align-items: center; gap: 16px; }
+    .mock-gauge { width: 80px; height: 45px; }
+    .mock-popup { background: var(--bg2); border: 1px solid var(--amber-border); border-radius: 10px; padding: 16px; }
+    .mock-input { background: var(--bg3); border: 0.5px solid rgba(90,80,64,0.4); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--text-muted); width: 100%; font-family: var(--mono); }
+    .mock-btn { background: var(--amber); color: #141414; border: none; border-radius: 5px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: var(--display); }
+    .mock-btn-ghost { background: none; border: 0.5px solid var(--amber-border); color: var(--amber); border-radius: 5px; padding: 5px 12px; font-size: 11px; cursor: pointer; }
+    .mock-topbar { background: var(--bg1); border: 0.5px solid rgba(90,80,64,0.25); border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .mock-nav { display: flex; gap: 4px; }
+    .mock-nav-item { padding: 4px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; }
+    .mock-nav-item.active { background: var(--amber); color: #141414; font-weight: 700; }
+    .mock-nav-item:not(.active) { color: var(--text-muted); border: 0.5px solid rgba(90,80,64,0.3); }
+    .mock-kie { border: 1.5px dashed rgba(201,158,103,0.3); border-radius: 8px; padding: 20px; text-align: center; background: var(--amber-faint); }
+    .mock-toolbar { display: flex; gap: 6px; }
+    .mock-attach { padding: 4px 10px; border: 0.5px solid rgba(90,80,64,0.4); border-radius: 4px; font-size: 10px; color: var(--text-secondary); background: var(--bg3); }
+    .mock-perf { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .mock-perf-item { display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid rgba(90,80,64,0.15); }
+    .mock-perf-name { color: var(--text-secondary); }
+    .mock-perf-val { color: var(--amber); font-weight: 700; }
+    .mock-prod { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
+    .mock-prod-card { background: var(--bg3); border-radius: 5px; padding: 7px 8px; font-size: 10px; color: var(--text-muted); text-align: center; }
+    .mock-prod-val { font-size: 16px; font-weight: 700; color: var(--amber); font-family: var(--display); }
+
+    /* ── FLOW DIAGRAM ── */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .flow-step {
+      background: var(--bg3);
+      border: 0.5px solid rgba(90,80,64,0.3);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 11px;
+      text-align: center;
+      min-width: 110px;
+    }
+    .flow-step.highlight { background: var(--amber-faint); border-color: var(--amber-border); color: var(--amber); }
+    .flow-step .fs-label { font-size: 9px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .flow-arrow { color: var(--text-muted); padding: 0 6px; font-size: 14px; }
+
+    /* ── API TABLE ── */
+    .api-table { width: 100%; border-collapse: collapse; }
+    .api-table th {
+      text-align: left;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(90,80,64,0.25);
+    }
+    .api-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+      border-bottom: 0.5px solid rgba(90,80,64,0.12);
+      vertical-align: top;
+    }
+    .api-table tr:last-child td { border-bottom: none; }
+    .api-method {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-family: var(--mono);
+      margin-right: 6px;
+    }
+    .m-get  { background: rgba(126,184,232,0.15); color: var(--blue); }
+    .m-post { background: rgba(151,196,89,0.15); color: var(--green); }
+    .m-put  { background: rgba(201,158,103,0.15); color: var(--amber); }
+    .endpoint { color: var(--text-secondary); font-size: 11px; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: var(--amber-faint);
+      border: 1px solid var(--amber-border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .callout strong { color: var(--amber); }
+
+    /* ── DIVIDER ── */
+    hr { border: none; border-top: 1px solid rgba(90,80,64,0.2); }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">Notice · v2026-03</div>
+    <h1>Dashboard InPressco MWP</h1>
+    <p>Guide visuel complet de chaque section, élément interactif et fonction du dashboard de pilotage.
+    Chaque bloc est documenté avec ses sources de données, ses actions disponibles et sa connexion au pipeline.</p>
+  </div>
+</div>
+
+<!-- TOC -->
+<nav class="toc">
+  <a href="#topbar">① Topbar</a>
+  <a href="#popup">② Popup quotidien</a>
+  <a href="#moteur-ia">③ Moteur IA</a>
+  <a href="#stats">④ Stats live</a>
+  <a href="#alertes">⑤ Alertes</a>
+  <a href="#financier">⑥ Financier</a>
+  <a href="#ca-chart">⑦ CA mensuel</a>
+  <a href="#performance">⑧ Performance</a>
+  <a href="#objectif">⑨ Objectif</a>
+  <a href="#devis">⑩ Devis à suivre</a>
+  <a href="#kie">⑪ Images kie.ai</a>
+  <a href="#api">⑫ Endpoints API</a>
+  <a href="#pipeline">⑬ Connexion pipeline</a>
+</nav>
+
+<div class="shell">
+
+  <!-- ① TOPBAR -->
+  <div class="section" id="topbar">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Topbar — Navigation principale</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div class="mock-topbar">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="font-size:14px;font-weight:700;color:var(--amber);font-family:var(--display)">InPressco</div>
+          <div class="mock-nav">
+            <div class="mock-nav-item active">IA</div>
+            <div class="mock-nav-item">Devis</div>
+            <div class="mock-nav-item">Suivi</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div class="mock-btn-ghost">📋 Jour</div>
+          <div class="mock-btn-ghost">Dev →</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-name">Bouton IA</div>
+        <div class="feature-desc">Scroll instantané vers le Moteur IA (section-ia). Raccourci d'accès principal au chat Claude.</div>
+        <div class="feature-tags"><span class="tag tag-read">Navigation</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📋</div>
+        <div class="feature-name">Bouton Devis</div>
+        <div class="feature-desc">Scroll vers la section "Devis à suivre". Accès rapide à la liste des devis en cours.</div>
+        <div class="feature-tags"><span class="tag tag-read">Navigation</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-name">Bouton Suivi</div>
+        <div class="feature-desc">Alias de Devis — scroll identique vers la liste des devis en cours de suivi.</div>
+        <div class="feature-tags"><span class="tag tag-read">Navigation</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📋</div>
+        <div class="feature-name">Bouton Jour</div>
+        <div class="feature-desc">Ouvre le popup quotidien : objectif du jour, citation, routine matinale, note de développement personnel.</div>
+        <div class="feature-tags"><span class="tag tag-write">Saisie</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-name">Lien Dev →</div>
+        <div class="feature-desc">Accès à la page admin développeur (/admin/dev) : diagnostic pipeline, logs bruts, configuration avancée.</div>
+        <div class="feature-tags"><span class="tag tag-read">Admin</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ② POPUP QUOTIDIEN -->
+  <div class="section" id="popup">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Popup quotidien — Démarrage de journée</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div class="mock-popup" style="max-width:440px;margin:auto">
+        <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:12px;font-family:var(--display)">📋 Objectifs du jour</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px">Objectif principal</div>
+        <textarea class="mock-input" rows="2" placeholder="Quel est ton objectif principal aujourd'hui ?" readonly></textarea>
+        <div style="margin-top:10px;font-size:10px;color:var(--text-muted);margin-bottom:4px">Citation du jour</div>
+        <div style="color:var(--text-secondary);font-size:11px;font-style:italic;padding:8px;background:var(--bg3);border-radius:5px">"L'excellence est un art que l'on n'atteint que par l'exercice constant."</div>
+        <div style="margin-top:10px;font-size:10px;color:var(--text-muted);margin-bottom:4px">Routine matinale</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <div style="background:var(--bg3);border-radius:4px;padding:4px 8px;font-size:10px;color:var(--text-secondary)">✓ Revue emails</div>
+          <div style="background:var(--bg3);border-radius:4px;padding:4px 8px;font-size:10px;color:var(--text-secondary)">✓ Dolibarr</div>
+          <div style="background:var(--bg3);border-radius:4px;padding:4px 8px;font-size:10px;color:var(--text-secondary)">✓ Pipeline MWP</div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+          <button class="mock-btn">Commencer →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-name">Objectif principal</div>
+        <div class="feature-desc">Zone de saisie libre pour noter l'objectif de la journée. Déclenché automatiquement à l'ouverture du dashboard (modal).</div>
+        <div class="feature-tags"><span class="tag tag-write">Saisie locale</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💬</div>
+        <div class="feature-name">Citation du jour</div>
+        <div class="feature-desc">Citation générée ou statique pour démarrer positivement. Affichée dans la section quotidienne.</div>
+        <div class="feature-tags"><span class="tag tag-read">Lecture</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✅</div>
+        <div class="feature-name">Routine matinale</div>
+        <div class="feature-desc">Checklist des tâches habituelles du matin : revue emails, Dolibarr, état du pipeline MWP.</div>
+        <div class="feature-tags"><span class="tag tag-write">Checklist</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📓</div>
+        <div class="feature-name">Note de développement perso</div>
+        <div class="feature-desc">Zone de saisie libre pour noter une décision, un apprentissage ou une réflexion du jour.</div>
+        <div class="feature-tags"><span class="tag tag-write">Saisie locale</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ③ MOTEUR IA -->
+  <div class="section" id="moteur-ia">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">Moteur IA — Chat Claude avec tools Dolibarr</div>
+    </div>
+
+    <div class="callout">
+      <strong>Modèle :</strong> Claude Sonnet 4.6 ·
+      <strong>Contexte injecté :</strong> snapshot Dolibarr temps réel (devis, factures, commandes, BL) ·
+      <strong>Tools :</strong> 10 actions Dolibarr disponibles (lecture + écriture)
+    </div>
+
+    <div class="mock" data-label="Aperçu chat">
+      <div class="mock-chat">
+        <div class="mock-msg user">Montre-moi les devis en brouillon de cette semaine</div>
+        <div class="mock-msg ai">
+          <span class="mock-tool">🔍 Recherche des devis…</span><br>
+          J'ai trouvé 3 devis en brouillon cette semaine : PRO2025-0142 (Maison Rivière — 2 840 €), PRO2025-0143 (Studio Alti — 890 €), PRO2025-0144 (Agence Blanche — 4 200 €).
+        </div>
+        <div class="mock-msg user">Sur PRO2025-0142, ajoute une note "Attendre retour BAT avant impression"</div>
+        <div class="mock-msg ai">
+          <span class="mock-tool">✏️ Modification du devis…</span><br>
+          Note interne mise à jour sur PRO2025-0142.
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">💬</div>
+        <div class="feature-name">Chat en langage naturel</div>
+        <div class="feature-desc">Posez n'importe quelle question sur vos devis, commandes, factures, clients. Claude répond en s'appuyant sur les données Dolibarr temps réel.</div>
+        <div class="feature-tags"><span class="tag tag-ai">IA</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-name">Suggestions rapides</div>
+        <div class="feature-desc">5 questions prédéfinies : "Devis ouverts", "Factures impayées", "Résumé commandes du mois", "BL en attente", "État du pipeline MWP".</div>
+        <div class="feature-tags"><span class="tag tag-read">Raccourci</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-name">Dépôt charte graphique</div>
+        <div class="feature-desc">Glissez ou cliquez pour charger une charte graphique client (PDF, SVG, AI, image). Le fichier est transmis à Claude avec la question suivante.</div>
+        <div class="feature-tags"><span class="tag tag-write">Upload</span><span class="tag tag-ai">IA</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✨</div>
+        <div class="feature-name">Dépôt inspiration produit</div>
+        <div class="feature-desc">Chargez une image de référence ou d'inspiration pour un produit. Claude l'analyse dans le contexte de la conversation.</div>
+        <div class="feature-tags"><span class="tag tag-write">Upload</span><span class="tag tag-ai">IA</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🖼</div>
+        <div class="feature-name">Zone kie.ai (reprompt image)</div>
+        <div class="feature-desc">Glissez une image générée par kie.ai. Claude analyse l'image et propose des reprompts améliorés selon le contexte produit et la charte client.</div>
+        <div class="feature-tags"><span class="tag tag-ai">IA</span><span class="tag tag-write">Upload</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📁</div>
+        <div class="feature-name">Sélecteur devis / commande</div>
+        <div class="feature-desc">Menu déroulant chargé depuis Dolibarr. Permet de contextualiser la conversation sur un document précis avant de poser une question.</div>
+        <div class="feature-tags"><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg2);border:0.5px solid rgba(90,80,64,0.25);border-radius:8px;overflow:hidden">
+      <table class="api-table">
+        <thead><tr><th>Tool IA disponible</th><th>Action Dolibarr</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr><td><code>search_proposals</code></td><td class="endpoint">GET /proposals — filtre par statut</td><td><span class="tag tag-read">Lecture</span></td></tr>
+          <tr><td><code>get_proposal</code></td><td class="endpoint">GET /proposals/{id} ou /ref/{ref}</td><td><span class="tag tag-read">Lecture</span></td></tr>
+          <tr><td><code>search_thirdparties</code></td><td class="endpoint">GET /thirdparties — filtre par nom</td><td><span class="tag tag-read">Lecture</span></td></tr>
+          <tr><td><code>get_thirdparty</code></td><td class="endpoint">GET /thirdparties/{id}</td><td><span class="tag tag-read">Lecture</span></td></tr>
+          <tr><td><code>search_invoices</code></td><td class="endpoint">GET /invoices — filtre par statut</td><td><span class="tag tag-read">Lecture</span></td></tr>
+          <tr><td><code>search_orders</code></td><td class="endpoint">GET /orders — filtre par statut</td><td><span class="tag tag-read">Lecture</span></td></tr>
+          <tr><td><code>update_proposal</code></td><td class="endpoint">PUT /proposals/{id} — note_public, note_private, ref_client, project_name, date_livraison…</td><td><span class="tag tag-write">Écriture</span></td></tr>
+          <tr><td><code>update_proposal_line</code></td><td class="endpoint">PUT /proposals/{id}/lines/{line_id} — desc, qty, subprice, remise_percent</td><td><span class="tag tag-write">Écriture</span></td></tr>
+          <tr><td><code>validate_proposal</code></td><td class="endpoint">POST /proposals/{id}/validate</td><td><span class="tag tag-write">Écriture</span></td></tr>
+          <tr><td><code>set_proposal_to_draft</code></td><td class="endpoint">POST /proposals/{id}/settodraft</td><td><span class="tag tag-write">Écriture</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ④ STATS LIVE -->
+  <div class="section" id="stats">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Stats live Dolibarr — Tableau de bord opérationnel</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div class="mock-stat-grid" style="margin-bottom:12px">
+        <div class="mock-stat"><div class="mock-stat-val">7</div><div class="mock-stat-lbl">Devis cette semaine</div></div>
+        <div class="mock-stat"><div class="mock-stat-val">3</div><div class="mock-stat-lbl">Commandes semaine</div></div>
+        <div class="mock-stat"><div class="mock-stat-val">12</div><div class="mock-stat-lbl">Devis en brouillon</div></div>
+      </div>
+      <div style="border:0.5px solid var(--amber-border);border-radius:6px;padding:10px;background:var(--amber-faint)">
+        <div style="font-size:9px;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Commandes · Production</div>
+        <div class="mock-prod">
+          <div class="mock-prod-card"><div class="mock-prod-val" style="color:var(--red)">2</div>Bloqué / fichier</div>
+          <div class="mock-prod-card"><div class="mock-prod-val">4</div>Fichiers en traitement</div>
+          <div class="mock-prod-card"><div class="mock-prod-val" style="color:var(--amber)">5</div>Attente BAT</div>
+          <div class="mock-prod-card"><div class="mock-prod-val" style="color:var(--green)">8</div>En cours de prod</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <div class="feature-name">Devis cette semaine</div>
+        <div class="feature-desc">Nombre de devis créés depuis le lundi de la semaine courante. Source : /api/stats → Dolibarr proposals.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📦</div>
+        <div class="feature-name">Commandes semaine</div>
+        <div class="feature-desc">Commandes validées ou en cours depuis lundi. Source : /api/stats → Dolibarr orders.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✏️</div>
+        <div class="feature-name">Devis en brouillon</div>
+        <div class="feature-desc">Devis au statut 0 (brouillon non envoyé). Signal d'action : ces devis doivent être complétés ou validés.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🚫</div>
+        <div class="feature-name">Bloqué / Attente fichier</div>
+        <div class="feature-desc">Commandes bloquées en attente de fichiers client. Indicateur critique — s'affiche en rouge dès que > 0.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📁</div>
+        <div class="feature-name">Fichiers en traitement</div>
+        <div class="feature-desc">Commandes dont les fichiers client sont en cours de préparation/vérification prépresse.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">👁</div>
+        <div class="feature-name">En attente de BAT</div>
+        <div class="feature-desc">Commandes dont le BAT a été envoyé au client, en attente de validation. Délai moyen cible : 48h.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🖨</div>
+        <div class="feature-name">En cours de production</div>
+        <div class="feature-desc">Commandes BAT validé, en fabrication chez les sous-traitants ou en production interne.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑤ ALERTES -->
+  <div class="section" id="alertes">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">Alertes actives — Signaux d'action prioritaires</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:13px;font-weight:700;font-family:var(--display)">Alertes actives</span>
+          <span style="background:#C44444;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px">3</span>
+        </div>
+        <button class="mock-btn-ghost" style="font-size:10px;color:var(--red);border-color:rgba(90,60,60,0.4)">Tout effacer</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div class="mock-alert"><span>🔴</span> Facture FAC2025-0089 — Maison Rivière — impayée depuis 32 jours</div>
+        <div class="mock-alert"><span>🟡</span> Devis PRO2025-0131 — aucune réponse client depuis 8 jours</div>
+        <div class="mock-alert"><span>🔴</span> Commande CMD2025-0044 — fichiers non reçus — délai dépassé</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🔴</div>
+        <div class="feature-name">Alertes critiques</div>
+        <div class="feature-desc">Impayés détectés, délais de livraison dépassés, commandes bloquées trop longtemps. Source : /api/stats → Dolibarr.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🟡</div>
+        <div class="feature-name">Alertes d'attention</div>
+        <div class="feature-desc">Devis sans réponse > 7 jours, BAT en attente > 3 jours, commandes non facturées. Signaux de relance.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🗑</div>
+        <div class="feature-name">Effacer les alertes</div>
+        <div class="feature-desc">Supprime toutes les alertes de la vue courante (ne modifie pas Dolibarr). Les alertes se rechargent à la prochaine actualisation.</div>
+        <div class="feature-tags"><span class="tag tag-write">Action locale</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🏷</div>
+        <div class="feature-name">Filtres par catégorie</div>
+        <div class="feature-desc">Boutons de filtre pour afficher uniquement les alertes d'un type (impayés, BAT, fichiers, devis). Cliquables dynamiquement.</div>
+        <div class="feature-tags"><span class="tag tag-read">Filtre local</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑥ FINANCIER -->
+  <div class="section" id="financier">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title">Financier — KPIs et métriques DAF</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div class="mock-kpi-grid" style="margin-bottom:12px">
+        <div class="mock-kpi"><div class="mock-kpi-val">38 400 €</div><div class="mock-kpi-lbl">CA HT · mois</div></div>
+        <div class="mock-kpi" style="opacity:0.4"><div class="mock-kpi-val">—</div><div class="mock-kpi-lbl">Rentabilité HT</div></div>
+        <div class="mock-kpi"><div class="mock-kpi-val">12 200 €</div><div class="mock-kpi-lbl">Impayés clients</div></div>
+        <div class="mock-kpi"><div class="mock-kpi-val">8 900 €</div><div class="mock-kpi-lbl">À payer fournisseurs</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+          <div style="font-size:9px;color:var(--text-muted)">CA ANNÉE</div>
+          <div style="font-size:18px;font-weight:700;color:var(--amber);font-family:var(--display)">284 000 €</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+          <div style="font-size:9px;color:var(--text-muted)">DSO</div>
+          <div style="font-size:18px;font-weight:700;color:var(--amber);font-family:var(--display)">24 <span style="font-size:11px">j</span></div>
+        </div>
+        <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+          <div style="font-size:9px;color:var(--text-muted)">PRÉVISIONNEL 30J</div>
+          <div style="font-size:18px;font-weight:700;color:var(--amber);font-family:var(--display)">42 100 €</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">💰</div>
+        <div class="feature-name">CA HT · mois</div>
+        <div class="feature-desc">Chiffre d'affaires facturé du mois en cours. Évolution vs mois précédent affichée. Source : /api/kpis → Dolibarr factures.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📉</div>
+        <div class="feature-name">Rentabilité HT · mois</div>
+        <div class="feature-desc">Marge brute estimée. Actuellement désactivé (en attente données fournisseurs). Prévu pour intégration future.</div>
+        <div class="feature-tags"><span class="tag tag-read">En attente</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🏭</div>
+        <div class="feature-name">À payer fournisseurs</div>
+        <div class="feature-desc">Montant total des factures fournisseurs en attente de règlement. Source : Dolibarr factures fournisseurs.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚠️</div>
+        <div class="feature-name">Impayés clients HT</div>
+        <div class="feature-desc">Montant et nombre de factures clients non réglées. S'affiche en rouge au-delà d'un seuil. Cliquable → Dolibarr.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔜</div>
+        <div class="feature-name">Facturation à venir</div>
+        <div class="feature-desc">Commandes livrées non encore facturées. Signal de trésorerie : ces encaissements sont imminents.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📅</div>
+        <div class="feature-name">CA année</div>
+        <div class="feature-desc">Cumul annuel factures payées. Source : /api/daf. Mis à jour à chaque clic "Rafraîchir".</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⏱</div>
+        <div class="feature-name">DSO (Days Sales Outstanding)</div>
+        <div class="feature-desc">Délai moyen d'encaissement en jours. Calculé sur les 12 derniers mois. Objectif InPressco : &lt; 30j.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Calculé</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔮</div>
+        <div class="feature-name">Prévisionnel 30 jours</div>
+        <div class="feature-desc">Estimation des encaissements attendus dans les 30 prochains jours basée sur les factures en cours + commandes non facturées.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Calculé</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑦ CA MENSUEL -->
+  <div class="section" id="ca-chart">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title">CA mensuel HT — Graphique 12 mois</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div class="mock-chart">
+        <div class="mock-bar-chart" style="height:35%"></div>
+        <div class="mock-bar-chart" style="height:50%"></div>
+        <div class="mock-bar-chart" style="height:45%"></div>
+        <div class="mock-bar-chart" style="height:60%"></div>
+        <div class="mock-bar-chart" style="height:42%"></div>
+        <div class="mock-bar-chart" style="height:70%"></div>
+        <div class="mock-bar-chart" style="height:55%"></div>
+        <div class="mock-bar-chart" style="height:48%"></div>
+        <div class="mock-bar-chart" style="height:65%"></div>
+        <div class="mock-bar-chart" style="height:58%"></div>
+        <div class="mock-bar-chart" style="height:80%"></div>
+        <div class="mock-bar-chart current" style="height:92%"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);margin-top:4px">
+        <span>Mar</span><span>Avr</span><span>Mai</span><span>Jun</span><span>Jul</span><span>Aoû</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Déc</span><span>Jan</span><span>Fév →</span>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📈</div>
+        <div class="feature-name">Barres mensuelles</div>
+        <div class="feature-desc">CA HT facturé par mois sur les 12 derniers mois. Le mois en cours est mis en valeur (couleur amber pleine).</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🖱</div>
+        <div class="feature-name">Tooltip au survol</div>
+        <div class="feature-desc">Affiche le montant exact et le nom du mois au survol de chaque barre. Rendu via Chart.js (canvas).</div>
+        <div class="feature-tags"><span class="tag tag-read">Interactif</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-name">Bouton Rafraîchir</div>
+        <div class="feature-desc">Recharge les données depuis /api/ca-chart → Dolibarr. Mise à jour instantanée du graphique.</div>
+        <div class="feature-tags"><span class="tag tag-write">Action</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑧ PERFORMANCE -->
+  <div class="section" id="performance">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title">Performance — Top clients et top produits</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div class="mock-perf">
+        <div>
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase">Top clients — CA année</div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Maison Rivière</span><span class="mock-perf-val">42 800 €</span></div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Agence Blanche</span><span class="mock-perf-val">31 200 €</span></div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Studio Alti</span><span class="mock-perf-val">18 600 €</span></div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Dom Pérignon</span><span class="mock-perf-val">15 400 €</span></div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Marque X</span><span class="mock-perf-val">12 100 €</span></div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase">Top produits — CA année</div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Brochures luxe</span><span class="mock-perf-val">68 000 €</span></div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Livrets offset</span><span class="mock-perf-val">44 200 €</span></div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Packaging</span><span class="mock-perf-val">38 800 €</span></div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Cartes de visite</span><span class="mock-perf-val">21 000 €</span></div>
+          <div class="mock-perf-item"><span class="mock-perf-name">Affiches grand format</span><span class="mock-perf-val">18 500 €</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🏆</div>
+        <div class="feature-name">Top clients CA année</div>
+        <div class="feature-desc">Les 5 clients avec le plus fort CA sur l'année en cours. Source : /api/daf → agrégation Dolibarr factures par tiers.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📦</div>
+        <div class="feature-name">Top produits CA année</div>
+        <div class="feature-desc">Les 5 familles de produits les plus vendus en CA. Calculé depuis les lignes de commandes Dolibarr.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑨ OBJECTIF -->
+  <div class="section" id="objectif">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title">Objectif — Taux de transformation et métriques pilotage</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div class="mock-gauge-wrap">
+        <div>
+          <div style="font-size:9px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em">Taux de transformation</div>
+          <svg viewBox="0 0 130 76" width="130" height="76">
+            <path d="M12,70 A53,53 0 0,1 118,70" fill="none" stroke="var(--bg4)" stroke-width="11" stroke-linecap="round"/>
+            <path d="M12,70 A53,53 0 0,1 118,70" fill="none" stroke="var(--amber)" stroke-width="11" stroke-linecap="round" stroke-dasharray="88 166" style="opacity:0.8"/>
+          </svg>
+          <div style="text-align:center;font-size:10px;color:var(--text-muted)">année en cours</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:1">
+          <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+            <div style="font-size:9px;color:var(--text-muted)">Incidents</div>
+            <div style="font-size:18px;font-weight:700;color:var(--red);font-family:var(--display)">0</div>
+            <div style="font-size:9px;color:var(--text-muted)">0 € HT</div>
+            <button class="mock-btn-ghost" style="font-size:10px;padding:2px 8px;margin-top:4px">Modifier</button>
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+            <div style="font-size:9px;color:var(--text-muted)">Marge mois</div>
+            <div style="font-size:18px;font-weight:700;color:var(--amber);font-family:var(--display)">—</div>
+            <button class="mock-btn-ghost" style="font-size:10px;padding:2px 8px;margin-top:4px">Modifier</button>
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+            <div style="font-size:9px;color:var(--text-muted)">Tapis rouge</div>
+            <div style="font-size:18px;font-weight:700;color:var(--red);font-family:var(--display)">0</div>
+            <button class="mock-btn-ghost" style="font-size:10px;padding:2px 8px;margin-top:4px;border-color:rgba(90,60,60,0.5);color:var(--red)">Modifier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-name">Jauge taux de transformation</div>
+        <div class="feature-desc">Ratio devis signés / devis émis sur l'année. Affiché sous forme de demi-cercle ambré. Source : /api/kpis.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚠️</div>
+        <div class="feature-name">Incidents / Problèmes</div>
+        <div class="feature-desc">Compteur manuel de dossiers problématiques avec montant HT associé. Saisi à la main via bouton "Modifier". Stocké localement.</div>
+        <div class="feature-tags"><span class="tag tag-write">Saisie manuelle</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💹</div>
+        <div class="feature-name">Marge mois en cours</div>
+        <div class="feature-desc">Marge brute cumulée du mois — saisie manuelle (en attente intégration données fournisseurs automatiques).</div>
+        <div class="feature-tags"><span class="tag tag-write">Saisie manuelle</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔴</div>
+        <div class="feature-name">Dossiers tapis rouge</div>
+        <div class="feature-desc">Compteur de dossiers en priorité absolue (client VIP, délai critique, problème qualité). Saisie manuelle, affiché en rouge.</div>
+        <div class="feature-tags"><span class="tag tag-write">Saisie manuelle</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑩ DEVIS À SUIVRE -->
+  <div class="section" id="devis">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title">Devis à suivre — Liste et relances</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div style="display:grid;grid-template-columns:110px 1fr 60px 80px 28px;gap:10px;padding-bottom:6px;border-bottom:0.5px solid rgba(90,80,64,0.3);font-size:9px;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase">
+        <div>REF</div><div>CLIENT / PROJET</div><div>JOURS</div><div style="text-align:right">MONTANT HT</div><div>PDF</div>
+      </div>
+      <div class="mock-devis-row">
+        <div class="mock-devis-ref">PRO2025-0144</div>
+        <div><div style="font-size:11px">Agence Blanche</div><div style="font-size:10px;color:var(--text-muted)">Catalogue Printemps 2026</div></div>
+        <div><span style="background:rgba(240,149,149,0.15);color:var(--red);padding:2px 6px;border-radius:4px;font-size:10px">8j</span></div>
+        <div class="mock-devis-montant" style="font-size:12px;font-weight:700">4 200 €</div>
+        <div style="color:var(--amber);font-size:13px">↓</div>
+      </div>
+      <div class="mock-devis-row">
+        <div class="mock-devis-ref">PRO2025-0143</div>
+        <div><div style="font-size:11px">Studio Alti</div><div style="font-size:10px;color:var(--text-muted)">Packaging série limitée</div></div>
+        <div><span style="background:rgba(201,158,103,0.15);color:var(--amber);padding:2px 6px;border-radius:4px;font-size:10px">3j</span></div>
+        <div class="mock-devis-montant" style="font-size:12px;font-weight:700">890 €</div>
+        <div style="color:var(--amber);font-size:13px">↓</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📋</div>
+        <div class="feature-name">Liste des devis ouverts</div>
+        <div class="feature-desc">Devis validés (statut 1) en attente de signature client. Triés par ancienneté. Source : /api/devis-suivre → Dolibarr proposals.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Auto</span><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📅</div>
+        <div class="feature-name">Indicateur d'ancienneté</div>
+        <div class="feature-desc">Nombre de jours depuis la création du devis. Rouge > 7j, orange 3–7j. Signal de relance automatique.</div>
+        <div class="feature-tags"><span class="tag tag-auto">Calculé</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📄</div>
+        <div class="feature-name">Lien PDF du devis</div>
+        <div class="feature-desc">Lien direct vers le PDF généré par Dolibarr (azur_fp). Disponible uniquement si le devis est validé.</div>
+        <div class="feature-tags"><span class="tag tag-read">Dolibarr</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔗</div>
+        <div class="feature-name">Voir dans Dolibarr</div>
+        <div class="feature-desc">Bouton en haut de section — ouvre directement l'interface Dolibarr pour consultation ou modification manuelle.</div>
+        <div class="feature-tags"><span class="tag tag-read">Lien externe</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">👁</div>
+        <div class="feature-name">Voir tous les devis</div>
+        <div class="feature-desc">Toggle pour afficher tous les devis (y compris anciens/expirés) ou seulement ceux à relancer. Limité à 10 par défaut.</div>
+        <div class="feature-tags"><span class="tag tag-read">Filtre local</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑪ KIE.AI -->
+  <div class="section" id="kie">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <div class="section-title">Images — Reprompt IA via kie.ai</div>
+    </div>
+
+    <div class="mock" data-label="Aperçu">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:6px">Image générée</div>
+          <div class="mock-kie">
+            <div style="font-size:28px">🖼</div>
+            <div style="font-size:11px;font-weight:700;color:var(--amber);font-family:var(--display);margin-top:4px">kie.ai — Reprompt image</div>
+            <div style="font-size:10px;color:var(--text-muted)">Glissez une image ici</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div>
+            <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px">Prompt original</div>
+            <textarea class="mock-input" rows="3" placeholder="Coller ici le prompt kie.ai…" readonly></textarea>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px">Contexte / intentions</div>
+            <textarea class="mock-input" rows="2" placeholder="Ambiance, style, marque…" readonly></textarea>
+          </div>
+          <button class="mock-btn" style="width:100%">✦ Générer reprompts</button>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:var(--amber-faint);border:0.5px solid var(--amber-border);border-radius:6px;font-size:11px;color:var(--text-secondary)">
+        <strong style="color:var(--amber)">Suggestions Claude :</strong> Voici 3 reprompts optimisés pour kie.ai…
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🖼</div>
+        <div class="feature-name">Zone de dépôt image</div>
+        <div class="feature-desc">Glissez, collez (Ctrl+V) ou cliquez pour charger une image générée par kie.ai. Formats : PNG, JPG, WEBP.</div>
+        <div class="feature-tags"><span class="tag tag-write">Upload</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📝</div>
+        <div class="feature-name">Prompt original</div>
+        <div class="feature-desc">Collez le prompt utilisé dans kie.ai pour générer l'image. Claude l'analysera pour proposer des améliorations ciblées.</div>
+        <div class="feature-tags"><span class="tag tag-write">Saisie</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎭</div>
+        <div class="feature-name">Contexte / intentions</div>
+        <div class="feature-desc">Décrivez l'ambiance souhaitée, l'usage final, la marque client. Claude adapte les reprompts à ce contexte.</div>
+        <div class="feature-tags"><span class="tag tag-write">Saisie</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✦</div>
+        <div class="feature-name">Générer reprompts</div>
+        <div class="feature-desc">Appel Claude avec l'image + le prompt + le contexte. Retourne 3–5 reprompts améliorés, prêts à copier dans kie.ai.</div>
+        <div class="feature-tags"><span class="tag tag-ai">IA</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-name">Lightbox image</div>
+        <div class="feature-desc">Cliquez sur l'image chargée pour l'afficher en plein écran et inspecter les détails avant de générer les reprompts.</div>
+        <div class="feature-tags"><span class="tag tag-read">Interactif</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑫ ENDPOINTS API -->
+  <div class="section" id="api">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <div class="section-title">Endpoints API — Référence complète</div>
+    </div>
+
+    <div style="background:var(--bg2);border:0.5px solid rgba(90,80,64,0.25);border-radius:8px;overflow:hidden">
+      <table class="api-table">
+        <thead><tr><th>Endpoint</th><th>Fonction</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td><span class="api-method m-get">GET</span><code>/</code></td><td>Dashboard principal (index.html)</td><td>Statique</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/admin/dev</code></td><td>Page développeur / diagnostic pipeline</td><td>Statique</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/status</code></td><td>Statut Flux A et Flux B depuis pipeline.log</td><td>pipeline.log</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/runs</code></td><td>Historique des runs (liste)</td><td>pipeline.log</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/log</code></td><td>Dernières lignes du log brut</td><td>pipeline.log</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/kpis</code></td><td>KPIs financiers (CA, impayés, fournisseurs, taux transfo)</td><td>Dolibarr</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/stats</code></td><td>Stats opérationnelles (devis, commandes, production)</td><td>Dolibarr</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/daf</code></td><td>Métriques DAF (CA année, DSO, prévisionnel 30j, top clients/produits)</td><td>Dolibarr</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/ca-chart</code></td><td>Données graphique CA 12 mois</td><td>Dolibarr</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/devis-suivre</code></td><td>Liste des devis ouverts à relancer</td><td>Dolibarr</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/clients</code></td><td>Liste des tiers Dolibarr</td><td>Dolibarr</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/proposals-orders</code></td><td>Devis et commandes pour le sélecteur IA</td><td>Dolibarr</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/config</code></td><td>URLs publiques du dashboard</td><td>Env</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/n8n/workflows</code></td><td>Liste des workflows n8n (live ou statique)</td><td>n8n / statique</td></tr>
+          <tr><td><span class="api-method m-post">POST</span><code>/api/run</code></td><td>Déclenche main.py en subprocess (pipeline complet)</td><td>Pipeline</td></tr>
+          <tr><td><span class="api-method m-post">POST</span><code>/api/chat</code></td><td>Chat IA streaming avec boucle agentique Dolibarr</td><td>Anthropic + Dolibarr</td></tr>
+          <tr><td><span class="api-method m-post">POST</span><code>/api/upload-asset</code></td><td>Upload d'assets (images, chartes) pour le chat IA</td><td>Local</td></tr>
+          <tr><td><span class="api-method m-get">GET</span><code>/api/go/{devis_id}</code></td><td>Déclenche l'envoi de l'email client (GO bouton email interne)</td><td>Pipeline s13</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ⑬ CONNEXION PIPELINE -->
+  <div class="section" id="pipeline">
+    <div class="section-header">
+      <div class="section-num">13</div>
+      <div class="section-title">Connexion pipeline — Flux automatisé</div>
+    </div>
+
+    <div class="callout">
+      Le dashboard et le pipeline Python sont <strong>indépendants</strong> mais connectés. Le pipeline tourne en arrière-plan (launchagent ou cron). Le dashboard lit son état via <strong>pipeline.log</strong> et les <strong>fichiers runs/</strong>. L'endpoint <strong>/api/run</strong> permet de le déclencher manuellement.
+    </div>
+
+    <div style="background:var(--bg2);border:0.5px solid rgba(90,80,64,0.25);border-radius:10px;padding:20px">
+      <div style="font-size:10px;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:16px">Flux complet — Email entrant → Email client</div>
+      <div class="flow" style="gap:0">
+        <div class="flow-step"><div class="fs-label">s01</div>Email reçu<br><span style="font-size:9px;color:var(--text-muted)">Outlook</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="fs-label">s02–s03</div>IA + Routing<br><span style="font-size:9px;color:var(--text-muted)">Claude</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="fs-label">s04–s05</div>Client Dolibarr<br><span style="font-size:9px;color:var(--text-muted)">Find/Create</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="fs-label">s06–s08</div>Analyse + Devis<br><span style="font-size:9px;color:var(--text-muted)">Dolibarr</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="fs-label">s09–s11</div>PJ + Log + Archive<br><span style="font-size:9px;color:var(--text-muted)">Outlook</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step highlight"><div class="fs-label">s12</div>📧 Email GO<br><span style="font-size:9px;color:var(--amber-dim)">Notification interne</span></div>
+        <div class="flow-arrow" style="color:var(--amber)">→</div>
+        <div class="flow-step highlight"><div class="fs-label">⏸ STOP</div>Attend GO<br><span style="font-size:9px;color:var(--amber-dim)">Dashboard</span></div>
+        <div class="flow-arrow" style="color:var(--amber)">→</div>
+        <div class="flow-step highlight"><div class="fs-label">s13</div>/api/go/{id}<br><span style="font-size:9px;color:var(--amber-dim)">Email client</span></div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">▶️</div>
+        <div class="feature-name">Bouton Run (page Dev)</div>
+        <div class="feature-desc">Déclenche main.py via POST /api/run. Lance le pipeline complet Flux A + Flux B en subprocess non-bloquant.</div>
+        <div class="feature-tags"><span class="tag tag-write">Action pipeline</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🚀</div>
+        <div class="feature-name">Bouton GO (email interne)</div>
+        <div class="feature-desc">Lien reçu par email après création du devis (s12). Déclenche s13 qui valide le statut Dolibarr et envoie l'email CONFIG_CLIENT_v2026 au client.</div>
+        <div class="feature-tags"><span class="tag tag-write">Action pipeline</span><span class="tag tag-auto">Humain requis</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📡</div>
+        <div class="feature-name">Surveillance log</div>
+        <div class="feature-desc">/api/status et /api/runs lisent pipeline.log en temps réel. Affichent le statut Flux A (devis créé, erreurs) et Flux B (suivi emails ETUDE).</div>
+        <div class="feature-tags"><span class="tag tag-read">Log</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💾</div>
+        <div class="feature-name">Fichiers runs/pending</div>
+        <div class="feature-desc">Le pipeline sauvegarde le contexte complet dans runs/pending/{id}.json après s12. Le dashboard charge ce fichier au clic GO pour reprendre s13.</div>
+        <div class="feature-tags"><span class="tag tag-read">Fichier local</span><span class="tag tag-auto">Auto</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;padding:32px;color:var(--text-muted);font-size:11px;border-top:1px solid rgba(90,80,64,0.2);margin-top:20px">
+  Notice Dashboard InPressco MWP · v2026-03 · Généré automatiquement depuis le codebase
+</div>
+
+</body>
+</html>

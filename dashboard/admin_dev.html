@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InPressco — Dev</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg0: #141414;
+      --bg1: #1a1a1a;
+      --bg2: #1e1e1e;
+      --bg3: #242424;
+      --bg4: #2a2a2a;
+      --amber: #C99E67;
+      --amber-dim: #A07840;
+      --amber-faint: #2a1e10;
+      --amber-glow: rgba(201,158,103,0.08);
+      --amber-border: rgba(201,158,103,0.2);
+      --text-primary: #f0e8dd;
+      --text-secondary: #a09080;
+      --text-muted: #585044;
+      --mono: 'IBM Plex Mono', monospace;
+      --display: 'Syne', sans-serif;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    body {
+      background: var(--bg0);
+      color: var(--text-primary);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    .badge { display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:500;letter-spacing:0.04em;font-family:var(--mono);white-space:nowrap; }
+    .badge-ok   { background:#1a2e0a;color:#97C459;border:0.5px solid #3B6D11; }
+    .badge-err  { background:#2e0a0a;color:#F09595;border:0.5px solid #A32D2D; }
+    .badge-warn { background:#2e1a0a;color:#FAC775;border:0.5px solid #854F0B; }
+    .badge-idle { background:#1e1e1e;color:#706050;border:0.5px solid #3a3028; }
+
+    .dot { width:7px;height:7px;border-radius:50%;flex-shrink:0; }
+    .dot-ok   { background:#6B9922; }
+    .dot-err  { background:#C44;box-shadow:0 0 6px rgba(204,68,68,0.5); }
+    .dot-warn { background:#C97A0A; }
+    .dot-idle { background:#444; }
+
+    /* ── Header ── */
+    .dev-header {
+      background: var(--bg1);
+      border-bottom: 0.5px solid var(--amber-border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .dev-header a {
+      color: var(--amber-dim);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+    .dev-header a:hover { color: var(--amber); }
+    .dev-title {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: 0.05em;
+    }
+    .dev-sub { font-size: 11px; color: var(--text-muted); margin-left: auto; }
+
+    /* ── Layout ── */
+    main { max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: flex; flex-direction: column; gap: 24px; }
+
+    .card {
+      background: var(--bg2);
+      border: 0.5px solid rgba(90,80,64,0.35);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .section-link {
+      background: none;
+      border: 0.5px solid var(--amber-border);
+      color: var(--amber-dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .section-link:hover { color: var(--amber); border-color: var(--amber); }
+
+    /* ── Connectors ── */
+    .connectors-grid { display: flex; flex-direction: column; gap: 8px; }
+    .connector-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--bg3);
+      border-radius: var(--radius-md);
+      border: 0.5px solid rgba(90,80,64,0.2);
+    }
+    .connector-name { flex: 1; font-size: 12px; color: var(--text-primary); }
+    .connector-detail { font-size: 11px; color: var(--text-muted); }
+
+    /* ── Runs ── */
+    .run-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 80px 60px;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 0.5px solid rgba(90,80,64,0.15);
+    }
+    .run-row:last-child { border-bottom: none; }
+
+    /* ── Logs ── */
+    .log-box {
+      background: var(--bg1);
+      border: 0.5px solid rgba(90,80,64,0.25);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-height: 320px;
+      overflow-y: auto;
+      font-family: var(--mono);
+    }
+    .log-line-err  { color: #F09595; }
+    .log-line-warn { color: #FAC775; }
+    .log-line-ok   { color: #97C459; }
+
+    /* ── Pipeline ── */
+    .pipeline-stages { display: flex; flex-direction: column; gap: 8px; }
+    .stage-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 14px;
+      background: var(--bg3);
+      border: 0.5px solid rgba(90,80,64,0.25);
+      border-radius: var(--radius-md);
+    }
+    .stage-num {
+      font-size: 10px;
+      color: var(--text-muted);
+      width: 22px;
+      text-align: right;
+    }
+    .stage-label { flex: 1; font-size: 12px; }
+    .stage-flux { font-size: 10px; color: var(--text-muted); }
+
+    /* ── Run button ── */
+    .run-btn {
+      background: var(--amber-faint);
+      border: 0.5px solid var(--amber-border);
+      color: var(--amber);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .run-btn:hover { background: rgba(201,158,103,0.12); }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── N8N ── */
+    .wf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .wf-card {
+      background: var(--bg3);
+      border: 0.5px solid rgba(90,80,64,0.25);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .wf-card.active-wf { border-color: rgba(107,153,34,0.35); background: rgba(26,46,10,0.3); }
+    .wf-card.has-id { cursor: pointer; }
+    .wf-card.has-id:hover { border-color: var(--amber-border); }
+    .wf-name { font-size: 12px; color: var(--text-primary); }
+    .wf-role { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+    .wf-id   { font-size: 10px; color: var(--text-muted); margin-top: 2px; font-family: var(--mono); }
+
+    /* ── P0 Bloquants ── */
+    .blocker-list { display: flex; flex-direction: column; gap: 8px; }
+    .blocker-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: rgba(46,10,10,0.4);
+      border: 0.5px solid rgba(163,45,45,0.3);
+      border-radius: var(--radius-md);
+    }
+    .blocker-key { font-size: 11px; color: #FAC775; font-family: var(--mono); }
+    .blocker-desc { flex: 1; font-size: 12px; color: var(--text-secondary); }
+
+    .empty-state { padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px; }
+  </style>
+</head>
+
+<body>
+
+  <div class="dev-header">
+    <a href="/">← Dashboard</a>
+    <div class="dev-title">DEV</div>
+    <div class="dev-sub" id="dev-ts">Chargement…</div>
+  </div>
+
+  <main>
+
+    <!-- P0 BLOQUANTS -->
+    <div class="card">
+      <div class="section-head">
+        <div class="section-title">P0 — Bloquants environnement</div>
+        <span id="blockers-count" style="font-size:11px;color:var(--text-muted)"></span>
+      </div>
+      <div id="blockers-list" class="blocker-list">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+
+    <!-- CONNECTEURS -->
+    <div class="card">
+      <div class="section-head">
+        <div class="section-title">Connecteurs</div>
+      </div>
+      <div id="connectors-list" class="connectors-grid">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+
+    <!-- PIPELINE -->
+    <div class="card">
+      <div class="section-head">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="section-title">Pipeline MWP</div>
+          <div class="dot dot-idle" id="pipeline-dot"></div>
+          <span id="pipeline-sub" style="font-size:11px;color:var(--text-muted)">Jamais lancé</span>
+        </div>
+        <button class="run-btn" id="run-btn" onclick="triggerRun()">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polygon points="2,1 11,6 2,11" fill="currentColor"/></svg>
+          Lancer pipeline
+        </button>
+      </div>
+      <div class="pipeline-stages">
+        <div class="stage-item" id="stage-item-1">
+          <div class="stage-num">01</div>
+          <div class="stage-label">Extraction email</div>
+          <div class="stage-flux">Flux A</div>
+          <span class="badge badge-idle" id="stage-badge-1">En attente</span>
+        </div>
+        <div class="stage-item" id="stage-item-2">
+          <div class="stage-num">02</div>
+          <div class="stage-label">Analyse client</div>
+          <div class="stage-flux">Flux A</div>
+          <span class="badge badge-idle" id="stage-badge-2">En attente</span>
+        </div>
+        <div class="stage-item" id="stage-item-3">
+          <div class="stage-num">03</div>
+          <div class="stage-label">Analyse besoin</div>
+          <div class="stage-flux">Flux A</div>
+          <span class="badge badge-idle" id="stage-badge-3">En attente</span>
+        </div>
+        <div class="stage-item" id="stage-item-4">
+          <div class="stage-num">04</div>
+          <div class="stage-label">Construction devis</div>
+          <div class="stage-flux">Flux A</div>
+          <span class="badge badge-idle" id="stage-badge-4">En attente</span>
+        </div>
+        <div class="stage-item" id="stage-item-5">
+          <div class="stage-num">05</div>
+          <div class="stage-label">Archivage</div>
+          <div class="stage-flux">Flux A</div>
+          <span class="badge badge-idle" id="stage-badge-5">En attente</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORIQUE RUNS -->
+    <div class="card">
+      <div class="section-head">
+        <div class="section-title">Historique des runs</div>
+        <span id="runs-ts" style="font-size:11px;color:var(--text-muted)"></span>
+      </div>
+      <div id="runs-list">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+
+    <!-- LOGS LIVE -->
+    <div class="card">
+      <div class="section-head">
+        <div class="section-title">Logs live</div>
+        <button class="section-link" onclick="loadLogs()">Rafraîchir</button>
+      </div>
+      <div id="log-box" class="log-box">Chargement…</div>
+    </div>
+
+    <!-- N8N WORKFLOWS -->
+    <div class="card">
+      <div class="section-head">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="section-title">n8n — Workflows</div>
+          <span id="n8n-source" style="font-size:10px;color:var(--text-muted)"></span>
+        </div>
+        <button class="section-link" id="n8n-open-btn" style="display:none" onclick="openN8n()">Ouvrir n8n →</button>
+      </div>
+      <div id="n8n-grid" class="wf-grid">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function $(id) { return document.getElementById(id); }
+
+    function fmtTs(str) {
+      if (!str) return '—';
+      const d = new Date(str.replace(' ', 'T'));
+      if (isNaN(d)) return str;
+      return d.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit' }) + ' '
+           + d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+    }
+
+    // ── Status pipeline + connecteurs ────────────────────────────────────────
+    async function loadAdminRuns() {
+      try {
+        const r = await fetch('/api/admin/runs-logs');
+        if (!r.ok) return;
+        const d = await r.json();
+
+        $('dev-ts').textContent = 'Mis à jour ' + new Date().toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+
+        // Connecteurs
+        const connList = $('connectors-list');
+        if (d.connectors && d.connectors.length) {
+          connList.innerHTML = d.connectors.map(c => `
+            <div class="connector-row" id="connector-${c.id}">
+              <div class="dot dot-${c.ok ? 'ok' : 'err'}"></div>
+              <div class="connector-name">${c.name}</div>
+              <div class="connector-detail">${c.detail || ''}</div>
+              <span class="badge ${c.ok ? 'badge-ok' : 'badge-err'}">${c.ok ? 'Connecté' : 'Hors ligne'}</span>
+            </div>`).join('');
+        } else {
+          connList.innerHTML = '<div class="empty-state">Aucun connecteur configuré</div>';
+        }
+
+        // Runs
+        const runsList = $('runs-list');
+        const runs = d.runs || [];
+        if (runs.length) {
+          const statusMap = {
+            ok:      ['dot-ok',   'badge-ok',   'Succès'],
+            error:   ['dot-err',  'badge-err',  'Échec'],
+            idle:    ['dot-idle', 'badge-idle', 'Idle'],
+            unknown: ['dot-warn', 'badge-warn', 'Partiel'],
+          };
+          runsList.innerHTML = runs.map(run => {
+            const fa = run.flux_a || {};
+            const overall = (fa.status === 'ok' || fa.status === 'idle') ? 'ok' : fa.status === 'error' ? 'error' : 'unknown';
+            const [dotCls, badgeCls, label] = statusMap[overall];
+            return `<div class="run-row">
+              <div style="font-size:11px;color:var(--text-muted)">${fmtTs(run.finished_at || run.started_at)}</div>
+              <div style="display:flex;align-items:center;gap:6px"><div class="dot ${dotCls}"></div><span>Flux A</span></div>
+              <div><span class="badge ${badgeCls}">${label}</span></div>
+              <div style="font-size:11px;color:var(--text-muted)">—</div>
+            </div>`;
+          }).join('');
+          $('runs-ts').textContent = runs.length + ' run(s)';
+        } else {
+          runsList.innerHTML = '<div class="empty-state">Aucun run enregistré</div>';
+        }
+
+        // Logs
+        const logLines = d.log_lines || [];
+        const logBox = $('log-box');
+        if (logLines.length) {
+          logBox.innerHTML = logLines.map(line => {
+            const cls = /error|exception|traceback/i.test(line) ? 'log-line-err'
+                      : /warning|warn/i.test(line)              ? 'log-line-warn'
+                      : /ok|success|200/i.test(line)            ? 'log-line-ok'
+                      : '';
+            return `<div class="${cls}">${line.replace(/</g, '&lt;')}</div>`;
+          }).join('');
+          logBox.scrollTop = logBox.scrollHeight;
+        } else {
+          logBox.textContent = 'Aucun log disponible';
+        }
+
+      } catch(e) {
+        console.warn('loadAdminRuns:', e);
+      }
+    }
+
+    async function loadLogs() {
+      await loadAdminRuns();
+    }
+
+    // ── Status (pipeline + stages) ───────────────────────────────────────────
+    async function loadStatus() {
+      try {
+        const r = await fetch('/api/status');
+        if (!r.ok) return;
+        const d = await r.json();
+        const s = d.summary;
+        const fa = s.flux_a || {};
+
+        const dotMap = { ok: 'dot-ok', error: 'dot-err', idle: 'dot-idle', never_run: 'dot-idle' };
+        $('pipeline-dot').className = 'dot ' + (dotMap[s.status] || 'dot-warn');
+        if (s.last_run) $('pipeline-sub').textContent = 'Dernier run : ' + fmtTs(s.last_run);
+
+        const stages = d.stages || {};
+        for (let i = 1; i <= 5; i++) {
+          const key = 'stage_0' + i;
+          const item = $('stage-item-' + i);
+          const badge = $('stage-badge-' + i);
+          if (!item || !stages[key]) continue;
+          if (stages[key].has_output) {
+            item.style.borderColor = 'rgba(99,153,34,0.3)';
+            item.style.background  = 'rgba(26,46,10,0.3)';
+            if (badge) { badge.className = 'badge badge-ok'; badge.textContent = 'Terminé'; }
+          }
+        }
+      } catch(e) { console.warn('loadStatus:', e); }
+    }
+
+    // ── P0 Bloquants ────────────────────────────────────────────────────────
+    async function loadBlockers() {
+      try {
+        const r = await fetch('/api/config');
+        if (!r.ok) return;
+        const d = await r.json();
+        const blockers = d.blockers || [];
+        const list = $('blockers-list');
+        $('blockers-count').textContent = blockers.length + ' bloquant(s)';
+        if (blockers.length === 0) {
+          list.innerHTML = '<div class="empty-state" style="color:#97C459">Aucun bloquant — environnement OK</div>';
+          return;
+        }
+        list.innerHTML = blockers.map(b => `
+          <div class="blocker-item">
+            <span class="blocker-key">${b.key || b.name || '?'}</span>
+            <span class="blocker-desc">${b.message || b.detail || ''}</span>
+            <span class="badge badge-err">Bloquant</span>
+          </div>`).join('');
+      } catch(e) { console.warn('loadBlockers:', e); }
+    }
+
+    // ── N8N Workflows ────────────────────────────────────────────────────────
+    let _n8nUrl = null;
+
+    const ROLE_LABELS = {
+      pipeline:  'Pipeline devis',
+      finance:   'Finance',
+      crm:       'CRM / Tiers',
+      design:    'Design',
+      marketing: 'Marketing',
+      other:     'Autre',
+    };
+
+    function openN8n() {
+      if (_n8nUrl) window.open(_n8nUrl, '_blank');
+    }
+
+    async function loadN8nWorkflows() {
+      const grid   = $('n8n-grid');
+      const source = $('n8n-source');
+      try {
+        const r = await fetch('/api/n8n/workflows');
+        if (!r.ok) { if (source) source.textContent = 'n8n non configuré'; return; }
+        const d = await r.json();
+
+        _n8nUrl = d.n8n_url || null;
+        const openBtn = $('n8n-open-btn');
+        if (openBtn && _n8nUrl) openBtn.style.display = 'inline';
+
+        if (source) {
+          const lbl = d.source === 'live' ? 'Live' : d.source === 'static_fallback' ? 'Fallback' : 'Catalogue local';
+          source.textContent = lbl;
+        }
+
+        if (!d.workflows || !d.workflows.length) {
+          grid.innerHTML = '<div class="empty-state">Aucun workflow</div>';
+          return;
+        }
+
+        if (source) source.textContent += ` · ${d.workflows.length} WF`;
+        const activeCount = d.workflows.filter(w => w.active === true).length;
+        if (activeCount > 0 && source) source.textContent += ` · ${activeCount} actifs`;
+
+        grid.innerHTML = d.workflows.map(wf => {
+          const isActive   = wf.active === true;
+          const isInactive = wf.active === false;
+          const hasId      = wf.has_id;
+
+          let statusBadge;
+          if (!hasId)          statusBadge = '<span class="badge badge-warn">ID manquant</span>';
+          else if (isActive)   statusBadge = '<span class="badge badge-ok">Actif</span>';
+          else if (isInactive) statusBadge = '<span class="badge badge-idle">Inactif</span>';
+          else                 statusBadge = '<span class="badge badge-idle">—</span>';
+
+          const cardClass = ['wf-card', hasId ? 'has-id' : '', isActive ? 'active-wf' : ''].filter(Boolean).join(' ');
+          const clickAttr = hasId && wf.url ? `onclick="window.open('${wf.url}','_blank')"` : '';
+
+          return `<div class="${cardClass}" ${clickAttr}>
+            <div>
+              <div class="wf-name">${wf.name}</div>
+              <div class="wf-role">${ROLE_LABELS[wf.role] || wf.role}</div>
+              ${hasId ? `<div class="wf-id">${wf.id.slice(0, 16)}</div>` : ''}
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+              ${statusBadge}
+              ${hasId ? '<span style="font-size:10px;color:var(--amber-dim)">↗</span>' : ''}
+            </div>
+          </div>`;
+        }).join('');
+
+      } catch(e) {
+        console.warn('loadN8nWorkflows:', e);
+        if (grid) grid.innerHTML = '<div class="empty-state">Erreur de chargement</div>';
+      }
+    }
+
+    // ── Run button ───────────────────────────────────────────────────────────
+    async function triggerRun() {
+      const btn = $('run-btn');
+      btn.disabled = true;
+      btn.innerHTML = 'Lancement…';
+      try {
+        const r = await fetch('/api/run', { method: 'POST' });
+        const d = await r.json();
+        if (r.ok) {
+          btn.innerHTML = `PID ${d.pid} lancé`;
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polygon points="2,1 11,6 2,11" fill="currentColor"/></svg> Lancer pipeline`;
+            loadStatus(); loadAdminRuns();
+          }, 3000);
+        } else {
+          btn.innerHTML = 'Erreur';
+          setTimeout(() => { btn.disabled = false; btn.innerHTML = 'Lancer pipeline'; }, 2000);
+        }
+      } catch(e) {
+        btn.innerHTML = 'Erreur réseau';
+        setTimeout(() => { btn.disabled = false; btn.innerHTML = 'Lancer pipeline'; }, 2000);
+      }
+    }
+
+    // ── Init ────────────────────────────────────────────────────────────────
+    loadAdminRuns();
+    loadStatus();
+    loadBlockers();
+    loadN8nWorkflows();
+    setInterval(loadAdminRuns, 30 * 1000);
+    setInterval(loadStatus,    30 * 1000);
+  </script>
+
+</body>
+
+</html>
