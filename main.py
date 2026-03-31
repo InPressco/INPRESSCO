@@ -69,6 +69,16 @@ async def run_once() -> None:
         ctx = await pipeline.run(ctx)
         if ctx.errors:
             logger.error(f"Pipeline terminé avec erreurs : {ctx.errors}")
+            # Tagger l'email [Erreur-{step}] pour éviter les boucles de retraitement
+            if ctx.email_id:
+                from src.connectors.outlook import OutlookClient
+                failed_step = ctx.errors[0].get("step", "step") if ctx.errors else "step"
+                new_subject = f"[Erreur-{failed_step}] {ctx.email_subject}"
+                try:
+                    await OutlookClient().update_message_subject(ctx.email_id, new_subject)
+                    logger.info(f"Email tagué en erreur : {new_subject!r}")
+                except Exception as tag_err:
+                    logger.warning(f"Impossible de tagger l'email en erreur : {tag_err}")
         elif ctx.devis_ref:
             logger.info(f"Pipeline OK — devis créé : {ctx.devis_ref}")
         else:
@@ -80,4 +90,76 @@ async def run_once() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(run_once())
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="InPressco Pipeline — traitement emails + outils système",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Exemples :\n"
+            "  python main.py                   # traite un email depuis la boîte de réception\n"
+            "  python main.py --verify          # vérifie toutes les connexions + intégrité\n"
+            "  python main.py --report          # génère SYSTEM_REPORT.md + .svg\n"
+            "  python main.py --synthesis       # génère STRATEGIC_SYNTHESIS.md + .svg (live Dolibarr)\n"
+            "  python main.py --check-dashboard # teste tous les endpoints dashboard + rapport\n"
+        ),
+    )
+    parser.add_argument(
+        "--verify",
+        action="store_true",
+        help="Vérification masquée : connexions API, pipeline, skills, anti-patterns",
+    )
+    parser.add_argument(
+        "--report",
+        action="store_true",
+        help="Génère reports/SYSTEM_REPORT.md + SYSTEM_REPORT.svg",
+    )
+    parser.add_argument(
+        "--synthesis",
+        action="store_true",
+        help="Génère reports/STRATEGIC_SYNTHESIS.md + .svg depuis Dolibarr live",
+    )
+    parser.add_argument(
+        "--check-dashboard",
+        action="store_true",
+        dest="check_dashboard",
+        help="Teste tous les endpoints dashboard + génère DASHBOARD_REPORT.md",
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8080,
+        help="Port du dashboard (défaut: 8080)",
+    )
+    parser.add_argument(
+        "--start-if-down",
+        action="store_true",
+        dest="start_if_down",
+        help="Démarre le dashboard si non disponible (avec --check-dashboard)",
+    )
+    args = parser.parse_args()
+
+    if args.verify:
+        from tools.system_verify import run_verify
+        asyncio.run(run_verify())
+    elif args.report:
+        from tools.system_report_generator import generate_all
+        asyncio.run(generate_all())
+    elif args.synthesis:
+        from tools.strategic_synthesis import run_synthesis
+        asyncio.run(run_synthesis())
+    elif args.check_dashboard:
+        from tools.dashboard_verify import run_dashboard_verify, generate_dashboard_report_md
+        base = f"http://127.0.0.1:{args.port}"
+        report = asyncio.run(run_dashboard_verify(
+            base=base,
+            start_if_down=args.start_if_down,
+        ))
+        generate_dashboard_report_md(report)
+        summary = report["summary"]
+        ok  = summary["ok"]
+        tot = ok + summary["warn"] + summary["error"] + summary.get("skip", 0)
+        icon = "✅" if report["overall"] == "healthy" else "⚠️" if report["overall"] == "degraded" else "🔴"
+        print(f"{icon} Dashboard {report['overall'].upper()} — {ok}/{tot} endpoints OK → reports/DASHBOARD_REPORT.md")
+    else:
+        asyncio.run(run_once())

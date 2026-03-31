@@ -5,8 +5,10 @@ Modèles :
   - claude-opus-4-5          → analyses complexes (extraction client, besoin impression)
   - claude-haiku-4-5-20251001 → routing et sentiment (rapide, économique)
 """
+import asyncio
 import json
 import logging
+import re
 
 import anthropic
 
@@ -14,8 +16,36 @@ from src import config
 
 logger = logging.getLogger(__name__)
 
-_MODEL_FULL = "claude-opus-4-5"
+_MODEL_FULL = "claude-opus-4-6"
 _MODEL_FAST = "claude-haiku-4-5-20251001"
+
+
+def _extract_json_from_text(text: str) -> str:
+    """Extrait le JSON d'une réponse Claude même si du texte l'entoure.
+
+    Stratégies dans l'ordre :
+      1. Bloc ```json ... ``` ou ``` ... ```
+      2. Premier objet JSON { ... } détecté par accolades
+      3. Texte brut strippé (fallback)
+    """
+    text = text.strip()
+    # 1. Bloc markdown
+    fence = re.search(r"```(?:json)?\s*(\{[\s\S]*?\})\s*```", text)
+    if fence:
+        return fence.group(1).strip()
+    # 2. Chercher le premier { et l'accolade fermante correspondante
+    start = text.find("{")
+    if start != -1:
+        depth = 0
+        for i, ch in enumerate(text[start:], start):
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    return text[start : i + 1]
+    # 3. Fallback brut
+    return text
 
 
 class ClaudeClient:
@@ -30,24 +60,31 @@ class ClaudeClient:
         user_content: str,
         model: str = _MODEL_FULL,
         max_tokens: int = 2048,
+        temperature: float = 0,
     ) -> dict:
         """
         Appel Claude avec instruction de retourner UNIQUEMENT du JSON.
-        Parse et retourne le dict Python.
+        Parse et retourne le dict Python. Retry automatique si rate limit (429).
         """
-        response = await self._client.messages.create(
-            model=model,
-            max_tokens=max_tokens,
-            system=system_prompt,
-            messages=[{"role": "user", "content": user_content}],
-        )
+        for attempt in range(3):
+            try:
+                response = await self._client.messages.create(
+                    model=model,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                    system=system_prompt,
+                    messages=[{"role": "user", "content": user_content}],
+                )
+                break
+            except anthropic.RateLimitError as e:
+                wait = 60 if attempt == 0 else 120
+                logger.warning(f"Rate limit Claude (tentative {attempt+1}/3) — attente {wait}s : {e}")
+                if attempt == 2:
+                    raise
+                await asyncio.sleep(wait)
         raw = response.content[0].text if response.content else "{}"
         # Extraire le JSON même si Claude ajoute du texte autour
-        raw = raw.strip()
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
+        raw = _extract_json_from_text(raw)
         try:
             return json.loads(raw)
         except json.JSONDecodeError as e:
@@ -117,17 +154,19 @@ Tu es un agent de routing email pour une imprimerie (In'Pressco).
 Analyse l'email et retourne UNIQUEMENT un JSON avec la catégorie de routing.
 
 Catégories disponibles :
-- NEW_PROJECT : demande de devis/nouveau projet client externe (aucune référence Dolibarr)
-- VISUAL_CREATION : demande de création graphique (logo, maquette, visuel, design)
-- SUPPLIER_INVOICE : facture reçue d'un fournisseur
-- PROJECT_UPDATE : mise à jour d'un projet existant (référence DEV-XXXX, CMD-XXXX, FA-XXXX présente)
-- SUPPLIER_QUOTE : offre de prix reçue d'un fournisseur/sous-traitant
-- PRICE_REQUEST : demande de tarif envoyée à un fournisseur
-- ACTION : email interne (@inpressco.fr) — action Dolibarr directe
-- UNKNOWN : non classifiable
+- NEW_PROJECT              : demande de devis/nouveau projet client externe (aucune référence Dolibarr)
+- VISUAL_CREATION          : demande de création graphique (logo, maquette, visuel, design)
+- SUPPLIER_INVOICE         : facture reçue d'un fournisseur
+- PROJECT_UPDATE           : mise à jour d'un projet existant (référence DEV-XXXX, CMD-XXXX, FA-XXXX présente)
+- SUPPLIER_QUOTE           : offre de prix reçue d'un fournisseur/sous-traitant
+- PRICE_REQUEST            : demande de tarif envoyée à un fournisseur
+- ACTION                   : email interne (@inpressco.fr) — action Dolibarr directe
+- ADMINISTRATIF_GENERALE   : courrier administratif général (contrat, assurance, admin légale, relance paiement, banque, social, fiscal — hors facture fournisseur déjà classée SUPPLIER_INVOICE)
+- UNKNOWN                  : non classifiable / commercial non-devis (newsletter, prospection, courtesy)
 
 Règle prioritaire : si expéditeur @inpressco.fr → categorie = "ACTION" (sauf contenu contraire évident).
 Règle PROJECT_UPDATE : présence d'un numéro DEV-XXXX, CMD-XXXX ou FA-XXXX = signal fort.
+Règle ADMINISTRATIF_GENERALE : email sans enjeu commercial mais avec contenu administratif structuré.
 
 Retourner UNIQUEMENT ce JSON :
 {
@@ -264,45 +303,10 @@ Formule d'ouverture à utiliser : {salut}
         Note : l'imposition et le score sont calculés en Python après cet appel
         (src/utils/imposition.py) — plus fiable que de demander du calcul à l'IA.
         """
-        system_prompt = """
-Tu es un expert en impression et pré-presse.
-Analyse la demande client et extrais les composants d'impression de façon structurée.
+        system_prompt = """Tu es expert impression/pré-presse. Extrais les composants d'impression en JSON valide UNIQUEMENT.
 
-RÈGLES :
-1. Identifier chaque composant distinct (couverture, intérieur, marque-page, encart...)
-2. Regrouper les composants liés sous un même intitule_maitre (ex: "Brochure A5")
-3. Déduire le format ouvert depuis le format fermé selon le type de reliure :
-   - Agrafage / Dos carré collé : largeur_ouverte = largeur_fermée × 2
-   - Spirale / Sans reliure : format ouvert = format fermé
-   - Si pas de reliure et composant simple : format ouvert = format fermé
-4. Lister les alertes production sémantiques (incohérences, données suspectes)
-5. Proposer une synthèse courte (3-4 phrases max)
-6. Extraire la date de livraison souhaitée si mentionnée (format YYYY-MM-DD)
+Règles : identifier chaque composant distinct, regrouper sous intitule_maitre, déduire format ouvert (agrafage/DCC : largeur×2 ; spirale/sans reliure : = fermé), lister alertes sémantiques, synthèse 3 phrases max, date livraison si mentionnée (YYYY-MM-DD).
 
-RÉPONDRE UNIQUEMENT EN JSON valide, sans texte supplémentaire.
-
-Schéma attendu :
-{
-  "synthese_contexte": "string",
-  "date_livraison_souhaitee": "YYYY-MM-DD ou null",
-  "composants_isoles": [
-    {
-      "intitule_maitre": "string",
-      "produit": "string",
-      "nombre_pages": int_ou_null,
-      "format_ferme_mm": {"largeur": float_ou_null, "hauteur": float_ou_null},
-      "format_ouvert_mm": {"largeur": float_ou_null, "hauteur": float_ou_null},
-      "type_impression": "string_ou_null",
-      "support_grammage": "string_ou_null",
-      "type_finition": "string_ou_null",
-      "type_reliure": "string_ou_null",
-      "conditionnement": "string_ou_null",
-      "franco_port": "string_ou_null",
-      "quantite": int,
-      "SCORE_DEVIS": {"alertes": ["string — alerte sémantique uniquement"]},
-      "TRACE": "string_ou_null — citation exacte du mail ayant permis l'extraction"
-    }
-  ]
-}
-"""
-        return await self.extract_json(system_prompt, email_body, model=_MODEL_FULL)
+JSON attendu :
+{"synthese_contexte":"str","date_livraison_souhaitee":"YYYY-MM-DD|null","composants_isoles":[{"intitule_maitre":"str","produit":"str","nombre_pages":int|null,"format_ferme_mm":{"largeur":float|null,"hauteur":float|null},"format_ouvert_mm":{"largeur":float|null,"hauteur":float|null},"type_impression":"str|null","support_grammage":"str|null","type_finition":"str|null","type_reliure":"str|null","conditionnement":"str|null","franco_port":"str|null","quantite":int,"SCORE_DEVIS":{"alertes":["str"]},"TRACE":"str|null"}]}"""
+        return await self.extract_json(system_prompt, email_body, model=_MODEL_FULL, max_tokens=16000)

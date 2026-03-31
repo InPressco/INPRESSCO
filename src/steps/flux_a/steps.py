@@ -24,25 +24,37 @@ logger = logging.getLogger(__name__)
 # ── Step 1 — Récupération email ────────────────────────────────────────────
 
 async def s01_get_email(ctx: Context) -> None:
-    """Récupère le dernier email non traité du dossier DEVIS Outlook."""
+    """Récupère le dernier email non traité depuis la drop zone FLUX_INPRESSCO.
+
+    FLUX_INPRESSCO est le point d'entrée universel du pipeline :
+    - Règle Outlook : tous les emails entrants y sont routés automatiquement
+    - Glisser-déposer manuel : tout email ou document à traiter
+    Après traitement, chaque email est déplacé vers sa destination finale par le flux concerné.
+    """
     outlook = OutlookClient()
-    folder_id = config.OUTLOOK_FOLDER_DEVIS
+    folder_id = config.OUTLOOK_FOLDER_PENDING
+    # Exclure les emails déjà traités ([Traité]) ET déjà routés ([Routé-])
+    _ODATA_FILTER = (
+        "not(startswith(subject,'[Traité]'))"
+        " and not(startswith(subject,'[Routé-'))"
+        " and not(startswith(subject,'[Erreur-'))"
+    )
     try:
         emails = await outlook.get_emails(
             folder_id=folder_id,
-            odata_filter="not(startswith(subject,'[Traité]'))",
+            odata_filter=_ODATA_FILTER,
             top=1,
         )
     except Exception:
         # ID en config périmé → résoudre par nom
-        logger.warning("s01 : ID dossier DEVIS invalide, résolution par nom...")
-        folder_id = await outlook.get_folder_id_by_name("DEVIS")
+        logger.warning("s01 : ID dossier FLUX_INPRESSCO invalide, résolution par nom...")
+        folder_id = await outlook.get_folder_id_by_name("FLUX INPRESSCO")
         if not folder_id:
-            raise StopPipeline("Dossier DEVIS introuvable dans Outlook")
-        logger.info(f"s01 : dossier DEVIS résolu → {folder_id}")
+            raise StopPipeline("Dossier FLUX INPRESSCO (drop zone) introuvable dans Outlook")
+        logger.info(f"s01 : dossier FLUX_INPRESSCO résolu → {folder_id}")
         emails = await outlook.get_emails(
             folder_id=folder_id,
-            odata_filter="not(startswith(subject,'[Traité]'))",
+            odata_filter=_ODATA_FILTER,
             top=1,
         )
     if not emails:
@@ -80,22 +92,59 @@ async def s01_get_email(ctx: Context) -> None:
 
 async def s02_extract_client_ai(ctx: Context) -> None:
     """
-    3 appels Claude en parallèle :
-    1. extract_client_data   → ctx.client_data (skill extraction-tiers)
-    2. analyse_sentiment     → ctx.email_sentiment (skill analyse-sentiment-email)
-    3. classify_routing      → ctx.routing_category (skill mail-routing-inpressco)
+    3 appels Claude séquentiels avec délai anti-rate-limit :
+    1. extract_client_data   → ctx.client_data  (Opus — extraction complexe)
+    2. analyse_sentiment     → ctx.email_sentiment (Haiku — classification)
+    3. classify_routing      → ctx.routing_category (Haiku — classification)
+
+    Séquentiel pour éviter le 429 rate_limit_error (limite 10k tokens/min).
+    Délai de 3s entre chaque appel pour espacer la consommation.
     """
     ai = ClaudeClient()
     sender_info = f"{ctx.email_sender} <{ctx.email_sender_address}>"
     clean_body = prepare_email_for_ai(ctx.email_body)
+    # Corps tronqué pour les appels Haiku (sentiment + routing) — 600 chars suffisent,
+    # réduit ~3x la consommation de tokens sur ces appels secondaires.
+    short_body = clean_body[:600] + ("…" if len(clean_body) > 600 else "")
 
-    # Appels parallèles
-    client_result, sentiment_result, routing_result = await asyncio.gather(
-        ai.extract_client_data(sender_info, clean_body),
-        ai.analyse_sentiment_email(sender_info, clean_body),
-        ai.classify_email_routing(sender_info, clean_body),
-        return_exceptions=True,
-    )
+    client_result: dict = {}
+    sentiment_result: dict = {}
+    routing_result: dict = {}
+
+    try:
+        client_result = await asyncio.wait_for(
+            ai.extract_client_data(sender_info, clean_body), timeout=30.0
+        )
+    except asyncio.TimeoutError:
+        logger.error("s02 : timeout extract_client_data")
+        ctx.add_error("s02", "timeout extract_client_data")
+    except Exception as e:
+        logger.error(f"s02 extract_client_data échouée : {e}")
+
+    await asyncio.sleep(13)
+
+    try:
+        sentiment_result = await asyncio.wait_for(
+            ai.analyse_sentiment_email(sender_info, short_body), timeout=20.0
+        )
+    except asyncio.TimeoutError:
+        logger.warning("s02 : timeout analyse_sentiment")
+    except Exception as e:
+        logger.warning(f"s02 analyse_sentiment échouée : {e}")
+
+    await asyncio.sleep(13)
+
+    try:
+        routing_result = await asyncio.wait_for(
+            ai.classify_email_routing(sender_info, short_body), timeout=20.0
+        )
+    except asyncio.TimeoutError:
+        logger.warning("s02 : timeout classify_routing")
+        ctx.add_error("s02", "timeout classify_routing")
+        ctx.skip_remaining = True
+        return
+    except Exception as e:
+        logger.warning(f"s02 classify_routing échouée : {e}")
 
     # ── Extraction client ──────────────────────────────────────────────────
     if isinstance(client_result, Exception):
@@ -125,6 +174,62 @@ async def s02_extract_client_ai(ctx: Context) -> None:
         routing_result = {}
     ctx.routing_category = routing_result.get("categorie", "UNKNOWN")
     logger.info(f"Routing : categorie={ctx.routing_category!r}, confidence={routing_result.get('confidence')!r}")
+
+
+# ── Step 2b — Routing vers dossiers Outlook ───────────────────────────────
+
+async def s_mark_non_devis(ctx: Context) -> None:
+    """
+    Marque l'email [Routé-{categorie}] sans déplacer.
+    Utilisé uniquement pour PROJECT_UPDATE (géré par Flux B dans ETUDE).
+    """
+    outlook = OutlookClient()
+    cat = ctx.routing_category or "UNKNOWN"
+    new_subject = f"[Routé-{cat}] {ctx.email_subject}"
+    try:
+        await outlook.update_message_subject(ctx.email_id, new_subject)
+        logger.info(f"Email marqué {new_subject!r} (PROJECT_UPDATE → Flux B)")
+    except Exception as e:
+        logger.warning(f"s_mark_non_devis : impossible de renommer le mail → {e}")
+
+
+async def s_route_to_admin(ctx: Context) -> None:
+    """
+    Marque l'email [Routé-ADMIN] et le déplace vers le dossier ADMIN.
+    Utilisé pour ADMINISTRATIF_GENERALE.
+    """
+    outlook = OutlookClient()
+    cat = ctx.routing_category or "ADMINISTRATIF_GENERALE"
+    new_subject = f"[Routé-{cat}] {ctx.email_subject}"
+    try:
+        await outlook.update_message_subject(ctx.email_id, new_subject)
+        await outlook.move_message(ctx.email_id, config.OUTLOOK_FOLDER_ADMIN)
+        logger.info(f"Email {new_subject!r} → dossier ADMIN")
+    except Exception as e:
+        logger.warning(f"s_route_to_admin : échec → {e}")
+
+
+async def s_route_to_commerce(ctx: Context) -> None:
+    """
+    Marque l'email [Routé-{categorie}] et le déplace vers le dossier adapté.
+    VISUAL_CREATION → MARKETING / RS
+    PRICE_REQUEST / ACTION / UNKNOWN → COMMERCE
+    """
+    outlook = OutlookClient()
+    cat = ctx.routing_category or "UNKNOWN"
+    new_subject = f"[Routé-{cat}] {ctx.email_subject}"
+    dest_folder = (
+        config.OUTLOOK_FOLDER_MARKETING_RS
+        if cat == "VISUAL_CREATION"
+        else config.OUTLOOK_FOLDER_COMMERCE
+    )
+    dest_label = "MARKETING_RS" if cat == "VISUAL_CREATION" else "COMMERCE"
+    try:
+        await outlook.update_message_subject(ctx.email_id, new_subject)
+        await outlook.move_message(ctx.email_id, dest_folder)
+        logger.info(f"Email {new_subject!r} → dossier {dest_label}")
+    except Exception as e:
+        logger.warning(f"s_route_to_commerce : échec → {e}")
 
 
 # ── Step 3 — Routing validation + nettoyage données ──────────────────────
@@ -216,6 +321,7 @@ async def s05_get_attachments(ctx: Context) -> None:
 
 async def s06_analyse_besoin(ctx: Context) -> None:
     """Analyse le besoin d'impression via IA. Extrait les composants structurés."""
+    await asyncio.sleep(13)  # anti-rate-limit : 5 req/min → 12s entre chaque appel
     ai = ClaudeClient()
     clean_body = prepare_email_for_ai(ctx.email_body)
     result = await ai.analyse_besoin_impression(clean_body)
@@ -307,6 +413,20 @@ async def s08_create_devis(ctx: Context) -> None:
     # 3. Remettre en brouillon pour édition manuelle
     await doli.set_to_draft(devis_id)
 
+    # 4. Créer le dossier Outlook dédié à ce devis
+    if config.OUTLOOK_FOLDER_DOSSIERS_DEVIS:
+        try:
+            outlook = OutlookClient()
+            folder_display = f"{ctx.devis_ref} — {(ctx.soc_nom or '')[:100]}"
+            folder_id = await outlook.get_or_create_folder(
+                config.OUTLOOK_FOLDER_DOSSIERS_DEVIS,
+                folder_display,
+            )
+            ctx.outlook_folder_id = folder_id
+            logger.info(f"s08 : dossier Outlook créé → {folder_display!r}")
+        except Exception as e:
+            logger.warning(f"s08 : création dossier Outlook échouée → {e}")
+
     logger.info(f"Devis créé : id={ctx.devis_id}, ref={ctx.devis_ref!r}")
 
 
@@ -345,24 +465,27 @@ async def s10_log_email(ctx: Context) -> None:
 
 async def s11_archive_outlook(ctx: Context) -> None:
     """
-    Crée un dossier Outlook "{ref} - {soc_nom}",
-    renomme le mail "[Traité] {subject}",
-    et déplace le mail dans ce dossier.
+    Déplace l'email entrant dans le sous-dossier Outlook du devis.
+
+    - Utilise ctx.outlook_folder_id si déjà créé par s08 (cas nominal).
+    - Sinon crée/récupère le dossier sous OUTLOOK_FOLDER_DOSSIERS_DEVIS.
+    - Fallback sur OUTLOOK_FOLDER_DEVIS si DOSSIERS_DEVIS non configuré.
     """
     outlook = OutlookClient()
+    folder_name = f"{ctx.devis_ref} — {(ctx.soc_nom or '')[:180]}"
 
-    folder_name = f"{ctx.devis_ref} - {(ctx.soc_nom or '')[:180]}"
-    new_folder = await outlook.create_folder(
-        parent_folder_id=config.OUTLOOK_FOLDER_DEVIS,
-        display_name=folder_name,
-    )
+    # Résoudre le dossier cible
+    folder_id = ctx.outlook_folder_id
+    if not folder_id:
+        parent = config.OUTLOOK_FOLDER_DOSSIERS_DEVIS or config.OUTLOOK_FOLDER_DEVIS
+        folder_id = await outlook.get_or_create_folder(parent, folder_name)
+        ctx.outlook_folder_id = folder_id
 
     await outlook.update_message_subject(
         ctx.email_id,
         f"[Traité] {ctx.email_subject}"
     )
-
-    await outlook.move_message(ctx.email_id, new_folder["id"])
+    await outlook.move_message(ctx.email_id, folder_id)
     logger.info(f"Email archivé dans {folder_name!r}")
 
     # Archivage complet : effacer le marker anti-doublon pour laisser place au prochain email
@@ -511,10 +634,10 @@ async def s13_send_email_client(ctx: Context) -> None:
     - ctx.devis_id doit être renseigné (pour log agenda)
     """
     if not ctx.email_sender_address:
-        logger.warning("s12 : email_sender_address vide — réponse client ignorée")
+        logger.warning("s13 : email_sender_address vide — réponse client ignorée")
         return
     if not ctx.devis_ref:
-        logger.warning("s12 : devis_ref vide — réponse client ignorée")
+        logger.warning("s13 : devis_ref vide — réponse client ignorée")
         return
 
     # ── Construire l'URL du devis uniquement si le devis est validé ─────
@@ -538,7 +661,7 @@ async def s13_send_email_client(ctx: Context) -> None:
             else:
                 logger.info(f"s12 : devis en brouillon (statut={statut}) — lien exclu de l'email")
         except Exception as e:
-            logger.warning(f"s12 : impossible de vérifier le statut du devis → {e}")
+            logger.warning(f"s13 : impossible de vérifier le statut du devis → {e}")
 
     # ── Calculer le total HT depuis les lignes du devis ─────────────────
     total_ht = sum(
@@ -548,6 +671,7 @@ async def s13_send_email_client(ctx: Context) -> None:
     )
 
     # ── Générer le corps de l'email via Claude ──────────────────────────
+    await asyncio.sleep(13)  # anti-rate-limit : 5 req/min → 12s entre chaque appel
     ai = ClaudeClient()
     contact_prenom = ctx.client_data.get("contact_prenom") or None
 
@@ -564,8 +688,8 @@ async def s13_send_email_client(ctx: Context) -> None:
     )
 
     if not body_html:
-        logger.error("s12 : génération email vide — étape ignorée")
-        ctx.add_error("s12", "Corps email vide retourné par Claude")
+        logger.error("s13 : génération email vide — étape ignorée")
+        ctx.add_error("s13", "Corps email vide retourné par Claude")
         return
 
     # Stocker dans le context
@@ -582,7 +706,7 @@ async def s13_send_email_client(ctx: Context) -> None:
     # ── Envoyer l'email via Outlook Graph ────────────────────────────────
     try:
         outlook = OutlookClient()
-        await outlook.send_email(
+        sent_message_id = await outlook.send_email(
             to_email=ctx.email_sender_address,
             subject=f"Re: {ctx.email_subject}",
             body_html=body_html,
@@ -590,13 +714,23 @@ async def s13_send_email_client(ctx: Context) -> None:
             reply_to_message_id=ctx.email_id,
         )
         ctx.output_response["status"] = "sent"
+        ctx.output_response["message_id"] = sent_message_id
         logger.info(
-            f"s12 : email CONFIG_CLIENT_v2026 envoyé à {ctx.email_sender_address!r} "
+            f"s13 : email CONFIG_CLIENT_v2026 envoyé à {ctx.email_sender_address!r} "
             f"(devis {ctx.devis_ref})"
         )
+
+        # Classer l'email envoyé dans le dossier devis Outlook
+        if ctx.outlook_folder_id and sent_message_id:
+            try:
+                await outlook.move_message(sent_message_id, ctx.outlook_folder_id)
+                logger.info(f"s13 : email envoyé classé dans dossier devis {ctx.devis_ref!r}")
+            except Exception as move_err:
+                logger.warning(f"s13 : classement dossier Outlook échoué → {move_err}")
+
     except Exception as e:
-        logger.error(f"s12 : échec envoi email → {e}")
-        ctx.add_error("s12_send", str(e))
+        logger.error(f"s13 : échec envoi email → {e}")
+        ctx.add_error("s13_send", str(e))
         ctx.output_response["status"] = "error"
         # Ne pas bloquer le pipeline : l'email peut être renvoyé manuellement
 
