@@ -32,6 +32,7 @@ class Context:
     client_created: bool = False
     devis_id: int | None = None
     devis_ref: str = ""
+    outlook_folder_id: str = ""  # ID du sous-dossier Outlook créé pour ce devis
 
     # ── Analyse besoin impression ──────────────────────────────────────────
     synthese_contexte: str = ""
@@ -61,6 +62,12 @@ class Context:
     #        "payload": {...}, "status": "pending|confirmed|cancelled", "comment": ""}]
     output_silent: list[dict] = field(default_factory=list)
     # ex: [{"type": "log_agenda", "label": "Log email agenda", "status": "done"}]
+
+    # ── Fournisseur (Flux C) ───────────────────────────────────────────────
+    supplier_socid: int | None = None
+    supplier_nom: str = ""
+    linked_proposal_ref: str = ""   # ref PRO/DEV extraite du sujet email
+    linked_proposal_id: int | None = None
 
     # ── Contrôle pipeline ─────────────────────────────────────────────────
     skip_remaining: bool = False

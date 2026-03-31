@@ -197,12 +197,12 @@ class OutlookClient:
         body_html: str,
         cc_emails: list[str] | None = None,
         reply_to_message_id: str | None = None,
-    ) -> None:
+    ) -> str:
         """
-        Envoyer un email via Microsoft Graph (sendMail).
+        Envoyer un email via Microsoft Graph (flow brouillon → envoi).
 
-        Si reply_to_message_id est fourni, l'email est envoyé comme réponse
-        à ce message (thread conservé).
+        Utilise systématiquement le flow draft pour récupérer le message_id
+        du message envoyé — nécessaire pour le classement dans un dossier devis.
 
         Args:
             to_email: Destinataire principal.
@@ -210,63 +210,95 @@ class OutlookClient:
             body_html: Corps HTML du message.
             cc_emails: Destinataires en copie (optionnel).
             reply_to_message_id: ID du message Outlook auquel on répond (optionnel).
+
+        Returns:
+            message_id: ID Graph du message envoyé (dans Éléments envoyés).
         """
         token = await self._get_token()
-
         to_recipients = [{"emailAddress": {"address": to_email}}]
         cc_recipients = [{"emailAddress": {"address": e}} for e in (cc_emails or [])]
 
         if reply_to_message_id:
-            # Créer un brouillon de réponse puis l'envoyer (conserve le thread)
+            # Brouillon de réponse (conserve le thread)
             async with httpx.AsyncClient(timeout=30) as client:
-                draft_resp = await client.post(
+                resp = await client.post(
                     f"{self.GRAPH_BASE}/messages/{reply_to_message_id}/createReply",
                     headers=self._headers(token),
                     json={},
                 )
-                draft_resp.raise_for_status()
-                draft_id = draft_resp.json()["id"]
-
-            # Mettre à jour le corps et les destinataires du brouillon
-            async with httpx.AsyncClient(timeout=30) as client:
-                update_resp = await client.patch(
-                    f"{self.GRAPH_BASE}/messages/{draft_id}",
-                    headers=self._headers(token),
-                    json={
-                        "subject": subject,
-                        "body": {"contentType": "HTML", "content": body_html},
-                        "toRecipients": to_recipients,
-                        **({"ccRecipients": cc_recipients} if cc_recipients else {}),
-                    },
-                )
-                update_resp.raise_for_status()
-
-            # Envoyer le brouillon
-            async with httpx.AsyncClient(timeout=30) as client:
-                send_resp = await client.post(
-                    f"{self.GRAPH_BASE}/messages/{draft_id}/send",
-                    headers=self._headers(token),
-                )
-                send_resp.raise_for_status()
+                resp.raise_for_status()
+                draft_id = resp.json()["id"]
         else:
-            # Envoi direct via /sendMail
-            payload = {
-                "message": {
+            # Nouveau brouillon
+            draft_payload: dict = {
+                "subject": subject,
+                "body": {"contentType": "HTML", "content": body_html},
+                "toRecipients": to_recipients,
+            }
+            if cc_recipients:
+                draft_payload["ccRecipients"] = cc_recipients
+            async with httpx.AsyncClient(timeout=30) as client:
+                resp = await client.post(
+                    f"{self.GRAPH_BASE}/messages",
+                    headers=self._headers(token),
+                    json=draft_payload,
+                )
+                resp.raise_for_status()
+                draft_id = resp.json()["id"]
+
+        # Mettre à jour sujet + corps (utile pour les réponses)
+        async with httpx.AsyncClient(timeout=30) as client:
+            resp = await client.patch(
+                f"{self.GRAPH_BASE}/messages/{draft_id}",
+                headers=self._headers(token),
+                json={
                     "subject": subject,
                     "body": {"contentType": "HTML", "content": body_html},
                     "toRecipients": to_recipients,
+                    **({"ccRecipients": cc_recipients} if cc_recipients else {}),
                 },
-                "saveToSentItems": True,
-            }
-            if cc_recipients:
-                payload["message"]["ccRecipients"] = cc_recipients
+            )
+            resp.raise_for_status()
 
-            async with httpx.AsyncClient(timeout=30) as client:
-                resp = await client.post(
-                    f"{self.GRAPH_BASE}/sendMail",
-                    headers=self._headers(token),
-                    json=payload,
-                )
-                resp.raise_for_status()
+        # Envoyer le brouillon
+        async with httpx.AsyncClient(timeout=30) as client:
+            resp = await client.post(
+                f"{self.GRAPH_BASE}/messages/{draft_id}/send",
+                headers=self._headers(token),
+            )
+            resp.raise_for_status()
 
-        logger.info(f"Email envoyé à {to_email!r} — sujet : {subject!r}")
+        logger.info(f"Email envoyé à {to_email!r} — sujet : {subject!r} — id : {draft_id}")
+        return draft_id
+
+    async def get_or_create_folder(self, parent_id: str, display_name: str) -> str:
+        """Retourner l'ID d'un sous-dossier existant ou le créer s'il n'existe pas."""
+        folders = await self.get_folders(parent_id)
+        for f in folders:
+            if f.get("displayName", "") == display_name:
+                return f["id"]
+        created = await self.create_folder(parent_id, display_name)
+        return created["id"]
+
+    async def move_folder(self, folder_id: str, new_parent_id: str) -> dict:
+        """Déplacer un dossier mail vers un nouveau dossier parent."""
+        token = await self._get_token()
+        async with httpx.AsyncClient(timeout=30) as client:
+            resp = await client.post(
+                f"{self.GRAPH_BASE}/mailFolders/{folder_id}/move",
+                headers=self._headers(token),
+                json={"destinationId": new_parent_id},
+            )
+            resp.raise_for_status()
+            return resp.json()
+
+    async def rename_folder(self, folder_id: str, new_name: str) -> None:
+        """Renommer un dossier mail."""
+        token = await self._get_token()
+        async with httpx.AsyncClient(timeout=15) as client:
+            resp = await client.patch(
+                f"{self.GRAPH_BASE}/mailFolders/{folder_id}",
+                headers=self._headers(token),
+                json={"displayName": new_name},
+            )
+            resp.raise_for_status()

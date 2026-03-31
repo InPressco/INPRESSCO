@@ -245,7 +245,36 @@ Parmi : accusé réception, envoi devis, info, suivi, relance, réclamation.
 - Pièce jointe mentionnée si applicable
 
 ### Étape 5 — Soumettre pour validation
-Toujours présenter l'email à l'utilisateur avant envoi. Jamais d'envoi automatique sans confirmation explicite.
+
+Créer l'événement Dolibarr ⏸ via `agenda-inpressco` :
+```json
+{
+  "label": "⏸ réponse-client — [objet court] — [tiers]",
+  "note": "[corps email complet]\n\n---\nOUI pour envoyer · NON pour annuler · MODIFIER + instruction",
+  "done": 0
+}
+```
+Présenter l'email à l'utilisateur. Jamais d'envoi automatique sans confirmation explicite.
+
+### Étape 6 — Envoi après validation OUI
+
+Appeler `POST /api/send-email` :
+```json
+{
+  "to_email": "destinataire@exemple.fr",
+  "subject": "Objet",
+  "body_html": "<p>Corps HTML</p>",
+  "cc_emails": [],
+  "reply_to_message_id": "ID_outlook_si_réponse_thread",
+  "agenda_event_id": 456
+}
+```
+L'endpoint envoie via Microsoft Graph et marque automatiquement l'événement ⏸ `done=1`.
+
+Ensuite logger l'envoi en note Dolibarr via `dolibarr-query-inpressco` :
+```
+"Email envoyé à [destinataire] le [date] — objet : [sujet]"
+```
 
 ---
 

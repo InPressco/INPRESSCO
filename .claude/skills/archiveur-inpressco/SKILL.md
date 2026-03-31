@@ -341,6 +341,61 @@ Action requise : préciser le tiers pour le 3ᵉ fichier.
 
 ---
 
+## Arborescence Outlook — Cycle de vie des dossiers devis
+
+L'archiveur pilote également l'arborescence Outlook en parallèle du dépôt Dolibarr.
+Chaque devis a son propre dossier Outlook qui suit le cycle de vie du dossier.
+
+### Structure cible dans Outlook
+```
+contact@in-pressco.com/
+├── >> DOSSIERS-DEVIS/              (dossiers actifs)
+│   ├── DEV-2026-089 — AgenceExemple — Catalogue A5/
+│   │   ├── [email entrant brief]
+│   │   ├── [email sortant réponse]
+│   │   └── [email sortant devis PDF]
+│   └── DEV-2026-090 — Cartier — Coffrets/
+└── >> ARCHIVES-FACTURES/           (dossiers facturés)
+    └── [ARCHIVÉ] FA-2026-042 — DEV-2026-089 — AgenceExemple — Catalogue A5/
+```
+
+### Déclencheurs automatiques
+
+| Événement Dolibarr | Action Outlook | Endpoint |
+|-------------------|----------------|----------|
+| Devis créé | Créer sous-dossier `DEV-XXXX — [tiers] — [projet]` | `POST /api/outlook/folders/create-devis` |
+| Email entrant classé dans le pipeline | Déplacer vers dossier du devis | `POST /api/outlook/folders/move-email` |
+| Email sortant envoyé via `POST /api/send-email` | Classer dans dossier devis (param `devis_folder_id`) | intégré dans `/api/send-email` |
+| Devis transformé en facture (statut Dolibarr) | Archiver dossier → `>> ARCHIVES-FACTURES` | `POST /api/outlook/folders/archive-devis` |
+
+### Processus création dossier (à la création d'un devis)
+
+```
+devis créé dans Dolibarr
+    → archiveur appelle POST /api/outlook/folders/create-devis
+      { "devis_ref": "DEV-2026-089", "tiers_nom": "AgenceExemple", "projet_nom": "Catalogue A5" }
+    → retourne { "folder_id": "AAMk...", "folder_name": "DEV-2026-089 — AgenceExemple — Catalogue A5" }
+    → stocker le folder_id en note Dolibarr sur le devis (via dolibarr-query-inpressco)
+      → note privée : "outlook_folder_id: AAMk..."
+```
+
+### Processus archivage (à la création d'une facture)
+
+```
+facture créée dans Dolibarr (devis → commande → facture)
+    → archiveur appelle POST /api/outlook/folders/archive-devis
+      { "devis_ref": "DEV-2026-089", "facture_ref": "FA-2026-042" }
+    → dossier renommé : "[ARCHIVÉ] FA-2026-042 — DEV-2026-089 — AgenceExemple — Catalogue A5"
+    → dossier déplacé de >> DOSSIERS-DEVIS vers >> ARCHIVES-FACTURES
+```
+
+### Consultation des dossiers
+
+```
+Dossiers actifs  : GET /api/outlook/folders
+Dossiers archivés: GET /api/outlook/folders?archived=true
+```
+
 ## Notes importantes
 - Ce skill gère les **fichiers** — le skill `chat-to-db-inpressco` gère les **données textuelles** — complémentaires, non substituables
 - La convention de nommage est **obligatoire** pour tous les fichiers, y compris ceux uploadés manuellement
@@ -348,3 +403,4 @@ Action requise : préciser le tiers pour le 3ᵉ fichier.
 - En cas d'erreur non récupérable → déclencher `gestion-erreurs-inpressco`
 - Les fichiers `.ai` `.indd` `.eps` sont des fichiers de production → toujours sur la commande, jamais en base images
 - Pour les dépôts en base images → passer systématiquement par `bdd-images-query-inpressco`
+- Le `folder_id` Outlook est stocké en note privée Dolibarr sur le devis pour éviter une recherche à chaque envoi

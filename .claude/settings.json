@@ -1,4 +1,19 @@
 {
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/nicolasbompois/Desktop/Bureau - MacBook Pro de nicolas/SYSTEME-MWP/tools/autotest.sh",
+            "timeout": 120,
+            "statusMessage": "Autotest SYSTEME-MWP..."
+          }
+        ]
+      }
+    ]
+  },
   "mcpServers": {
     "dolibarr-inpressco": {
       "command": "/Users/nicolasbompois/Desktop/Bureau - MacBook Pro de nicolas/inpressco-mwp/.venv/bin/python",

@@ -38,7 +38,7 @@
     }
 
     body {
-      background: var(--bg0);
+      background: #F5EDD8;
       color: var(--text-primary);
       font-family: var(--mono);
       font-size: 13px;
@@ -378,7 +378,7 @@
 
     /* ── LAYOUT ── */
     .shell {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 24px 20px 48px;
       display: grid;
@@ -515,6 +515,78 @@
     }
 
     /* ── PIPELINE ── */
+    /* ── PIPELINE QUEUE ── */
+    .pq-section { display:flex;flex-direction:column;gap:8px }
+    .pq-run {
+      background:var(--bg2);border:0.5px solid rgba(90,80,64,0.35);
+      border-radius:var(--radius-md);padding:12px 14px;
+      display:flex;flex-direction:column;gap:8px;
+      transition:border-color 0.2s;
+    }
+    .pq-run:hover { border-color:var(--amber-border); }
+    .pq-run.status-running { border-color:rgba(201,158,103,0.5); animation:pq-pulse-border 2s infinite; }
+    .pq-run.status-devis_created { border-color:rgba(99,153,34,0.5); }
+    .pq-run.status-error { border-color:rgba(226,75,74,0.4); }
+    .pq-run.status-stopped { border-color:rgba(90,80,64,0.25); opacity:0.7; }
+    @keyframes pq-pulse-border { 0%,100%{border-color:rgba(201,158,103,0.35)} 50%{border-color:rgba(201,158,103,0.7)} }
+    .pq-header { display:flex;align-items:flex-start;gap:8px;min-width:0 }
+    .pq-badge {
+      flex-shrink:0;padding:2px 7px;border-radius:3px;font-size:10px;
+      letter-spacing:0.05em;font-family:var(--mono);font-weight:600;
+    }
+    .pq-badge.NEW_PROJECT    { background:#2a1e08;color:#FAC775;border:0.5px solid #7A5218; }
+    .pq-badge.PROJECT_UPDATE { background:#0a1a2e;color:#7BB0E0;border:0.5px solid #1F5080; }
+    .pq-badge.SUPPLIER_INVOICE { background:#1a0a2e;color:#B07EE0;border:0.5px solid #4A2080; }
+    .pq-badge.UNKNOWN        { background:var(--bg3);color:var(--text-muted);border:0.5px solid rgba(90,80,64,0.4); }
+    .pq-badge.running        { background:#2a1e08;color:#FAC775;border:0.5px solid #7A5218;animation:pq-pulse-border 1.5s infinite; }
+    .pq-badge.devis_created  { background:#0a2e14;color:#97C459;border:0.5px solid #3B6D11; }
+    .pq-badge.error          { background:#2e0a0a;color:#F09595;border:0.5px solid #A32D2D; }
+    .pq-badge.stopped        { background:var(--bg3);color:var(--text-muted);border:0.5px solid rgba(90,80,64,0.3); }
+    .pq-subject { flex:1;font-size:12px;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0; }
+    .pq-meta { flex-shrink:0;font-size:10px;color:var(--text-muted);font-family:var(--mono);white-space:nowrap;margin-left:auto; }
+    /* Stepper */
+    .pq-stepper { display:flex;align-items:center;gap:0 }
+    .pq-node {
+      display:flex;flex-direction:column;align-items:center;gap:3px;
+      width:52px;flex-shrink:0;
+    }
+    .pq-node-dot {
+      width:22px;height:22px;border-radius:50%;display:flex;align-items:center;
+      justify-content:center;font-size:11px;border:1.5px solid;transition:all 0.3s;
+    }
+    .pq-node-dot.done    { background:#0a2e14;border-color:#3B6D11;color:#97C459; }
+    .pq-node-dot.active  { background:#2a1e08;border-color:#C99E67;color:#FAC775;animation:pulse 1.5s infinite; }
+    .pq-node-dot.pending { background:var(--bg3);border-color:rgba(90,80,64,0.35);color:var(--text-muted); }
+    .pq-node-dot.skip    { background:var(--bg1);border-color:rgba(90,80,64,0.2);color:rgba(90,80,64,0.4); }
+    .pq-node-dot.error   { background:#2e0a0a;border-color:#A32D2D;color:#F09595; }
+    .pq-node-label { font-size:9px;color:var(--text-muted);letter-spacing:0.04em;text-align:center;line-height:1.2; }
+    .pq-connector { flex:1;height:1.5px;background:rgba(90,80,64,0.35);transition:background 0.3s; }
+    .pq-connector.done { background:#3B6D11; }
+    /* Actions */
+    .pq-actions { display:flex;flex-wrap:wrap;gap:4px }
+    .pq-action {
+      display:inline-flex;align-items:center;gap:4px;padding:2px 7px;
+      border-radius:3px;font-size:10px;color:var(--text-secondary);
+      background:var(--bg3);border:0.5px solid rgba(90,80,64,0.3);
+    }
+    .pq-empty { padding:24px 0;text-align:center;color:var(--text-muted);font-size:12px;letter-spacing:0.05em; }
+    /* Boutons d'action sur les cartes */
+    .pq-action-row { display:flex;gap:6px;justify-content:flex-end;margin-top:2px }
+    .pq-btn {
+      display:inline-flex;align-items:center;gap:4px;padding:3px 10px;
+      border-radius:4px;font-size:10px;font-family:var(--mono);cursor:pointer;
+      border:0.5px solid;transition:all 0.15s;background:none;
+    }
+    .pq-btn-devis  { color:#FAC775;border-color:#7A5218;background:#2a1e0880 }
+    .pq-btn-devis:hover  { background:#3a2a10;border-color:#C99E67 }
+    .pq-btn-archive { color:var(--text-muted);border-color:rgba(90,80,64,0.4) }
+    .pq-btn-archive:hover { color:var(--text-secondary);border-color:rgba(90,80,64,0.7) }
+    .pq-btn-doli   { color:#7BB0E0;border-color:#1F5080;background:#0a1a2e80 }
+    .pq-btn-doli:hover   { background:#0f2240;border-color:#5A9FD4 }
+    .pq-btn-retry  { color:#C99E67;border-color:rgba(201,158,103,0.4) }
+    .pq-btn-retry:hover  { background:var(--amber-glow) }
+    .pq-btn:disabled { opacity:0.4;cursor:not-allowed }
+
     .pipeline-header {
       display: flex;
       align-items: flex-start;
@@ -691,87 +763,120 @@
     .wf-role { font-size: 10px; color: var(--text-muted); margin-top: 2px; letter-spacing: 0.04em; }
     .wf-id   { font-size: 10px; color: var(--amber-dim); font-family: var(--mono); margin-top: 3px; }
 
-    /* ── MOTEUR IA ── */
+    /* ── MOTEUR IA — COMMANDE DIRECTE ── */
     .ia-card {
-      background: linear-gradient(135deg, #1a1a1a 0%, #181818 100%);
-      border: 1px solid rgba(201,158,103,0.35);
+      background: #111111;
+      border: 1px solid rgba(201,158,103,0.4);
       border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: 0 0 40px rgba(201,158,103,0.06);
+      padding: 18px 20px 16px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.4);
     }
     .ia-header {
-      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px; padding-bottom: 12px;
+      border-bottom: 0.5px solid rgba(201,158,103,0.12);
     }
     .ia-pulse {
-      width: 10px; height: 10px; border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: var(--amber);
-      box-shadow: 0 0 0 3px rgba(201,158,103,0.25);
+      box-shadow: 0 0 0 3px rgba(201,158,103,0.2);
       animation: pulse 2s infinite; flex-shrink: 0;
     }
     .ia-title {
-      font-family: var(--display); font-size: 15px; font-weight: 700;
-      color: var(--amber); letter-spacing: 0.05em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      color: var(--amber); letter-spacing: 0.12em; text-transform: uppercase;
+      flex-shrink: 0;
     }
-    .ia-model { font-size: 10px; color: var(--text-muted); margin-left: auto; }
-    .ia-messages {
-      min-height: 0; max-height: 420px; overflow-y: auto;
-      display: flex; flex-direction: column; gap: 12px;
-      margin-bottom: 16px; scroll-behavior: smooth;
+    /* Chaîne de skills affichée dans le header pendant le traitement */
+    .ia-chain-bar {
+      flex: 1; display: flex; align-items: center; gap: 3px;
+      overflow: hidden; min-width: 0;
     }
-    .ia-messages:empty::before {
-      content: "Posez une question sur vos devis, clients, pipeline…";
-      color: var(--text-muted); font-size: 12px; text-align: center;
-      padding: 32px 0; display: block;
+    .ia-chain-step {
+      font-size: 10px; color: var(--text-muted); white-space: nowrap;
+      padding: 1px 6px; border-radius: 2px;
+      background: var(--bg3); border: 0.5px solid rgba(90,80,64,0.3);
+      animation: fadeIn 0.2s ease;
     }
-    .ia-msg { display: flex; flex-direction: column; gap: 3px; }
-    .ia-msg-user { align-items: flex-end; }
-    .ia-msg-user .ia-bubble {
-      background: var(--bg3); color: var(--text-primary);
-      border-radius: 12px 12px 2px 12px;
-    }
-    .ia-msg-ai .ia-bubble {
-      background: rgba(201,158,103,0.08); color: var(--text-primary);
-      border: 0.5px solid rgba(201,158,103,0.2);
-      border-radius: 2px 12px 12px 12px;
-    }
-    .ia-bubble {
-      padding: 10px 14px; font-size: 13px; line-height: 1.6;
-      max-width: 90%; white-space: pre-wrap; word-break: break-word;
-    }
-    .ia-bubble-label { font-size: 10px; color: var(--text-muted); padding: 0 4px; }
-    .ia-suggestions {
-      display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
-    }
-    .ia-suggestion {
-      background: var(--bg3); border: 0.5px solid var(--amber-border);
-      color: var(--text-secondary); font-size: 11px; font-family: var(--mono);
-      padding: 5px 10px; border-radius: 99px; cursor: pointer;
-      transition: all 0.15s;
-    }
-    .ia-suggestion:hover { background: var(--amber-faint); color: var(--amber); border-color: var(--amber); }
+    .ia-chain-step.active { color: var(--amber); background: var(--amber-faint); border-color: var(--amber-border); }
+    .ia-chain-arr { font-size: 9px; color: rgba(90,80,64,0.5); flex-shrink: 0; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: none; } }
+    .ia-model { font-size: 10px; color: var(--text-muted); flex-shrink: 0; letter-spacing: 0.03em; }
+    /* ── Input principal (en haut) ── */
     .ia-input-row {
-      display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end;
+      display: grid; grid-template-columns: 1fr auto auto; gap: 6px; align-items: end;
+      margin-bottom: 10px;
     }
+    .ia-mic {
+      height: 56px; width: 40px; background: transparent;
+      border: 1px solid rgba(201,158,103,0.25); border-radius: var(--radius-md);
+      color: var(--text-muted); cursor: pointer; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; flex-shrink: 0;
+    }
+    .ia-mic:hover { border-color: rgba(201,158,103,0.5); color: var(--amber); }
+    .ia-mic.listening { color: #F09595; border-color: rgba(240,149,149,0.5); animation: micPulse 1s infinite; }
+    @keyframes micPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
     .ia-input {
-      background: var(--bg2); border: 0.5px solid rgba(90,80,64,0.5);
+      background: var(--bg0); border: 1px solid rgba(201,158,103,0.25);
       border-radius: var(--radius-md); color: var(--text-primary);
       font-family: var(--mono); font-size: 13px;
-      padding: 10px 14px; resize: none; min-height: 44px; max-height: 140px;
-      transition: border-color 0.15s; outline: none; line-height: 1.5;
+      padding: 11px 14px; resize: none; min-height: 56px; max-height: 160px;
+      transition: border-color 0.15s, box-shadow 0.15s; outline: none; line-height: 1.55;
     }
-    .ia-input:focus { border-color: rgba(201,158,103,0.5); }
-    .ia-input::placeholder { color: var(--text-muted); }
+    .ia-input:focus { border-color: rgba(201,158,103,0.55); box-shadow: 0 0 0 3px rgba(201,158,103,0.07); }
+    .ia-input::placeholder { color: var(--text-muted); font-size: 12px; line-height: 1.5; }
     .ia-send {
-      background: var(--amber); color: #141414; font-family: var(--mono);
-      font-size: 12px; font-weight: 600; padding: 10px 18px;
+      background: var(--amber); color: #111; font-family: var(--mono);
+      font-size: 18px; font-weight: 700; padding: 0 20px;
       border-radius: var(--radius-md); cursor: pointer; border: none;
-      transition: opacity 0.15s; white-space: nowrap; height: 44px;
+      transition: opacity 0.15s, background 0.15s; white-space: nowrap; height: 56px;
+      letter-spacing: -0.03em; display: flex; align-items: center; justify-content: center;
     }
-    .ia-send:hover { opacity: 0.85; }
-    .ia-send:disabled { opacity: 0.4; cursor: not-allowed; }
-    .ia-cursor { display: inline-block; width: 8px; height: 14px;
+    .ia-send:hover { background: #e0b070; }
+    .ia-send:disabled { opacity: 0.35; cursor: not-allowed; }
+    .ia-cursor { display: inline-block; width: 7px; height: 13px;
       background: var(--amber); margin-left: 2px; vertical-align: middle;
       animation: blink 0.8s infinite; border-radius: 1px; }
+    /* ── Raccourcis commandes ── */
+    .ia-suggestions {
+      display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px;
+    }
+    .ia-suggestion {
+      background: transparent; border: 0.5px solid rgba(90,80,64,0.35);
+      color: var(--text-muted); font-size: 10px; font-family: var(--mono);
+      padding: 3px 9px; border-radius: 3px; cursor: pointer;
+      transition: all 0.15s; letter-spacing: 0.02em;
+    }
+    .ia-suggestion:hover { background: var(--amber-faint); color: var(--amber); border-color: var(--amber-border); }
+    /* ── Historique / Output (terminal) ── */
+    .ia-messages {
+      max-height: 260px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 0;
+      scroll-behavior: smooth;
+      border-top: 0.5px solid rgba(90,80,64,0.15); padding-top: 10px;
+      margin-bottom: 12px;
+    }
+    .ia-messages:empty { display: none; padding-top: 0; margin-bottom: 0; border-top: none; }
+    .ia-msg { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
+    .ia-msg-user .ia-bubble-label { display: none; }
+    .ia-msg-user .ia-bubble {
+      background: transparent; color: var(--text-muted); font-size: 11px;
+      padding: 0 0 0 14px; border: none; position: relative;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .ia-msg-user .ia-bubble::before {
+      content: '›'; position: absolute; left: 0; color: var(--amber);
+      font-size: 14px; line-height: 1; top: -1px;
+    }
+    .ia-msg-ai .ia-bubble-label { display: none; }
+    .ia-msg-ai .ia-bubble {
+      background: rgba(201,158,103,0.05); color: var(--text-primary);
+      border: 0.5px solid rgba(201,158,103,0.15); border-radius: var(--radius-sm);
+      padding: 10px 14px; font-size: 12px; line-height: 1.65;
+      white-space: pre-wrap; word-break: break-word; max-width: 100%;
+    }
+    .ia-bubble { font-family: var(--mono); }
 
     /* ── ASSETS ── */
     .assets-selector-row {
@@ -1120,7 +1225,7 @@
       </div>
       <nav class="nav-items">
         <button class="nav-item active">IA</button>
-        <button class="nav-item">Devis</button>
+        <button class="nav-item" onclick="window.location='/devis'" style="cursor:pointer">Devis →</button>
         <button class="nav-item">Suivi</button>
       </nav>
     </div>
@@ -1130,113 +1235,20 @@
         <span id="run-btn-icon">▶</span>
         <span id="run-btn-label">Lancer pipeline</span>
       </button>
+      <div id="pipeline-log-panel" style="display:none;position:fixed;top:52px;right:16px;width:520px;max-height:320px;background:#1c1a15;border:1px solid rgba(250,185,82,0.3);border-radius:8px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.5);overflow:hidden;font-family:var(--mono)">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(250,185,82,0.15);background:#211e16">
+          <span style="font-size:11px;color:var(--amber);font-weight:600">Pipeline — journal en direct</span>
+          <button onclick="closePipelineLog()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 2px">✕</button>
+        </div>
+        <div id="pipeline-log-lines" style="padding:10px 12px;overflow-y:auto;max-height:272px;font-size:11px;line-height:1.6;color:#c8b99a;white-space:pre-wrap"></div>
+      </div>
+      <a href="/pipeline" style="font-family:var(--mono);font-size:11px;color:var(--amber);text-decoration:none;padding:6px 12px;border:0.5px solid rgba(201,158,103,0.4);border-radius:var(--radius-sm);transition:color 0.15s" onmouseover="this.style.color='#FAC775'" onmouseout="this.style.color='var(--amber)'">Pipeline →</a>
       <a href="/admin/dev" style="font-family:var(--mono);font-size:11px;color:var(--text-muted);text-decoration:none;padding:6px 12px;border:0.5px solid rgba(90,80,64,0.4);border-radius:var(--radius-sm);transition:color 0.15s" onmouseover="this.style.color='var(--amber)'" onmouseout="this.style.color='var(--text-muted)'">Dev →</a>
     </div>
   </header>
 
   <!-- MAIN -->
   <main class="shell">
-
-    <!-- MOTEUR IA -->
-    <div class="ia-card" id="section-ia">
-      <div class="ia-header">
-        <div class="ia-pulse"></div>
-        <div class="ia-title">Moteur IA</div>
-        <div class="ia-model">Claude Sonnet</div>
-      </div>
-      <div class="ia-messages" id="ia-messages"></div>
-      <div class="ia-suggestions" id="ia-suggestions">
-        <button class="ia-suggestion" onclick="iaQuick(this)">Devis ouverts en cours</button>
-        <button class="ia-suggestion" onclick="iaQuick(this)">Factures impayées</button>
-        <button class="ia-suggestion" onclick="iaQuick(this)">Résumé des commandes du mois</button>
-        <button class="ia-suggestion" onclick="iaQuick(this)">BL en attente d'envoi</button>
-        <button class="ia-suggestion" onclick="iaQuick(this)">État du pipeline MWP</button>
-      </div>
-      <div class="ia-input-row">
-        <textarea class="ia-input" id="ia-input" placeholder="Posez une question, ou décrivez les ajustements pour l'image kie.ai…" rows="1"></textarea>
-        <button class="ia-send" id="ia-send" onclick="iaSend()">Envoyer</button>
-      </div>
-      <!-- Barre d'outils assets -->
-      <div class="ia-toolbar">
-        <label class="ia-attach-btn" id="drop-charte" ondragover="dzDragOver(event,'drop-charte')" ondragleave="dzDragLeave('drop-charte')" ondrop="dzDrop(event,'charte')" title="Charte graphique · Image, PDF, AI, SVG">
-          <input type="file" accept="image/*,.pdf,.ai,.eps,.svg,.png,.jpg,.jpeg,.tiff,.psd" onchange="dzChange(event,'charte')" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">
-          🎨 Charte <span class="drop-status" id="status-charte" style="margin:0;font-size:10px"></span>
-        </label>
-        <label class="ia-attach-btn" id="drop-inspiration" ondragover="dzDragOver(event,'drop-inspiration')" ondragleave="dzDragLeave('drop-inspiration')" ondrop="dzDrop(event,'inspiration')" title="Inspiration produit · Image, PDF">
-          <input type="file" accept="image/*,.pdf,.jpg,.jpeg,.png,.tiff,.webp" onchange="dzChange(event,'inspiration')" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">
-          ✨ Inspiration <span class="drop-status" id="status-inspiration" style="margin:0;font-size:10px"></span>
-        </label>
-        <div style="flex:1"></div>
-        <select class="assets-select" id="assets-doc-select" style="max-width:190px;font-size:11px;padding:4px 8px">
-          <option value="">— Devis / Commande —</option>
-        </select>
-        <span id="assets-ts" style="font-size:10px;color:var(--text-muted)"></span>
-        <button class="section-link" onclick="loadProposalsOrders()" style="font-size:10px;padding:4px 8px">↺</button>
-      </div>
-      <!-- Zone kie.ai large -->
-      <label class="kieai-zone" id="drop-kieai" ondragover="dzDragOver(event,'drop-kieai')" ondragleave="dzDragLeave('drop-kieai')" ondrop="dzDrop(event,'kieai')">
-        <input type="file" accept="image/*,.png,.jpg,.jpeg,.webp" onchange="dzChange(event,'kieai')" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">
-        <div id="ia-kieai-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 0;gap:6px">
-          <div style="font-size:38px">🖼</div>
-          <div style="font-size:13px;font-weight:700;color:var(--amber);font-family:var(--display);letter-spacing:0.06em;text-transform:uppercase">kie.ai — Reprompt image</div>
-          <div style="font-size:11px;color:var(--text-muted)">Glissez une image ici · ou cliquez · PNG · JPG · WEBP</div>
-        </div>
-        <div id="ia-kieai-loaded" style="display:none;width:100%">
-          <img id="ia-img-thumb" class="lb-trigger" onclick="openLightbox(this.src)" style="width:100%;max-height:520px;border-radius:8px;object-fit:contain;display:block">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding:0 2px">
-            <span id="ia-img-label" style="font-size:11px;color:var(--amber);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1"></span>
-            <button onclick="event.preventDefault();clearIAImage()" style="background:none;border:0.5px solid rgba(90,60,60,0.5);color:#F09595;border-radius:4px;padding:3px 10px;font-size:10px;cursor:pointer;flex-shrink:0;margin-left:10px">✕ Retirer</button>
-          </div>
-        </div>
-      </label>
-    </div>
-
-    <!-- STATS LIVE DOLIBARR -->
-    <div id="stats-cards" style="display:flex;flex-direction:column;gap:10px">
-      <!-- Devis + Commandes générales -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px">
-        <div class="stat-card kpi-loading" id="stat-devis-semaine" data-href="">
-          <div class="stat-label">Devis cette semaine</div>
-          <div class="stat-value" id="stat-devis-semaine-val">—</div>
-          <div class="stat-sub" id="stat-devis-semaine-sub">créés depuis lundi</div>
-        </div>
-        <div class="stat-card kpi-loading" id="stat-cmds-semaine" data-href="">
-          <div class="stat-label">Commandes semaine</div>
-          <div class="stat-value" id="stat-cmds-semaine-val">—</div>
-          <div class="stat-sub" id="stat-cmds-semaine-sub">—</div>
-        </div>
-        <div class="stat-card kpi-loading" id="stat-devis-brouillon" data-href="">
-          <div class="stat-label">Devis en brouillon</div>
-          <div class="stat-value" id="stat-devis-brouillon-val">—</div>
-          <div class="stat-sub" id="stat-devis-brouillon-sub">non envoyés</div>
-        </div>
-      </div>
-      <!-- Groupe production commandes -->
-      <div style="border:0.5px solid rgba(201,158,103,0.18);border-radius:8px;padding:10px 12px;background:rgba(201,158,103,0.025)">
-        <div style="font-size:10px;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Commandes · Production</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px">
-          <div class="stat-card kpi-loading" id="stat-cmds-bloque" data-href="">
-            <div class="stat-label">Bloqué / attente fichier</div>
-            <div class="stat-value" id="stat-cmds-bloque-val">—</div>
-            <div class="stat-sub" id="stat-cmds-bloque-sub">—</div>
-          </div>
-          <div class="stat-card kpi-loading" id="stat-cmds-fichiers" data-href="">
-            <div class="stat-label">Fichiers en traitement</div>
-            <div class="stat-value" id="stat-cmds-fichiers-val">—</div>
-            <div class="stat-sub" id="stat-cmds-fichiers-sub">—</div>
-          </div>
-          <div class="stat-card kpi-loading" id="stat-cmds-bat" data-href="">
-            <div class="stat-label">En attente de BAT</div>
-            <div class="stat-value" id="stat-cmds-bat-val">—</div>
-            <div class="stat-sub" id="stat-cmds-bat-sub">—</div>
-          </div>
-          <div class="stat-card kpi-loading" id="stat-cmds-enprod" data-href="">
-            <div class="stat-label">En cours de prod</div>
-            <div class="stat-value" id="stat-cmds-enprod-val">—</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- ZONE ALERTES -->
     <div class="card" id="section-alertes">
@@ -1250,6 +1262,216 @@
       <div id="alerte-btns" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
       <div id="alertes-list"></div>
     </div>
+
+    <!-- COMMANDE DIRECTE IA -->
+    <div class="ia-card" id="section-ia">
+
+      <!-- Header : titre + chaîne skills + statut -->
+      <div class="ia-header">
+        <div class="ia-pulse"></div>
+        <div class="ia-title">Commande</div>
+        <div class="ia-chain-bar" id="ia-chain-bar"></div>
+        <div class="ia-model" id="ia-status-label">prêt</div>
+      </div>
+
+      <!-- Input principal — en haut, prominent -->
+      <div class="ia-input-row">
+        <textarea class="ia-input" id="ia-input"
+          placeholder="Envoie un mail à [client] · Déclenche le pipeline · Prix papier Antalis · SIREN de [société]…"
+          rows="2"></textarea>
+        <button class="ia-mic" id="ia-mic" onclick="iaMicToggle()" title="Commande vocale (fr)">🎤</button>
+        <button class="ia-send" id="ia-send" onclick="iaSend()">↵</button>
+      </div>
+
+      <!-- Raccourcis commandes -->
+      <div class="ia-suggestions" id="ia-suggestions">
+        <button class="ia-suggestion" onclick="iaQuick(this)">devis ouverts</button>
+        <button class="ia-suggestion" onclick="iaQuick(this)">factures impayées</button>
+        <button class="ia-suggestion" onclick="iaQuick(this)">déclenche le pipeline</button>
+        <button class="ia-suggestion" onclick="iaQuick(this)">résumé du mois</button>
+        <button class="ia-suggestion" onclick="iaQuick(this)">BL en attente</button>
+        <button class="ia-suggestion" onclick="iaQuick(this)">prix papier 150g couché</button>
+        <button class="ia-suggestion" onclick="iaClearHistory()" style="margin-left:auto;color:rgba(120,100,80,0.5)">✕ effacer</button>
+      </div>
+
+      <!-- Historique / Output terminal -->
+      <div class="ia-messages" id="ia-messages"></div>
+
+      <!-- Sélecteur contexte (devis / commande actif) -->
+      <div style="display:flex;align-items:center;gap:6px;padding-top:10px;border-top:0.5px solid rgba(90,80,64,0.15)">
+        <span style="font-size:10px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;flex-shrink:0">Contexte</span>
+        <select class="assets-select" id="assets-doc-select" style="flex:1;max-width:260px;font-size:11px;padding:4px 8px">
+          <option value="">— Devis / Commande actif —</option>
+        </select>
+        <button class="section-link" onclick="loadProposalsOrders()" style="font-size:10px;padding:3px 8px">↺</button>
+        <span id="assets-ts" style="font-size:10px;color:var(--text-muted)"></span>
+      </div>
+
+    </div>
+
+    <!-- ZONE TRAVAIL -->
+    <!-- DÉPÔTS FICHIERS -->
+    <div id="section-depot" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:0">
+
+      <!-- Sélecteur Dolibarr commun -->
+      <div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <span style="font-size:10px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;flex-shrink:0">Lier à</span>
+        <select id="depot-doc-ref" class="assets-select" style="flex:1;max-width:320px;font-size:11px;padding:4px 8px">
+          <option value="">— Devis / Commande Dolibarr —</option>
+        </select>
+        <button class="section-link" onclick="loadProposalsOrders()" style="font-size:10px;padding:4px 8px">↺</button>
+        <span id="depot-ref-ts" style="font-size:10px;color:var(--text-muted)"></span>
+      </div>
+
+      <!-- 🎨 Charte -->
+      <label style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 8px;background:var(--bg2);border:0.5px dashed rgba(201,158,103,0.3);border-radius:8px;cursor:pointer;min-height:80px;transition:border-color .2s"
+        id="dz-charte" ondragover="dzDragOver(event,'dz-charte')" ondragleave="dzDragLeave('dz-charte')" ondrop="dzDrop(event,'charte')">
+        <span style="font-size:20px">🎨</span>
+        <span style="font-size:10px;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;text-align:center">Charte graphique<br><span style="font-size:9px">identité client</span></span>
+        <span class="drop-status" id="status-dz-charte" style="font-size:10px;color:var(--amber);text-align:center"></span>
+        <input type="file" id="dz-file-charte" accept=".pdf,.ai,.png,.jpg,.svg,.zip" style="display:none" onchange="depotHandleFile(this,'charte')">
+      </label>
+
+      <!-- ✨ Inspiration -->
+      <label style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 8px;background:var(--bg2);border:0.5px dashed rgba(201,158,103,0.3);border-radius:8px;cursor:pointer;min-height:80px;transition:border-color .2s"
+        id="dz-inspiration" ondragover="dzDragOver(event,'dz-inspiration')" ondragleave="dzDragLeave('dz-inspiration')" ondrop="dzDrop(event,'_inspiration')">
+        <span style="font-size:20px">✨</span>
+        <span style="font-size:10px;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;text-align:center">Inspiration</span>
+        <span class="drop-status" id="status-dz-inspiration" style="font-size:10px;color:var(--amber);text-align:center"></span>
+        <input type="file" id="dz-file-inspiration" accept=".pdf,.png,.jpg,.jpeg,.webp" style="display:none" onchange="depotHandleFile(this,'_inspiration')">
+      </label>
+
+      <!-- 📄 Facture fournisseur -->
+      <label style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 8px;background:var(--bg2);border:0.5px dashed rgba(201,158,103,0.3);border-radius:8px;cursor:pointer;min-height:80px;transition:border-color .2s"
+        id="dz-facture-f" ondragover="dzDragOver(event,'dz-facture-f')" ondragleave="dzDragLeave('dz-facture-f')" ondrop="dzDrop(event,'_factures_fournisseurs')">
+        <span style="font-size:20px">📄</span>
+        <span style="font-size:10px;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;text-align:center">Facture<br>fournisseur</span>
+        <span class="drop-status" id="status-dz-facture-f" style="font-size:10px;color:var(--amber);text-align:center"></span>
+        <input type="file" id="dz-file-facture-f" accept=".pdf,.png,.jpg" style="display:none" onchange="depotHandleFile(this,'_factures_fournisseurs')">
+      </label>
+
+      <!-- 📑 Devis fournisseur -->
+      <label style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 8px;background:var(--bg2);border:0.5px dashed rgba(201,158,103,0.3);border-radius:8px;cursor:pointer;min-height:80px;transition:border-color .2s"
+        id="dz-devis-f" ondragover="dzDragOver(event,'dz-devis-f')" ondragleave="dzDragLeave('dz-devis-f')" ondrop="dzDrop(event,'_devis_fournisseurs')">
+        <span style="font-size:20px">📑</span>
+        <span style="font-size:10px;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;text-align:center">Devis<br>fournisseur</span>
+        <span class="drop-status" id="status-dz-devis-f" style="font-size:10px;color:var(--amber);text-align:center"></span>
+        <input type="file" id="dz-file-devis-f" accept=".pdf,.png,.jpg,.xlsx,.xls" style="display:none" onchange="depotHandleFile(this,'_devis_fournisseurs')">
+      </label>
+
+      <!-- 📁 Document -->
+      <label style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 8px;background:var(--bg2);border:0.5px dashed rgba(201,158,103,0.3);border-radius:8px;cursor:pointer;min-height:80px;transition:border-color .2s"
+        id="dz-document" ondragover="dzDragOver(event,'dz-document')" ondragleave="dzDragLeave('dz-document')" ondrop="dzDrop(event,'_documents')">
+        <span style="font-size:20px">📁</span>
+        <span style="font-size:10px;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;text-align:center">Document</span>
+        <span class="drop-status" id="status-dz-document" style="font-size:10px;color:var(--amber);text-align:center"></span>
+        <input type="file" id="dz-file-document" style="display:none" onchange="depotHandleFile(this,'_documents')">
+      </label>
+
+    </div>
+
+    <!-- CONNEXIONS SYSTEME -->
+
+    <div id="section-connexions" style="display:flex;align-items:center;gap:12px;padding:8px 12px;background:var(--bg2);border:0.5px solid rgba(90,80,64,0.3);border-radius:var(--radius-md)">
+      <span style="font-size:10px;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Connexions</span>
+      <div id="conn-list" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex:1">
+        <span style="font-size:11px;color:var(--text-muted)">Chargement…</span>
+      </div>
+      <span id="conn-ts" style="font-size:10px;color:var(--text-muted);flex-shrink:0"></span>
+      <button onclick="loadHealth()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:12px;padding:2px 6px" title="Rafraîchir">↺</button>
+    </div>
+
+    <!-- STATS LIVE DOLIBARR -->
+    <div id="stats-cards">
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px">
+        <div class="stat-card kpi-loading" id="stat-devis-semaine" data-href="">
+          <div class="stat-label">Devis semaine</div>
+          <div class="stat-value" id="stat-devis-semaine-val">—</div>
+          <div class="stat-sub" id="stat-devis-semaine-sub">créés depuis lundi</div>
+        </div>
+        <div class="stat-card kpi-loading" id="stat-cmds-semaine" data-href="">
+          <div class="stat-label">Commandes semaine</div>
+          <div class="stat-value" id="stat-cmds-semaine-val">—</div>
+          <div class="stat-sub" id="stat-cmds-semaine-sub">—</div>
+        </div>
+        <div class="stat-card kpi-loading" id="stat-devis-brouillon" data-href="">
+          <div class="stat-label">Brouillons</div>
+          <div class="stat-value" id="stat-devis-brouillon-val">—</div>
+          <div class="stat-sub" id="stat-devis-brouillon-sub">non envoyés</div>
+        </div>
+        <div class="stat-card kpi-loading" id="stat-cmds-bloque" data-href="">
+          <div class="stat-label">Bloqué</div>
+          <div class="stat-value" id="stat-cmds-bloque-val">—</div>
+          <div class="stat-sub" id="stat-cmds-bloque-sub">attente fichier</div>
+        </div>
+        <div class="stat-card kpi-loading" id="stat-cmds-fichiers" data-href="">
+          <div class="stat-label">Fichiers</div>
+          <div class="stat-value" id="stat-cmds-fichiers-val">—</div>
+          <div class="stat-sub" id="stat-cmds-fichiers-sub">en traitement</div>
+        </div>
+        <div class="stat-card kpi-loading" id="stat-cmds-bat" data-href="">
+          <div class="stat-label">BAT</div>
+          <div class="stat-value" id="stat-cmds-bat-val">—</div>
+          <div class="stat-sub" id="stat-cmds-bat-sub">en attente</div>
+        </div>
+        <div class="stat-card kpi-loading" id="stat-cmds-enprod" data-href="">
+          <div class="stat-label">En prod</div>
+          <div class="stat-value" id="stat-cmds-enprod-val">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION OBJECTIF -->
+    <div class="card" id="section-objectif">
+      <div class="section-head">
+        <div class="section-title">Objectif</div>
+        <button class="section-link" onclick="loadObjectif()">Actualiser →</button>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start">
+
+        <!-- Jauge taux de transformation -->
+        <div class="obj-gauge-wrap">
+          <div class="daf-block-title">Taux de transformation</div>
+          <div style="position:relative;width:130px;height:76px">
+            <svg viewBox="0 0 130 76" width="130" height="76">
+              <path d="M12,70 A53,53 0 0,1 118,70" fill="none" stroke="var(--bg4)" stroke-width="11" stroke-linecap="round"/>
+              <path id="gauge-arc" d="M12,70 A53,53 0 0,1 118,70" fill="none" stroke="var(--amber)" stroke-width="11" stroke-linecap="round" stroke-dasharray="0 166"/>
+            </svg>
+            <div style="position:absolute;bottom:2px;width:100%;text-align:center">
+              <span class="daf-big" id="kpi-transfo-val" style="font-size:24px">—</span>
+            </div>
+          </div>
+          <div class="daf-sub" id="kpi-transfo-sub" style="text-align:center">année en cours</div>
+        </div>
+
+        <!-- 3 métriques manuelles -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:10px 12px">
+            <div class="daf-block-title">Incidents / Problèmes</div>
+            <div style="display:flex;align-items:baseline;gap:5px">
+              <span class="daf-big" id="obj-incidents-nb" style="font-size:20px;color:#F09595">0</span>
+              <span style="font-size:10px;color:var(--text-muted)">dossiers</span>
+            </div>
+            <div class="daf-sub" id="obj-incidents-ht">Perte : 0 €</div>
+            <button class="obj-edit-btn" onclick="event.stopPropagation();editObjectif('incidents')">Modifier</button>
+          </div>
+          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:10px 12px">
+            <div class="daf-block-title">Marge mois en cours</div>
+            <div class="daf-big" id="obj-marge" style="font-size:20px">—</div>
+            <div class="daf-sub">Cumul dégagé</div>
+            <button class="obj-edit-btn" onclick="editObjectif('marge')">Modifier</button>
+          </div>
+          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:10px 12px">
+            <div class="daf-block-title">Dossiers tapis rouge</div>
+            <div class="daf-big" id="obj-tapis" style="font-size:20px;color:#F09595">0</div>
+            <div class="daf-sub">Statut client Dolibarr →</div>
+            <button class="obj-edit-btn" style="border-color:rgba(90,60,60,0.5);color:#F09595" onclick="event.stopPropagation();editObjectif('tapis')">Modifier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVIS À SUIVRE -->
 
     <!-- FINANCIER UNIFIÉ -->
     <div class="card" id="section-financier">
@@ -1312,6 +1534,29 @@
           <div class="daf-sub">Entrées estimées</div>
         </div>
       </div>
+
+      <!-- Encours clients par tranche de retard -->
+      <div style="margin-top:8px">
+        <div class="daf-block-title" style="margin-bottom:6px;font-size:10px;letter-spacing:.08em;color:var(--text-muted)">ENCOURS CLIENTS</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:8px 10px">
+            <div style="font-size:10px;color:var(--text-muted);margin-bottom:2px">Courant</div>
+            <div class="daf-big" id="daf-enc-courant" style="font-size:14px;color:#97C459">—</div>
+          </div>
+          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:8px 10px">
+            <div style="font-size:10px;color:var(--text-muted);margin-bottom:2px">Retard &lt; 30j</div>
+            <div class="daf-big" id="daf-enc-30j" style="font-size:14px;color:#FAC775">—</div>
+          </div>
+          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:8px 10px">
+            <div style="font-size:10px;color:var(--text-muted);margin-bottom:2px">Retard 30-60j</div>
+            <div class="daf-big" id="daf-enc-60j" style="font-size:14px;color:#F09595">—</div>
+          </div>
+          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:8px 10px">
+            <div style="font-size:10px;color:var(--text-muted);margin-bottom:2px">&gt; 60j</div>
+            <div class="daf-big" id="daf-enc-90j" style="font-size:14px;color:#C44444">—</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- GRAPHIQUE CA 12 MOIS -->
@@ -1348,129 +1593,7 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- SECTION OBJECTIF -->
-    <div class="card" id="section-objectif">
-      <div class="section-head">
-        <div class="section-title">Objectif</div>
-        <button class="section-link" onclick="loadObjectif()">Actualiser →</button>
-      </div>
-      <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start">
-
-        <!-- Jauge taux de transformation -->
-        <div class="obj-gauge-wrap">
-          <div class="daf-block-title">Taux de transformation</div>
-          <div style="position:relative;width:130px;height:76px">
-            <svg viewBox="0 0 130 76" width="130" height="76">
-              <path d="M12,70 A53,53 0 0,1 118,70" fill="none" stroke="var(--bg4)" stroke-width="11" stroke-linecap="round"/>
-              <path id="gauge-arc" d="M12,70 A53,53 0 0,1 118,70" fill="none" stroke="var(--amber)" stroke-width="11" stroke-linecap="round" stroke-dasharray="0 166"/>
-            </svg>
-            <div style="position:absolute;bottom:2px;width:100%;text-align:center">
-              <span class="daf-big" id="kpi-transfo-val" style="font-size:24px">—</span>
-            </div>
-          </div>
-          <div class="daf-sub" id="kpi-transfo-sub" style="text-align:center">année en cours</div>
-        </div>
-
-        <!-- 3 métriques manuelles -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:10px 12px">
-            <div class="daf-block-title">Incidents / Problèmes</div>
-            <div style="display:flex;align-items:baseline;gap:5px">
-              <span class="daf-big" id="obj-incidents-nb" style="font-size:20px;color:#F09595">0</span>
-              <span style="font-size:10px;color:var(--text-muted)">dossiers</span>
-            </div>
-            <div class="daf-sub" id="obj-incidents-ht">0 € HT</div>
-            <button class="obj-edit-btn" onclick="editObjectif('incidents')">Modifier</button>
-          </div>
-          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:10px 12px">
-            <div class="daf-block-title">Marge mois en cours</div>
-            <div class="daf-big" id="obj-marge" style="font-size:20px">—</div>
-            <div class="daf-sub">Cumul dégagé</div>
-            <button class="obj-edit-btn" onclick="editObjectif('marge')">Modifier</button>
-          </div>
-          <div style="background:var(--bg3);border:0.5px solid rgba(90,80,64,.25);border-radius:6px;padding:10px 12px">
-            <div class="daf-block-title">Dossiers tapis rouge</div>
-            <div class="daf-big" id="obj-tapis" style="font-size:20px;color:#F09595">0</div>
-            <div class="daf-sub">Priorité absolue</div>
-            <button class="obj-edit-btn" style="border-color:rgba(90,60,60,0.5);color:#F09595" onclick="editObjectif('tapis')">Modifier</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DEVIS À SUIVRE -->
-    <div class="card" id="section-devis">
-      <div class="section-head">
-        <div style="display:flex;align-items:center;gap:10px">
-          <div class="section-title">Devis à suivre</div>
-          <span id="suivi-ts" style="font-size:10px;color:var(--text-muted)">Chargement…</span>
-          <span id="suivi-nb" class="badge badge-warn" style="display:none"></span>
-        </div>
-        <button class="section-link" onclick="openDolibarr()">Voir dans Dolibarr →</button>
-      </div>
-      <div style="display:grid;grid-template-columns:110px 1fr 60px 70px 32px 28px;gap:10px;padding-bottom:8px;border-bottom:0.5px solid rgba(90,80,64,0.35)">
-        <div style="font-size:10px;color:var(--text-muted);letter-spacing:0.06em">REF</div>
-        <div style="font-size:10px;color:var(--text-muted);letter-spacing:0.06em">CLIENT / PROJET</div>
-        <div style="font-size:10px;color:var(--text-muted);letter-spacing:0.06em">JOURS</div>
-        <div style="font-size:10px;color:var(--text-muted);letter-spacing:0.06em;text-align:right">MONTANT HT</div>
-        <div style="font-size:10px;color:var(--text-muted);letter-spacing:0.06em;text-align:center">PDF</div>
-        <div></div>
-      </div>
-      <div id="suivi-tbody">
-        <div style="padding:20px;text-align:center;color:var(--text-muted);font-size:12px">Chargement…</div>
-      </div>
-      <div id="suivi-footer" style="display:none;padding-top:10px;border-top:0.5px solid rgba(90,80,64,0.2);text-align:center">
-        <button class="section-link" id="suivi-toggle-btn" onclick="toggleSuiviAll()">Voir tous les devis →</button>
-      </div>
-    </div>
-
-    <!-- KIE.AI — IMAGE GENERATION -->
-    <div class="card" id="section-kie">
-      <div class="section-head">
-        <div style="display:flex;align-items:center;gap:10px">
-          <div class="section-title">Images — Reprompt IA</div>
-          <a href="https://kie.ai/fr/logs" target="_blank" class="kie-link">kie.ai →</a>
-        </div>
-        <button class="section-link" onclick="kieClear()">Effacer</button>
-      </div>
-      <div class="kie-grid">
-        <div>
-          <div class="kie-label" style="margin-bottom:8px">Image générée</div>
-          <div id="kie-drop" class="kie-drop-zone"
-            ondragover="kieDragOver(event)" ondragleave="kieDragLeave()" ondrop="kieDrop(event)"
-            onclick="$('kie-file').click()" title="Coller (Ctrl+V) ou glisser une image">
-            <div id="kie-preview" style="display:none;width:100%"></div>
-            <div id="kie-drop-hint">
-              <div class="kie-drop-icon">🖼</div>
-              <div class="kie-drop-hint">Glisser, coller (Ctrl+V)<br>ou cliquer pour sélectionner</div>
-            </div>
-          </div>
-          <input type="file" id="kie-file" accept="image/*" style="display:none" onchange="kieFileChange(event)">
-        </div>
-        <div class="kie-prompt-area">
-          <div>
-            <div class="kie-label" style="margin-bottom:6px">Prompt original</div>
-            <textarea id="kie-prompt" class="kie-textarea" placeholder="Coller ici le prompt utilisé dans kie.ai…"></textarea>
-          </div>
-          <div>
-            <div class="kie-label" style="margin-bottom:6px">Contexte / intentions</div>
-            <textarea id="kie-context" class="kie-textarea" style="min-height:60px" placeholder="Ambiance souhaitée, usage, style, marque…"></textarea>
-          </div>
-          <div class="kie-actions">
-            <button id="kie-btn" class="kie-btn" onclick="kieAnalyse()">✦ Générer reprompts</button>
-            <button class="kie-btn-clear" onclick="kieClear()">✕</button>
-          </div>
-        </div>
-      </div>
-      <div id="kie-result" class="kie-result">
-        <div class="kie-result-title">Suggestions Claude</div>
-        <div id="kie-result-content"></div>
-      </div>
-    </div>
-
-  </main>
+    </div></main>
 
   <script>
     // ── Utilitaires ──────────────────────────────────────────────────────────
@@ -1506,8 +1629,8 @@
         btn.classList.add('active');
         const label = btn.textContent.trim();
         if (label === 'IA')    $('section-ia').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (label === 'Devis') $('section-devis').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (label === 'Suivi') $('section-devis').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (label === 'Devis') window.location = '/devis';
+        if (label === 'Suivi') window.location = '/devis';
       });
     });
 
@@ -1520,6 +1643,48 @@
     }
 
     // ── Stats live Dolibarr ────────────────────────────────────────────────────
+    let _pipelineLogInterval = null;
+    let _DOLI_WEB = '';
+
+    function closePipelineLog() {
+      document.getElementById('pipeline-log-panel').style.display = 'none';
+      if (_pipelineLogInterval) { clearInterval(_pipelineLogInterval); _pipelineLogInterval = null; }
+    }
+
+    async function refreshPipelineLog() {
+      try {
+        const r = await fetch('/api/log?lines=60');
+        if (!r.ok) return;
+        const d = await r.json();
+        const lines = (d.lines || []);
+        // Trouver le dernier bloc de run (depuis le dernier "═══")
+        let start = lines.length - 1;
+        for (let i = lines.length - 1; i >= 0; i--) {
+          if (lines[i].includes('═'.repeat(10)) && lines[i].includes('démarrage')) { start = i; break; }
+        }
+        const block = lines.slice(start);
+        const el = document.getElementById('pipeline-log-lines');
+        el.textContent = block.join('\n');
+        el.scrollTop = el.scrollHeight;
+        // Coloriser les lignes
+        el.innerHTML = block.map(l => {
+          const c = l.includes('ERROR') || l.includes('erreur') ? '#f09595'
+                  : l.includes('WARNING') ? '#f5c55a'
+                  : l.includes('Pipeline OK') || l.includes('devis créé') ? '#7ecfa4'
+                  : l.includes('StopPipeline') || l.includes('Pas d\'email') ? '#a8956a'
+                  : '#c8b99a';
+          return `<span style="color:${c}">${l.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`;
+        }).join('\n');
+        el.scrollTop = el.scrollHeight;
+        // Arrêter le polling si le pipeline est terminé (présence de la 2ème ligne "═══ Pipeline terminé")
+        const done = block.filter(l => l.includes('Pipeline terminé')).length >= 1;
+        if (done && _pipelineLogInterval) {
+          clearInterval(_pipelineLogInterval);
+          _pipelineLogInterval = null;
+        }
+      } catch(e) { /* silencieux */ }
+    }
+
     async function runPipeline() {
       const btn    = document.getElementById('run-btn');
       const icon   = document.getElementById('run-btn-icon');
@@ -1530,6 +1695,11 @@
       label.textContent = 'En cours…';
       btn.style.opacity = '0.7';
 
+      // Ouvrir le panel log immédiatement
+      document.getElementById('pipeline-log-panel').style.display = 'block';
+      document.getElementById('pipeline-log-lines').textContent = 'Démarrage du pipeline…';
+      if (_pipelineLogInterval) clearInterval(_pipelineLogInterval);
+
       try {
         const r = await fetch('/api/run', { method: 'POST' });
         const d = await r.json();
@@ -1537,17 +1707,22 @@
           icon.textContent  = '✓';
           label.textContent = 'Lancé !';
           btn.style.background = '#4caf7d';
-          // Rafraîchir les stats après 4s (le pipeline tourne en arrière-plan)
-          setTimeout(() => { loadStats(); loadKpis(); }, 4000);
+          // Démarrer le polling du log toutes les 2s
+          _pipelineLogInterval = setInterval(refreshPipelineLog, 2000);
+          // Rafraîchir la queue pipeline immédiatement + stats après 8s
+          setTimeout(() => loadPipelineRuns(), 1000);
+          setTimeout(() => { loadStats(); loadKpis(); loadPipelineRuns(); }, 8000);
         } else {
           icon.textContent  = '✗';
           label.textContent = 'Erreur';
           btn.style.background = '#e05a5a';
+          document.getElementById('pipeline-log-lines').textContent = `Erreur HTTP ${r.status} : ${JSON.stringify(d)}`;
         }
       } catch (e) {
         icon.textContent  = '✗';
         label.textContent = 'Erreur';
         btn.style.background = '#e05a5a';
+        document.getElementById('pipeline-log-lines').textContent = `Erreur réseau : ${e.message}`;
       }
 
       // Remettre à l'état initial après 3s
@@ -1560,6 +1735,35 @@
       }, 3000);
     }
 
+    async function loadHealth() {
+      const connList = $('conn-list');
+      const connTs   = $('conn-ts');
+      try {
+        const r = await fetch('/api/connections');
+        if (!r.ok) {
+          connList.innerHTML = `<span style="font-size:11px;color:#F09595">⚠ Serveur non joignable (HTTP ${r.status})</span>`;
+          return;
+        }
+        const d = await r.json();
+        const items = d.connectors || [];
+        if (!items.length) {
+          connList.innerHTML = `<span style="font-size:11px;color:var(--text-muted)">—</span>`;
+          return;
+        }
+        connList.innerHTML = items.map(c => {
+          const color = c.ok ? '#97C459' : '#F09595';
+          const dot   = c.ok ? 'dot-ok' : 'dot-err';
+          const lat   = c.latency_ms ? ` · ${Math.round(c.latency_ms)}ms` : '';
+          return `<span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:${color}"><span class="dot ${dot}"></span>${c.name}${lat}</span>`;
+        }).join('');
+        connTs.textContent = d.last_check
+          ? `vérifié ${new Date(d.last_check).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`
+          : '';
+      } catch(e) {
+        connList.innerHTML = `<span style="font-size:11px;color:#F09595">⚠ Serveur non démarré</span>`;
+      }
+    }
+
     async function loadStats() {
       try {
         const r = await fetch('/api/stats');
@@ -1567,7 +1771,7 @@
         const d = await r.json();
         if (d.error) return;
 
-        const web = d.doli_web || '';
+        const web = d.doli_web || ''; _DOLI_WEB = web;
 
         function setStatCard(cardId, valId, nb, subId, subTxt, href, danger) {
           const card = $(cardId);
@@ -1623,7 +1827,7 @@
         if (d.error) { $('kpi-ts').textContent = 'Dolibarr non configuré'; return; }
 
         $('kpi-ts').textContent = 'Mis à jour ' + new Date(d.generated_at).toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
-        const web = d.doli_web || '';
+        const web = d.doli_web || ''; _DOLI_WEB = web;
 
         function linkCard(cardId, href) {
           const card = $(cardId);
@@ -1724,6 +1928,14 @@
         renderTopList('daf-top-clients',  d.top_clients,  'nom',   'ca_ht');
         renderTopList('daf-top-produits', d.top_produits, 'label', 'ca_ht');
         if ($('perf-ts')) $('perf-ts').textContent = $('daf-ts').textContent;
+
+        // Encours par tranche de retard
+        if (d.encours) {
+          $('daf-enc-courant').textContent = fmt(d.encours.courant);
+          $('daf-enc-30j').textContent     = fmt(d.encours.retard_30j);
+          $('daf-enc-60j').textContent     = fmt(d.encours.retard_60j);
+          $('daf-enc-90j').textContent     = fmt(d.encours.retard_90j_plus);
+        }
 
         // Facturation à venir
         const cnf = d.cmds_non_facturees;
@@ -2113,7 +2325,7 @@
       for (const item of items) {
         if (item.type.startsWith('image/')) {
           kieSetImage(item.getAsFile());
-          $('section-kie').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          $('section-depot').scrollIntoView({ behavior: 'smooth', block: 'start' });
           break;
         }
       }
@@ -2198,7 +2410,81 @@
     // ── Moteur IA ─────────────────────────────────────────────────────────────
     const iaHistory = [];
     let iaStreaming = false;
+    let _iaSessionId = null;  // session_id claude CLI pour continuer la conversation
     const _IA_IMG_MIMES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
+    const _IA_LS_KEY = 'inpressco_ia_history_v1';
+    const _IA_SESSION_KEY = 'inpressco_ia_session_id';
+
+    // ── Persistance localStorage (conversation cross-reload) ─────────────────
+    function _iaSaveHistory() {
+      try { localStorage.setItem(_IA_LS_KEY, JSON.stringify(iaHistory.slice(-40))); } catch {}
+    }
+    function _iaLoadHistory() {
+      try {
+        const savedSession = localStorage.getItem(_IA_SESSION_KEY);
+        if (savedSession) _iaSessionId = savedSession;
+        const saved = localStorage.getItem(_IA_LS_KEY);
+        if (!saved) return;
+        const arr = JSON.parse(saved);
+        if (!Array.isArray(arr) || !arr.length) return;
+        arr.forEach(m => iaHistory.push(m));
+        $('ia-suggestions').style.display = 'none';
+        arr.forEach(m => {
+          if (m.role === 'user') {
+            const txt = typeof m.content === 'string' ? m.content
+              : (Array.isArray(m.content) ? (m.content.find(c => c.type === 'text')?.text || '[image]') : '');
+            if (txt) iaAppend('user', txt, false);
+          } else if (m.role === 'assistant' && typeof m.content === 'string') {
+            iaAppend('assistant', m.content, false);
+          }
+        });
+      } catch {}
+    }
+    function iaClearHistory() {
+      iaHistory.length = 0;
+      _iaSessionId = null;
+      $('ia-messages').innerHTML = '';
+      $('ia-suggestions').style.display = '';
+      try { localStorage.removeItem(_IA_LS_KEY); localStorage.removeItem(_IA_SESSION_KEY); } catch {}
+    }
+
+    // ── Microphone (Web Speech API) ───────────────────────────────────────────
+    let _iaMicRec = null;
+    function iaMicToggle() {
+      const btn = $('ia-mic');
+      if (_iaMicRec) {
+        _iaMicRec.stop();
+        _iaMicRec = null;
+        if (btn) btn.classList.remove('listening');
+        return;
+      }
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) {
+        alert('Commande vocale non supportée sur ce navigateur.\nUtilisez Chrome ou Safari.');
+        return;
+      }
+      _iaMicRec = new SR();
+      _iaMicRec.lang = 'fr-FR';
+      _iaMicRec.continuous = false;
+      _iaMicRec.interimResults = false;
+      _iaMicRec.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        const inp = $('ia-input');
+        inp.value = transcript;
+        inp.style.height = 'auto';
+        inp.style.height = Math.min(inp.scrollHeight, 140) + 'px';
+      };
+      _iaMicRec.onend = () => {
+        if (btn) btn.classList.remove('listening');
+        _iaMicRec = null;
+      };
+      _iaMicRec.onerror = () => {
+        if (btn) btn.classList.remove('listening');
+        _iaMicRec = null;
+      };
+      if (btn) btn.classList.add('listening');
+      _iaMicRec.start();
+    }
 
     function iaAppend(role, text, streaming) {
       const msgs = $('ia-messages');
@@ -2213,13 +2499,66 @@
       return div.querySelector('.ia-bubble');
     }
 
+    // Labels de skills pour la chaîne d'exécution
+    const _IA_TOOL_LABELS = {
+      search_proposals:      ['📄', 'devis'],
+      get_proposal:          ['📄', 'lecture devis'],
+      search_thirdparties:   ['👤', 'client'],
+      get_thirdparty:        ['👤', 'fiche client'],
+      search_invoices:       ['💶', 'factures'],
+      search_orders:         ['📦', 'commandes'],
+      update_proposal:       ['✏', 'modif devis'],
+      update_proposal_line:  ['✏', 'ligne devis'],
+      validate_proposal:     ['✓', 'validation'],
+      set_proposal_to_draft: ['↩', 'brouillon'],
+      trigger_pipeline:      ['⚡', 'pipeline'],
+      web_search:            ['🔍', 'web'],
+      list_shipments:        ['🚚', 'expéditions'],
+      search_shipments:      ['🚚', 'expéditions'],
+      search_shipments:      ['🚚', 'expéditions'],
+      get_shipment:          ['🚚', 'BL'],
+      search_products:       ['🗂', 'produits'],
+      create_thirdparty:     ['👤+', 'création tiers'],
+      create_proposal:       ['📄+', 'création devis'],
+    };
+
+    function _iaChainAdd(toolName) {
+      const bar = $('ia-chain-bar');
+      if (!bar) return;
+      const [icon, label] = _IA_TOOL_LABELS[toolName] || ['⚙', toolName];
+      if (bar.children.length > 0) {
+        const arr = document.createElement('span');
+        arr.className = 'ia-chain-arr';
+        arr.textContent = '›';
+        bar.appendChild(arr);
+      }
+      const step = document.createElement('span');
+      step.className = 'ia-chain-step active';
+      step.textContent = icon + ' ' + label;
+      bar.appendChild(step);
+      // Marquer le précédent comme fait (non actif)
+      const steps = bar.querySelectorAll('.ia-chain-step');
+      steps.forEach((s, i) => { if (i < steps.length - 1) s.classList.remove('active'); });
+    }
+
+    function _iaChainClear() {
+      const bar = $('ia-chain-bar');
+      if (bar) bar.innerHTML = '';
+      const lbl = $('ia-status-label');
+      if (lbl) lbl.textContent = 'prêt';
+    }
+
     async function _iaStream(bubble) {
       let full = '';
+      const statusLbl = $('ia-status-label');
+      if (statusLbl) statusLbl.textContent = 'en cours…';
       try {
+        const body = { messages: iaHistory };
+        if (_iaSessionId) body.session_id = _iaSessionId;
         const resp = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: iaHistory }),
+          body: JSON.stringify(body),
         });
         if (!resp.ok) {
           const err = await resp.json().catch(() => ({}));
@@ -2240,24 +2579,16 @@
               if (payload === '[DONE]') break;
               try {
                 const chunk = JSON.parse(payload);
-                if (chunk.error) { full += '\n⚠ ' + chunk.error; }
-                else if (chunk.tool_call) {
-                  const labels = {
-                    search_proposals:   '🔍 Recherche des devis…',
-                    get_proposal:       '📄 Lecture du devis…',
-                    search_thirdparties:'🔍 Recherche du client…',
-                    get_thirdparty:     '👤 Lecture de la fiche client…',
-                    search_invoices:    '🔍 Recherche des factures…',
-                    search_orders:      '🔍 Recherche des commandes…',
-                    update_proposal:       '✏️ Modification du devis…',
-                    update_proposal_line:  '✏️ Modification d\'une ligne…',
-                    validate_proposal:  '✅ Validation du devis…',
-                    set_proposal_to_draft: '📝 Remise en brouillon…',
-                  };
-                  const lbl = labels[chunk.tool_call.name] || `⚙️ ${chunk.tool_call.name}…`;
-                  full += `\n<span class="ia-tool-call">${lbl}</span>\n`;
+                if (chunk.session_id) {
+                  _iaSessionId = chunk.session_id;
+                  try { localStorage.setItem(_IA_SESSION_KEY, _iaSessionId); } catch {}
+                } else if (chunk.error) {
+                  full += '\n⚠ ' + chunk.error;
+                } else if (chunk.tool_call) {
+                  _iaChainAdd(chunk.tool_call.name);
+                } else if (chunk.text) {
+                  full += chunk.text;
                 }
-                else if (chunk.text) { full += chunk.text; }
               } catch {}
             }
             bubble.innerHTML = full + '<span class="ia-cursor"></span>';
@@ -2265,12 +2596,14 @@
           }
           bubble.innerHTML = full;
           iaHistory.push({ role: 'assistant', content: full });
+          _iaSaveHistory();
         }
       } catch(e) {
         bubble.innerHTML = `<span class="ia-err">Erreur réseau : ${e.message}</span>`;
       }
       iaStreaming = false;
       $('ia-send').disabled = false;
+      if (statusLbl) statusLbl.textContent = 'prêt';
     }
 
     async function iaSend() {
@@ -2281,6 +2614,7 @@
       input.value = '';
       input.style.height = 'auto';
       $('ia-suggestions').style.display = 'none';
+      _iaChainClear(); // réinitialiser la chaîne de skills
 
       const imgFile = _iaPendingImage;
       if (imgFile) clearIAImage();
@@ -2307,10 +2641,12 @@
         const content = [{ type: 'image', source: { type: 'base64', media_type: imgFile.type, data: b64 } }];
         if (text) content.push({ type: 'text', text });
         iaHistory.push({ role: 'user', content });
+        _iaSaveHistory();
         await _iaStream(iaAppend('assistant', '', true));
       } else {
         iaAppend('user', text, false);
         iaHistory.push({ role: 'user', content: text });
+        _iaSaveHistory();
         iaStreaming = true;
         $('ia-send').disabled = true;
         await _iaStream(iaAppend('assistant', '', true));
@@ -2412,6 +2748,11 @@
         }
 
         if (ts) ts.textContent = new Date().toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+        // Sync sélecteur dépôts
+        const depotSel = $('depot-doc-ref');
+        if (depotSel) depotSel.innerHTML = sel.innerHTML.replace('— Sélectionner un devis ou une commande —', '— Devis / Commande Dolibarr —');
+        const depotTs = $('depot-ref-ts');
+        if (depotTs) depotTs.textContent = new Date().toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
       } catch(e) {
         if (ts) ts.textContent = 'Erreur';
         console.warn('loadProposalsOrders:', e);
@@ -2515,6 +2856,7 @@
     }
 
     // ── Init ──────────────────────────────────────────────────────────────────
+    loadHealth();
     loadStats();
     loadKpis();
     loadDaf();
@@ -2522,11 +2864,206 @@
     loadDevisSuivre();
     loadProposalsOrders();
     loadObjectif();
+    loadPipelineRuns();
+    _iaLoadHistory();
     checkPopupDaily();
     setInterval(loadStats,         5 * 60 * 1000);
     setInterval(loadKpis,          5 * 60 * 1000);
     setInterval(loadDaf,           5 * 60 * 1000);
     setInterval(loadDevisSuivre,  10 * 60 * 1000);
+    setInterval(loadPipelineRuns, 30 * 1000);
+
+    // ── PIPELINE FILE D'ATTENTE ────────────────────────────────────────────────
+    const _PQ_CATEGORY_LABELS = {
+      NEW_PROJECT: 'NOUVEAU DEVIS', PROJECT_UPDATE: 'MISE À JOUR',
+      SUPPLIER_INVOICE: 'FACTURE FOURN.', SUPPLIER_QUOTE: 'DEVIS FOURN.',
+      ACTION: 'ACTION', UNKNOWN: 'NON IDENTIFIÉ',
+      devis_created: 'DEVIS CRÉÉ', error: 'ERREUR', running: 'EN COURS', stopped: 'STOPPÉ',
+    };
+    const _PQ_STEPS = [
+      { key:'s01', icon:'📧', label:'Lecture' },
+      { key:'s02', icon:'🤖', label:'Analyse IA' },
+      { key:'routing', icon:'🔀', label:'Routing' },
+      { key:'tiers',   icon:'👤', label:'Client' },
+      { key:'devis',   icon:'📄', label:'Devis' },
+    ];
+
+    function _pqBadgeClass(run) {
+      if (run.status === 'running') return 'running';
+      if (run.status === 'devis_created') return 'devis_created';
+      if (run.status === 'error') return 'error';
+      if (run.status === 'stopped') return 'stopped';
+      return run.routing_category || 'UNKNOWN';
+    }
+
+    function _pqStepState(run, stepKey) {
+      const v = run.steps?.[stepKey];
+      // Si pas de routing NEW_PROJECT, tiers/devis sont inutiles
+      if ((stepKey === 'tiers' || stepKey === 'devis') && run.routing_category && run.routing_category !== 'NEW_PROJECT') return 'skip';
+      return v || 'pending';
+    }
+
+    function _pqConnectorDone(run, fromKey, toKey) {
+      return _pqStepState(run, fromKey) === 'done' && _pqStepState(run, toKey) === 'done';
+    }
+
+    function _pqFormatTime(ts) {
+      if (!ts) return '';
+      const d = ts.slice(0, 10), t = ts.slice(11, 16);
+      const today = new Date().toISOString().slice(0, 10);
+      return d === today ? t : `${d.slice(5)} ${t}`;
+    }
+
+    function _pqRenderRun(run) {
+      const badgeClass = _pqBadgeClass(run);
+      const badgeLabel = (run.status === 'devis_created' ? 'DEVIS CRÉÉ' :
+                          run.status === 'error' ? 'ERREUR' :
+                          run.status === 'running' ? 'EN COURS…' :
+                          run.status === 'stopped' ? 'PAS D\'EMAIL' :
+                          _PQ_CATEGORY_LABELS[run.routing_category] || run.routing_category || '—');
+
+      const subjectHtml = run.email_subject
+        ? `<span class="pq-subject" title="${run.email_subject.replace(/"/g,'&quot;')}">${run.email_subject}</span>`
+        : `<span class="pq-subject" style="color:var(--text-muted);font-style:italic">${run.stop_reason || 'Pas d\'email'}</span>`;
+
+      const durationHtml = run.duration_s != null ? `<span style="opacity:.5">${run.duration_s}s</span>` : '';
+
+      const stepperHtml = _PQ_STEPS.map((s, i) => {
+        const state = _pqStepState(run, s.key);
+        const connector = i < _PQ_STEPS.length - 1
+          ? `<div class="pq-connector ${_pqConnectorDone(run, s.key, _PQ_STEPS[i+1].key) ? 'done' : ''}"></div>`
+          : '';
+        return `<div class="pq-node">
+          <div class="pq-node-dot ${state}">${s.icon}</div>
+          <div class="pq-node-label">${s.label}</div>
+        </div>${connector}`;
+      }).join('');
+
+      const actionsHtml = (run.actions || []).map(a =>
+        `<span class="pq-action">${a.icon} ${a.text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`
+      ).join('');
+
+      // Boutons d'action selon statut
+      let actionRowHtml = '';
+      const enc = s => s ? s.replace(/'/g, "\\'") : '';
+      if (run.status === 'routed' || run.status === 'ok') {
+        const cat = run.routing_category || '';
+        if (cat !== 'NEW_PROJECT' && run.email_subject && run.email_sender) {
+          actionRowHtml = `<div class="pq-action-row">
+            <button class="pq-btn pq-btn-devis" onclick="pqForceDevis('${enc(run.email_subject)}','${enc(run.email_sender)}',this)">→ Traiter comme devis</button>
+            <button class="pq-btn pq-btn-archive" onclick="pqArchive('${enc(run.email_subject)}','${enc(run.email_sender)}',this)">✓ Archiver</button>
+          </div>`;
+        }
+      } else if (run.status === 'devis_created' && run.devis_ref) {
+        actionRowHtml = `<div class="pq-action-row">
+          <button class="pq-btn pq-btn-doli" onclick="pqOpenDoli('${enc(run.devis_ref)}')">🔗 Voir dans Dolibarr</button>
+        </div>`;
+      } else if (run.status === 'error') {
+        actionRowHtml = `<div class="pq-action-row">
+          <button class="pq-btn pq-btn-retry" onclick="runPipeline()">↺ Relancer pipeline</button>
+        </div>`;
+      }
+
+      return `<div class="pq-run status-${run.status}">
+        <div class="pq-header">
+          <span class="pq-badge ${badgeClass}">${badgeLabel}</span>
+          ${subjectHtml}
+          <span class="pq-meta">${_pqFormatTime(run.started_at)} ${durationHtml}</span>
+        </div>
+        <div class="pq-stepper">${stepperHtml}</div>
+        ${actionsHtml ? `<div class="pq-actions">${actionsHtml}</div>` : ''}
+        ${actionRowHtml}
+      </div>`;
+    }
+
+    async function pqArchive(subject, sender, btn) {
+      btn.disabled = true;
+      btn.textContent = '…';
+      try {
+        const r = await fetch('/api/pipeline/archive-email', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({subject, sender})
+        });
+        const d = await r.json();
+        if (r.ok) {
+          btn.textContent = '✓ Archivé';
+          btn.style.color = '#97C459';
+          btn.closest('.pq-run').style.opacity = '0.45';
+          setTimeout(loadPipelineRuns, 2000);
+        } else {
+          btn.textContent = `✗ ${d.detail || 'Erreur'}`;
+          btn.style.color = '#F09595';
+          btn.disabled = false;
+        }
+      } catch(e) {
+        btn.textContent = '✗ Réseau';
+        btn.disabled = false;
+      }
+    }
+
+    async function pqForceDevis(subject, sender, btn) {
+      // 1. Retire le préfixe [Routé-*] pour remettre dans la file
+      btn.disabled = true;
+      btn.textContent = '…';
+      try {
+        const r = await fetch('/api/pipeline/unroute-email', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({subject, sender})
+        });
+        const d = await r.json();
+        if (r.ok) {
+          btn.textContent = '✓ Remis en file';
+          btn.style.color = '#97C459';
+          // 2. Pré-remplir le chat IA avec le contexte
+          const iaInput = $('ia-input');
+          if (iaInput) {
+            iaInput.value = `Traite cet email comme un nouveau devis : sujet "${subject}" de ${sender}. Recherche le tiers dans Dolibarr, analyse le besoin et crée le devis.`;
+            iaInput.style.height = 'auto';
+            iaInput.style.height = iaInput.scrollHeight + 'px';
+            // Scroll vers le moteur IA
+            $('section-ia')?.scrollIntoView({behavior:'smooth', block:'start'});
+            $('ia-input')?.focus();
+          }
+        } else {
+          btn.textContent = `✗ ${d.detail || 'Erreur'}`;
+          btn.style.color = '#F09595';
+          btn.disabled = false;
+        }
+      } catch(e) {
+        btn.textContent = '✗ Réseau';
+        btn.disabled = false;
+      }
+    }
+
+    function pqOpenDoli(devisRef) {
+      const base = _DOLI_WEB || '';
+      if (base) window.open(`${base}/propal/list.php?search_ref=${encodeURIComponent(devisRef)}`, '_blank');
+      else alert('URL Dolibarr non configurée');
+    }
+
+    async function loadPipelineRuns() {
+      try {
+        const r = await fetch('/api/pipeline-runs?limit=15');
+        if (!r.ok) return;
+        const d = await r.json();
+        const runs = d.runs || [];
+        const list = $('pq-list');
+        const badge = $('pq-badge-running');
+        const ts = $('pq-ts');
+
+        const hasRunning = runs.some(r => r.status === 'running');
+        badge.style.display = hasRunning ? 'inline-flex' : 'none';
+        ts.textContent = runs.length ? `${runs.length} run${runs.length > 1 ? 's' : ''}` : '';
+
+        if (!runs.length) {
+          list.innerHTML = '<div class="pq-empty">Aucun run enregistré — lancez le pipeline pour voir l\'activité</div>';
+          return;
+        }
+        list.innerHTML = runs.map(_pqRenderRun).join('');
+      } catch(e) { /* silencieux */ }
+    }
 
     // ── LIGHTBOX ──
     function openLightbox(src) {
@@ -2538,6 +3075,31 @@
       $('lightbox-img').src = '';
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    // ── DÉPÔT DE FICHIERS ────────────────────────────────────────────────────
+
+    function depotHandleFile(input, dossier) {
+      if (!input.files || !input.files[0]) return;
+      const file  = input.files[0];
+      const dzId  = input.id.replace('dz-file-', 'dz-');
+      const stId  = 'status-' + dzId;
+      const stEl  = $(stId);
+      const ref   = ($('depot-doc-ref') || {}).value || '';
+      const label = input.id.replace('dz-file-', '');
+      if (stEl) stEl.textContent = '↑ Envoi…';
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('dossier', dossier);
+      if (ref) fd.append('linked_ref', ref);
+      fetch('/api/upload', { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(d => {
+          if (stEl) stEl.textContent = d.error ? '✗ ' + d.error : '✓ Déposé';
+          setTimeout(() => { if (stEl) stEl.textContent = ''; }, 4000);
+        })
+        .catch(() => { if (stEl) stEl.textContent = '✗ Erreur'; });
+      input.value = '';
+    }
   </script>
 
   <div id="lightbox" onclick="closeLightbox()">

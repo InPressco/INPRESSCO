@@ -14,10 +14,11 @@ Usage :
 
 import sys as _sys
 import os as _os
-_sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent.parent))
+_root = str(__import__("pathlib").Path(__file__).parent.parent)
+_sys.path.insert(0, _root)
 
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(dotenv_path=__import__("pathlib").Path(_root) / ".env")
 _os.environ.setdefault("OPENAI_API_KEY", "dummy")
 _os.environ.setdefault("ANTHROPIC_API_KEY", "dummy")
 _os.environ.setdefault("DOLIBARR_API_KEY", "dummy")
@@ -99,18 +100,15 @@ async def run():
 
     async with httpx.AsyncClient() as client:
 
-        # ── 2. Profil boîte ───────────────────────────────────────────────
+        # ── 2. Accès boîte mail (via mailFolders — ne nécessite pas User.Read.All) ──
         subsection("2. Accès boîte mail")
-        code, data = await graph_get(client, token, "")
+        code, data = await graph_get(client, token, "/mailFolders", {"$top": 1, "$select": "id,displayName"})
         if code == 200:
-            ok(f"Boîte accessible : {data.get('displayName','?')} <{data.get('mail','?')}>")
-            if FULL:
-                print(json.dumps(data, indent=2, ensure_ascii=False))
+            ok(f"Boîte accessible : {config.OUTLOOK_USER_EMAIL}")
         elif code == 403:
-            fail(f"HTTP 403 — Permissions insuffisantes")
+            fail(f"HTTP 403 — Permissions Mail.Read insuffisantes ou consentement manquant")
             warn("Dans Azure AD → app inpressco-claude → Autorisations API")
-            warn("Ajouter : Mail.Read (Application) + Mail.ReadWrite (Application)")
-            warn("Puis cliquer : Accorder le consentement administrateur")
+            warn("Vérifier : Mail.Read (Application) + consentement administrateur accordé")
             return
         elif code == 404:
             fail(f"HTTP 404 — Utilisateur introuvable : {config.OUTLOOK_USER_EMAIL}")

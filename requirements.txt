@@ -5,6 +5,9 @@ pydantic>=2.8.0
 python-dotenv>=1.0.0
 tenacity>=9.0.0
 
+# Sentinel (surveillance fichiers temps réel)
+watchdog>=4.0.0
+
 # Dashboard
 fastapi>=0.111.0
 uvicorn[standard]>=0.30.0

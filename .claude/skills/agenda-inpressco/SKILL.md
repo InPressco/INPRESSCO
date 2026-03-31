@@ -24,8 +24,92 @@ Pour chaque événement, appliquer la règle suivante :
 | Bloc de production / jalons | ✅ | ✅ optionnel |
 | Rappel personnel utilisateur | ❌ | ✅ |
 | Demande explicite "mets dans Outlook" | ✅ | ✅ |
+| **Validation en attente (tout skill)** | ✅ | ❌ (push futur) |
 
 → **Par défaut : toujours créer dans Dolibarr**. Ajouter Outlook si RDV, réunion, ou si l'utilisateur le demande.
+
+---
+
+## Validations en attente — Convention système
+
+### Principe
+Dès qu'un skill génère une action qui nécessite une **validation humaine avant exécution**, créer immédiatement un événement Dolibarr `⏸ VALIDATION` visible dans l'agenda. L'utilisateur consulte l'agenda pour voir ce qui attend sa décision.
+
+Cette architecture est **push-ready** : quand les notifications push seront câblées, elles liront exactement ces événements Dolibarr (`done: 0`, label commençant par `⏸`).
+
+### Format standard obligatoire
+
+```json
+{
+  "type_code": "AC_OTH_AUTO",
+  "label": "⏸ [SKILL] — [action courte] — [tiers ou réf]",
+  "note": "[Contenu généré prêt à valider]\n\n---\nPour valider : répondre OUI dans le chat Claude\nPour refuser : répondre NON [+ motif optionnel]\nPour modifier : répondre MODIFIER [+ instruction]",
+  "datep": "[timestamp aujourd'hui]",
+  "fulldayevent": 1,
+  "socid": "[socid si connu, sinon null]",
+  "elementtype": "[propal | commande | null]",
+  "fk_element": "[id_document si connu, sinon null]",
+  "userownerid": 166,
+  "usertodo": null,
+  "done": 0
+}
+```
+
+**Règle label :** toujours commencer par `⏸` + nom du skill source + action + référence. Cela permet de filtrer toutes les validations en attente avec un seul GET Dolibarr.
+
+### Catalogue des 7 validations système
+
+| Skill source | Label type | Urgence |
+|-------------|-----------|---------|
+| `agent-acheteur-inpressco` | `⏸ acheteur — demande prix [type] — [ref devis] / [fournisseur]` | Modérée |
+| `reponse-client-inpressco` | `⏸ réponse-client — email [objet court] — [tiers]` | Haute |
+| `validation-qc-inpressco` | `⏸ validation-qc — devis à envoyer — [ref devis]` | Haute |
+| `generation-pdf-inpressco` | `⏸ pdf — document généré à envoyer — [ref]` | Haute |
+| `archiveur-inpressco` | `⏸ archiveur — fichier à classer — [nom fichier]` | Faible |
+| `chat-to-db-inpressco` | `⏸ chat-to-db — données à persister — [tiers]` | Faible |
+| `mail-routing-inpressco` | `⏸ routing — catégorie ambiguë — [expéditeur]` | Modérée |
+
+### Cycle de vie d'une validation
+
+```
+Skill génère l'action
+    → agenda-inpressco crée événement Dolibarr done=0 label ⏸
+    → [futur : push notification déclenché sur done=0 + label ⏸]
+    → Utilisateur voit l'événement dans l'agenda Dolibarr
+    → Utilisateur répond dans le chat Claude (OUI / NON / MODIFIER)
+    → Si OUI  → skill continue → PUT /agendaevents/{id} done=1
+    → Si NON  → skill annule  → PUT /agendaevents/{id} done=1 + note "Refusé : [motif]"
+    → Si MODIFIER → skill ajuste → nouvel événement ⏸ avec contenu modifié
+```
+
+### Consultation des validations en attente
+
+```
+Toutes les validations en attente (tous skills)
+→ GET /agendaevents?done=0&limit=50
+→ Filtrer localement les labels commençant par ⏸
+
+Par urgence (aujourd'hui)
+→ GET /agendaevents?done=0&datestart={debut_jour}&dateend={fin_jour}
+
+Par skill (ex : acheteur uniquement)
+→ Filtrer labels contenant "⏸ acheteur"
+```
+
+### Vue agenda avec validations
+
+```
+Agenda du [date] — Validations en attente :
+
+⏸ acheteur       DEV-2026-089 — demande prix dorure / Façonnier Martin
+                  → [OUI] [NON] [MODIFIER]
+
+⏸ réponse-client  Email confirmation devis — Maison Cartier Paris
+                  → [OUI] [NON] [MODIFIER]
+
+⏸ validation-qc   DEV-2026-091 prêt à envoyer — Agence Dupont
+                  → [OUI] [NON] [MODIFIER]
+```
 
 ---
 

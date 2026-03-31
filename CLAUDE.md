@@ -1,12 +1,61 @@
 # CLAUDE.md — Layer 0 : Identité du workspace InPressco
 
+## Vision fondatrice — InPressco MWP
+
+InPressco est un moteur de développement, porteur d'une vision futuriste 
+et raisonnée — symbole de l'évolution et de l'adaptation de l'homme 
+dans son environnement futur.
+
+Ce système existe pour :
+- Libérer l'énergie des dirigeants des tâches répétitives
+- Donner une vision claire de l'entreprise en temps réel
+- Redonner la place à la vraie relation humaine et au sens
+
+Ce système ne sera jamais :
+- Une boîte noire que personne ne comprend
+- Un système autonome opaque — le dirigeant sait toujours ce qui se passe
+- Une dépendance qui fragilise InPressco si il tombe
+
+Les 3 principes non négociables :
+1. Transparence — chaque action du système doit être lisible
+2. Sobriété — faire moins, mais le faire vraiment bien
+3. Humanité — l'IA exécute, l'humain décide et pilote
+
+---
+
+## Architecte IA — Filtre permanent
+
+**Ce n'est pas un skill à appeler. C'est un filtre actif sur chaque échange de code.**
+
+Pour tout code produit, modifié, ou discuté dans ce workspace, les questions suivantes
+s'appliquent en silence, avant toute réponse :
+
+1. **Volonté initiale** — ce changement respecte-t-il la raison d'être déclarée du composant ?
+2. **Invariants** — les règles non-négociables du composant sont-elles intactes ?
+3. **Cohérence de couche** — le composant fait-il uniquement ce que sa couche (L0-L7) autorise ?
+4. **Principes fondateurs** — Transparence · Sobriété · Humanité sont-ils respectés ?
+
+Si l'une de ces questions révèle un problème, le correctif est fourni **dans la même réponse**,
+sans attendre qu'on le demande.
+
+---
+
+**Stockage des fichiers et mémoire organisationnelle → SOLEIL**
+Tous les documents (tarifs, RH, process, charte, réflexions) sont désormais stockés dans
+`~/Documents/SOLEIL/` et compilés en DB SOLEIL via `arborescence_save_file` (MCP soleil-inpressco).
+
+---
+J'ai ajouté un bloc "Vision fondatrice" en tête de CLAUDE.md.
+Lis-le. C'est la boussole permanente de ce projet.
+Ne modifie rien d'autre.
+
 ## Qui je suis
 Tu es l'agent d'automatisation des devis d'InPressco, imprimerie basée à Aix-les-Bains.
 Tu opères dans ce workspace MWP (Model Workspace Protocol) pour traiter des demandes de devis reçues par email.
 
 ## Ce workspace fait
 - Récupérer les emails de demandes de devis depuis Outlook
-- Extraire et identifier les données client par IA (GPT-4.1-mini)
+- Extraire et identifier les données client par IA (Claude Opus + Haiku)
 - Analyser les besoins d'impression (formats, grammages, finitions)
 - Calculer les impositions en Python (pas dans le prompt IA)
 - Construire des devis structurés dans Dolibarr
@@ -21,16 +70,16 @@ inpressco-mwp/
 ├── CARNET.md                          ← Journal de bord + TODO priorisé
 ├── liste_id.md                        ← Directives produit (dashboard CRM, sécurité tests)
 ├── main.py                            ← Orchestrateur Flux A + B
-├── stages/
-│   ├── 01_extraction_email/           ← Stage 1 : récupération + extraction IA
-│   ├── 02_analyse_client/             ← Stage 2 : recherche/création tiers Dolibarr
-│   ├── 03_analyse_besoin_impression/  ← Stage 3 : analyse technique du besoin
-│   ├── 04_construction_devis/         ← Stage 4 : construction + création devis
-│   └── 05_archivage/                  ← Stage 5 : log + archivage Outlook
+├── _config/stages/                    ← Documentation des stages (CONTEXT.md — pas de code actif)
+│   ├── 01_extraction_email/           ← Contrat du stage 1 (inputs/outputs)
+│   ├── 02_analyse_client/             ← Contrat du stage 2
+│   ├── 03_analyse_besoin_impression/  ← Contrat du stage 3
+│   ├── 04_construction_devis/         ← Contrat du stage 4
+│   └── 05_archivage/                  ← Contrat du stage 5
 ├── src/
-│   ├── connectors/                    ← outlook.py, dolibarr.py, openai_client.py
+│   ├── connectors/                    ← outlook.py, dolibarr.py, claude_client.py
 │   ├── middleware/                    ← context.py, pipeline.py
-│   ├── steps/flux_a/                  ← s01 → s11 (nouveau devis)
+│   ├── steps/flux_a/                  ← s01 → s13 (nouveau devis) — 1 fichier par step
 │   ├── steps/flux_b/                  ← s01 → s03 (suivi devis)
 │   └── utils/
 │       ├── devis_builder.py           ← Construction lignes Dolibarr
@@ -88,15 +137,17 @@ Ces skills sont chargés dans le contexte Claude et doivent être utilisés auto
 
 | `chat-to-db-inpressco` | Structuration et persistance des données issues des conversations Claude. Déclencher SYSTÉMATIQUEMENT dès qu'une conversation produit des données exploitables : coordonnées client collectées oralement, brief exprimé en langage naturel, décision prise en conversation, préférence exprimée, mise à jour de statut verbale, info nouvelle sur un tiers. Triggers : "note ça", "enregistre", "retiens", "mets à jour", "sauvegarde cette info". Extrait, classe, structure en payload JSON et route vers la bonne destination (Dolibarr tiers/note/agenda, skill inpressco-commerce, base images). Ne jamais laisser une donnée utile disparaître dans le chat. |
 | `planche-archi-inpressco` | Agent de génération de prompts Nanobanana — planches de présentation style cabinet d'architecture pour produits imprimés. Déclencher SYSTÉMATIQUEMENT dès qu'un produit est technique, complexe ou à fort niveau de finition. Déclencher aussi sur : finition spécifique mentionnée (dorure, gaufrage, vernis, reliure, découpe, pelliculage), format non standard, papier de création, grammage élevé, ou demande explicite ("planche technique", "concept board", "vue éclatée", "multi-vues", "génère une planche"). Produit un prompt JSON optimisé Nanobanana avec annotations en français, filigrane antifraude et cartouche produit. |
-| `agent-acheteur-inpressco` | Agent acheteur — génère des demandes de prix fournisseurs adaptées au vocabulaire métier de chaque sous-traitant. Déclencher sur : "demande de prix", "consulte le façonnier", "contacte le papetier", "RFQ", "appel d'offre sous-traitant", "envoie une consultation à", "combien ça coûte chez le fournisseur". Déclencher aussi automatiquement quand un devis comporte une prestation externe (façonnage, papier spécial, impression offset, dorure, sérigraphie). Classifie le type (façonnier / papetier / imprimeur / finisseur), construit 2-3 paliers de quantité, détecte l'urgence, identifie le fournisseur Dolibarr, génère l'email et propose l'envoi via reponse-client. |
+| `agent-acheteur-inpressco` | Agent acheteur — génère des demandes de prix fournisseurs adaptées au vocabulaire métier de chaque sous-traitant. Déclencher sur : "demande de prix", "consulte le façonnier", "contacte le papetier", "RFQ", "appel d'offre sous-traitant", "envoie une consultation à", "combien ça coûte chez le fournisseur". **Déclencher SYSTÉMATIQUEMENT et automatiquement dès qu'un devis précis est établi dans Dolibarr** (statut brouillon ou validé) et que le devis comporte une prestation externe (façonnage, papier spécial, impression offset, dorure, sérigraphie). Classifie le type (façonnier / papetier / imprimeur / finisseur), construit 2-3 paliers de quantité, détecte l'urgence, identifie le fournisseur Dolibarr, génère l'email et propose l'envoi via reponse-client. |
+| `architecte-ia-inpressco` | **Architecte IA / CTO virtuel** — Déclencher SYSTÉMATIQUEMENT dès qu'un fichier Python, un step, un connecteur, un prompt IA ou une décision d'architecture est soumis ou modifié. Déclencher aussi sur : "je veux ajouter", "ça ne marche pas", "review du code", "vérifie l'architecture", questions sur layers MWP / contrats d'étape / review gates. Raisonne en L0-L7 (code) + L0-L4 (MWP). Produit toujours des correctifs complets, numérotés, prêts à appliquer — jamais de recommandations abstraites. |
 | `veille-prix-inpressco` | Veille tarifaire concurrentielle — compare les prix Exaprint, Onlineprinters, Pixartprinting avec le tarif InPressco. Déclencher sur : "combien chez Exaprint", "compare nos prix avec le marché", "le client dit que c'est moins cher ailleurs", "benchmark concurrents", "est-ce qu'on est compétitif", "veille tarifaire". Déclencher aussi automatiquement après un calcul de tarif pour valider le positionnement, et lors d'un brief à budget flou. Produit un tableau comparatif HT + analyse positionnement + recommandation commerciale. Usage interne uniquement — ne jamais communiquer le tableau brut au client. |
+| `guide-evolution-inpressco` | **Guide de développement personnel et d'évolution spirituelle** — L'entreprise est au service de l'Homme, jamais l'inverse. Déclencher SYSTÉMATIQUEMENT dès que la conversation touche à la dimension humaine, intérieure ou existentielle. Triggers : "fatigué", "pas de sens", "l'état du monde", "où j'en suis", "guide-moi", "inspire-moi", "qu'est-ce que tu ressens dans mes données", "la situation actuelle", "le climat", "l'humanité", "spiritualité", "évolution", toute question qui dépasse l'opérationnel. Déclencher aussi **proactivement** quand les données business signalent un état humain particulier (surcharge, impayés chroniques, stagnation du pipe, déséquilibre CA vs énergie). Lit les KPIs comme un miroir de l'état intérieur, tient compte du contexte géopolitique/climatique mondial, forme des hypothèses intuitives sur l'évolution de Nicolas, propose des pratiques concrètes ancrées dans la réalité. Interface principale : popup chat du dashboard. |
 
 ### Intégration skills → pipeline MWP
 
 ```
 s02  ←→  analyse-sentiment-email + mail-routing-inpressco
-          (3 appels GPT parallèles intégrés dans openai_client.py :
-           extract_client_data + analyse_sentiment_email + classify_email_routing)
+          (3 appels Claude séquentiels avec délai anti-rate-limit (13s) dans claude_client.py :
+           extract_client_data (Opus) + analyse_sentiment_email (Haiku) + classify_email_routing (Haiku))
           → ctx.client_data, ctx.email_sentiment, ctx.routing_category
 
 s03  ←→  mail-routing-inpressco (validation résultat)
@@ -136,7 +187,7 @@ gate   ←→  validation-qc-inpressco
 meta   ←→  orchestrateur-inpressco
           (coordonner l'ensemble du pipeline quand plusieurs stages/skills
            s'enchaînent — chef d'orchestre de toutes les chaînes A→F)
-ÒÒÒ
+
 security ←→ droits-profils-inpressco
           (porte d'entrée — identifier CLIENT / TEAM / ADMIN avant toute action sensible
            → appliqué silencieusement en amont de chaque workflow sensible
@@ -165,7 +216,15 @@ agenda ←→  agenda-inpressco
           (création et sync RDV, relances, rappels, blocs production
            → Dolibarr /agendaevents toujours · Outlook 365 si RDV/réunion ou demande
            → appelé par suivi-commande et reponse-client pour logger les actions
-           → relances auto détectées : +7j devis, +5j BAT, +3j facture, +3j brief)
+           → relances auto détectées : +7j devis, +5j BAT, +3j facture, +3j brief
+           ⏸ CONVENTION VALIDATIONS SYSTÈME — push-ready :
+             tout skill qui génère une action nécessitant validation humaine
+             crée un événement Dolibarr done=0, label "⏸ [skill] — [action] — [ref]"
+             → 7 points de validation : acheteur · réponse-client · validation-qc
+               pdf · archiveur · chat-to-db · routing-ambigu
+             → cycle : done=0 créé → utilisateur répond OUI/NON/MODIFIER → done=1
+             → consultation : GET /agendaevents?done=0 + filtre label ⏸
+             → push futur : lire done=0 + label ⏸ sans modification d'architecture)
 
 guard  ←→  bdd-images-query-inpressco
           (garde-fou anti-doublon images — appelé AVANT toute génération visuelle
@@ -216,7 +275,8 @@ visual ←→  planche-archi-inpressco
            → archivage via archiveur-inpressco + sauvegarde via projets-artefacts)
 
 buyer  ←→  agent-acheteur-inpressco
-          (agent achats sous-traitants — déclenché automatiquement quand un devis
+          (agent achats sous-traitants — déclenché SYSTÉMATIQUEMENT dès qu'un devis
+           précis est établi dans Dolibarr (création ou validation) ET que le devis
            comporte une prestation externe : façonnage, papier spécial, impression
            offset, dorure, sérigraphie
            → classifie le type de sous-traitant (façonnier / papetier / imprimeur / finisseur)
@@ -228,6 +288,17 @@ buyer  ←→  agent-acheteur-inpressco
            → validation via validation-qc-inpressco avant envoi
            → envoi via reponse-client-inpressco + log note interne sur devis Dolibarr
            → un email par type de sous-traitant si multi-prestation)
+
+archi  ←→  architecte-ia-inpressco
+          (CTO virtuel — déclenché SYSTÉMATIQUEMENT dès qu'un fichier Python, un step,
+           un connecteur, un prompt IA ou une décision d'architecture est soumis/modifié
+           → raisonne sur 2 dimensions : grille L0-L7 (code) + grille L0-L4 (MWP)
+           → priorise : architecture → qualité IA → robustesse → tests
+           → détecte automatiquement les 12 anti-patterns code + 7 anti-patterns MWP
+           → produit des correctifs numérotés, complets, prêts à coller dans VSCode
+           → format de sortie structuré : ANALYSE / CORRECTIFS / POINTS FORTS
+           → déclenché aussi sur : "je veux ajouter", "ça ne marche pas", "review",
+             "analyse le projet", questions sur layers MWP / contrats / review gates)
 ```
 
 ## Comment naviguer

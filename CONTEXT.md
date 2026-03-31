@@ -4,6 +4,15 @@
 
 | Composant | Statut | Détail |
 |-----------|--------|--------|
+| `core/system_reference.py` | ✅ Intégré | Source de vérité : 30 skills, 6 chaînes, conventions Dolibarr, anti-patterns — importable par tout le système |
+| `tools/system_verify.py` | ✅ Opérationnel | Vérification masquée : Dolibarr ✅ Claude ✅ Azure AD ✅ — score 100/100 |
+| `tools/system_report_generator.py` | ✅ Opérationnel | Génère SYSTEM_REPORT.md + SYSTEM_REPORT.svg + hook git post-commit |
+| `tools/intent_tracker.py` | ✅ Opérationnel | Log structuré intentions (technique/commercial/stratégique/vision) → STRATEGIC_SYNTHESIS |
+| `tools/strategic_synthesis.py` | ✅ Opérationnel | Intelligence live Dolibarr : CA 56 825 €, Impayés 77 751 €, DSO 29j, RFM, projections 90j |
+| `tools/dashboard_verify.py` | ✅ Opérationnel | Autotest 14 endpoints dashboard : latence, JSON, champs, cohérence données + correctifs auto |
+| `reports/` | ✅ Créé | SYSTEM_REPORT.md/.svg + STRATEGIC_SYNTHESIS.md/.svg + DASHBOARD_REPORT.md + health_report.json + intent_log.json |
+| `dashboard/app.py` | ✅ Enrichi | +2 endpoints : /api/health (rapport santé) + /api/synthesis (snapshot live Dolibarr) |
+| `main.py` | ✅ Enrichi | +4 flags : --verify / --report / --synthesis / --check-dashboard [--port N] [--start-if-down] |
 | `src/connectors/claude_client.py` | ✅ Produit | 5 méthodes : extract_client_data, analyse_sentiment, classify_routing, analyse_besoin, **generate_email_reponse_client** |
 | `src/connectors/outlook.py` | ✅ Produit | Lecture + archivage + **send_email()** (sendMail + createReply) |
 | `src/connectors/dolibarr.py` | ✅ Produit | Injection SQL corrigée — sanitisation stricte (quotes, `;`, backticks, keywords SQL) |
@@ -178,6 +187,7 @@ ROUTING_MAP = {
 | `validation-qc-inpressco` | Gate avant envoi client (s12) et avant archivage (s11) | — |
 | `projets-artefacts-inpressco` | Proposer sauvegarde après s06, s08, s12 | — |
 | `gestion-erreurs-inpressco` | Filet de sécurité — appelé automatiquement en cas d'erreur API | — |
+| `architecte-ia-inpressco` | **CTO virtuel / review architecture** — déclenché sur tout fichier Python, step, connecteur, prompt IA ou décision d'architecture. Raisonne L0-L7 (code) + L0-L4 (MWP). Produit correctifs complets prêts à appliquer. | `references/mwp_patterns.md`, `references/checklist_review.md` |
 
 ### Flux A enrichi avec les skills
 

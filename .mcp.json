@@ -10,6 +10,14 @@
         "DOLIBARR_API_KEY": "N8n2jedK6Txw0r3M0w92GN0ThNL0CqR4",
         "DOLIBARR_BASE_URL": "https://in-pressco.crm.freshprocess.eu/api/index.php"
       }
+    },
+    "soleil-inpressco": {
+      "type": "stdio",
+      "command": "/bin/zsh",
+      "args": [
+        "-c",
+        "cd '/Users/nicolasbompois/Desktop/Bureau - MacBook Pro de nicolas/SOLEIL-mwp' && .venv/bin/python3 mcp_server.py"
+      ]
     }
   }
 }

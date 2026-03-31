@@ -25,7 +25,8 @@ Avant toute autre analyse, vérifier le domaine expéditeur :
 | SUPPLIER_QUOTE | Devis fournisseur reçu | Dolibarr — proposition fournisseur | ✅ Oui |
 | PRICE_REQUEST | Demande de prix sous-traitant/fournisseur | Workflow prix externe | ✅ Oui |
 | ACTION | Action interne Dolibarr | Workflow direct — voir opérations ci-dessous | ❌ Non (interne @inpressco.fr) |
-| UNKNOWN | Non identifié | Traitement manuel requis | ⚠️ Alerte |
+| ADMINISTRATIF_GENERALE | Courrier administratif général | Marqué [Routé-] + déplacé → dossier ADMIN | ✅ Oui |
+| UNKNOWN | Non identifié / commercial non-devis | Marqué [Routé-] + déplacé → dossier COMMERCE | ⚠️ Alerte |
 
 ## Opérations du flux ACTION (sans validation)
 
@@ -67,8 +68,13 @@ Avant toute autre analyse, vérifier le domaine expéditeur :
 - **Signal fort** : expéditeur `@inpressco.fr`
 - Mots-clés complémentaires : "déposer", "archiver", "créer la facture", "nouvelle version", "versionnement", "mettre à jour Dolibarr"
 
+### ADMINISTRATIF_GENERALE
+- Mots-clés : "contrat", "assurance", "URSSAF", "recouvrement", "relance de paiement", "TVA", "liasse fiscale", "bail", "convocation", "AGO", "KBIS", "statuts"
+- Contexte : courrier administratif d'une administration, d'un organisme social/fiscal, d'un partenaire bancaire ou juridique — sans enjeu commercial direct
+- Exclure : les factures fournisseurs (→ SUPPLIER_INVOICE) et les devis fournisseurs (→ SUPPLIER_QUOTE)
+
 ### UNKNOWN
-- Aucun signal clair, email de courtoisie pure, contenu insuffisant, langue non reconnue
+- Aucun signal clair, newsletter, prospection commerciale, email de courtoisie pure, contenu insuffisant
 
 ---
 

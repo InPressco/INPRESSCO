@@ -28,9 +28,41 @@ OUTLOOK_GRAPH_BASE: str = (
     else "https://graph.microsoft.com/v1.0/me"
 )
 
-# IDs dossiers Outlook — format REST Graph API v1.0 (découverts le 28/03/2026)
-OUTLOOK_FOLDER_DEVIS: str = "inbox"           # Boîte de réception — well-known name Graph API
-OUTLOOK_FOLDER_ETUDE: str = "AAHD9iRZAAA="   # >> ETUDE PROJET (sous FLUX InPressco)
+# IDs dossiers Outlook — FLUX InPressco + sous-dossiers (vérifiés le 30/03/2026 via Graph API)
+OUTLOOK_FOLDER_INBOX:              str = "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZmViLTBlOTExZmYzYTQxZAAuAAAAAACxjFZsKT7nSbdhTw69f086AQA4XSMgZpzwS5Qsw_mqPyuHAAAAAAEMAAA="
+OUTLOOK_FOLDER_FLUX_INPRESSCO:     str = "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZmViLTBlOTExZmYzYTQxZAAuAAAAAACxjFZsKT7nSbdhTw69f086AQA4XSMgZpzwS5Qsw_mqPyuHAAGUrtifAAA="
+# Sous-dossiers de FLUX InPressco — destinations finales après classification
+OUTLOOK_FOLDER_COMMERCE:          str = "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZmViLTBlOTExZmYzYTQxZAAuAAAAAACxjFZsKT7nSbdhTw69f086AQA4XSMgZpzwS5Qsw_mqPyuHAAHD9iRaAAA="   # >> COMMERCE
+OUTLOOK_FOLDER_ETUDE:             str = "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZmViLTBlOTExZmYzYTQxZAAuAAAAAACxjFZsKT7nSbdhTw69f086AQA4XSMgZpzwS5Qsw_mqPyuHAAHD9iRZAAA="   # >> ETUDE PROJET
+OUTLOOK_FOLDER_GENERAL:           str = "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZmViLTBlOTExZmYzYTQxZAAuAAAAAACxjFZsKT7nSbdhTw69f086AQA4XSMgZpzwS5Qsw_mqPyuHAAHD9iRYAAA="   # >> GENERAL
+OUTLOOK_FOLDER_MARKETING_RS:      str = "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZmViLTBlOTExZmYzYTQxZAAuAAAAAACxjFZsKT7nSbdhTw69f086AQA4XSMgZpzwS5Qsw_mqPyuHAAHwfJB0AAA="   # >> MARKETING / RS
+OUTLOOK_FOLDER_ADMIN:             str = "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZmViLTBlOTExZmYzYTQxZAAuAAAAAACxjFZsKT7nSbdhTw69f086AQA4XSMgZpzwS5Qsw_mqPyuHAAHD9iRXAAA="   # ADMIN
+OUTLOOK_FOLDER_TARIF_FOURNISSEURS:str = "AAMkADE4NDcwOGRlLWVlNDItNDQ1Yy1hZmViLTBlOTExZmYzYTQxZAAuAAAAAACxjFZsKT7nSbdhTw69f086AQA4XSMgZpzwS5Qsw_mqPyuHAAGUrtiiAAA="   # TARIF FOURNISSEURS
+OUTLOOK_FOLDER_DEVIS:             str = OUTLOOK_FOLDER_COMMERCE  # alias pipeline
+# Routing fournisseurs : SUPPLIER_QUOTE → TARIF_FOURNISSEURS, SUPPLIER_INVOICE → ADMIN
+OUTLOOK_FOLDER_DEVIS_FOURNISSEUR:  str = OUTLOOK_FOLDER_TARIF_FOURNISSEURS
+OUTLOOK_FOLDER_FACTURE_FOURNISSEUR:str = OUTLOOK_FOLDER_ADMIN
+
+# ─── Drop zone universelle ────────────────────────────────────────────────────
+# Dossier Outlook "FLUX INPRESSCO" : point d'entrée unique du pipeline.
+# Tous les emails à traiter doivent atterrir ici :
+#   - Via règle Outlook (auto-route de la boîte principale)
+#   - Via glisser-déposer manuel depuis n'importe où dans Outlook
+#   - Via API Graph (move_message depuis la boîte de réception)
+# Après traitement, chaque email est déplacé vers sa destination finale :
+#   NEW_PROJECT           → sous-dossier ETUDE PROJET (par s11) → Flux A
+#   SUPPLIER_QUOTE        → DEVIS_FOURNISSEUR (par sc07)         → Flux C
+#   SUPPLIER_INVOICE      → FACTURE_FOURNISSEUR (par sc07)       → Flux C
+#   PROJECT_UPDATE        → géré par Flux B dans ETUDE (juste marqué [Routé-])
+#   ADMINISTRATIF_GENERALE→ dossier ADMIN (marqué + déplacé)
+#   Autres (commerce)     → dossier COMMERCE (marqué + déplacé)
+OUTLOOK_FOLDER_PENDING: str = OUTLOOK_FOLDER_FLUX_INPRESSCO
+
+# Arborescence devis : créée automatiquement à la première utilisation
+# OUTLOOK_FOLDER_DOSSIERS_DEVIS : parent des sous-dossiers par devis (un dossier = un DEV-XXXX)
+# OUTLOOK_FOLDER_ARCHIVES       : dossiers déplacés ici quand le devis est facturé
+OUTLOOK_FOLDER_DOSSIERS_DEVIS: str = os.environ.get("OUTLOOK_FOLDER_DOSSIERS_DEVIS", "")
+OUTLOOK_FOLDER_ARCHIVES: str       = os.environ.get("OUTLOOK_FOLDER_ARCHIVES", "")
 
 # === Dolibarr ===
 DOLIBARR_API_KEY: str = os.environ["DOLIBARR_API_KEY"]

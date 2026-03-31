@@ -59,6 +59,10 @@ Input : brief client (email, oral, formulaire)
 4. memoire-client-inpressco       → charger historique + préférences
 5. calcul-tarif-inpressco         → estimation rapide
 6. inpressco-devis                → construire devis structuré
+6b. agent-acheteur-inpressco      → [AUTO si prestation externe détectée]
+                                     demandes de prix fournisseurs (façonnier /
+                                     papetier / imprimeur / finisseur) générées
+                                     dès que le devis Dolibarr est établi
 7. generation-pdf-inpressco       → générer PDF azur_fp
 8. archiveur-inpressco            → classer le PDF
 9. validation-qc-inpressco        → contrôler avant envoi
@@ -170,14 +174,42 @@ Chaque skill reçoit :
 - Le contexte enrichi par les skills précédents
 - Les outputs des étapes dont il dépend
 
-### Étape 5 — Gérer les erreurs dans la chaîne
+### Étape 5 — Gérer les validations humaines dans la chaîne
+
+Dès qu'une étape produit une action qui nécessite validation humaine avant exécution :
+
+```
+1. Le skill génère le contenu (email, fichier, données...)
+2. agenda-inpressco crée un événement Dolibarr ⏸ VALIDATION (done=0)
+3. La chaîne se met en PAUSE — elle n'avance pas
+4. L'utilisateur répond dans le chat (OUI / NON / MODIFIER)
+5. Si OUI  → la chaîne reprend à l'étape suivante + done=1 sur l'événement
+6. Si NON  → la chaîne annule l'étape + done=1 avec note "Refusé"
+7. Si MODIFIER → l'étape se ré-exécute avec les nouvelles instructions
+```
+
+**Étapes qui créent systématiquement un événement ⏸ :**
+
+| Étape | Skill | Événement créé |
+|-------|-------|----------------|
+| Email fournisseur prêt | `agent-acheteur-inpressco` | `⏸ acheteur — [type] — [ref/fournisseur]` |
+| Email client prêt | `reponse-client-inpressco` | `⏸ réponse-client — [objet] — [tiers]` |
+| Devis prêt à envoyer | `validation-qc-inpressco` | `⏸ validation-qc — [ref devis]` |
+| PDF généré | `generation-pdf-inpressco` | `⏸ pdf — [ref]` |
+| Fichier à archiver | `archiveur-inpressco` | `⏸ archiveur — [nom fichier]` |
+| Données chat à persister | `chat-to-db-inpressco` | `⏸ chat-to-db — [tiers]` |
+| Routing ambigu | `mail-routing-inpressco` | `⏸ routing — [expéditeur]` |
+
+**Architecture push-ready :** ces événements Dolibarr (`done=0`, label `⏸`) constitueront la source de données des futures notifications push — aucune modification ne sera nécessaire lors de l'ajout des pushs.
+
+### Étape 6 — Gérer les erreurs dans la chaîne
 ```
 Étape bloquante en échec → stopper la chaîne, appeler gestion-erreurs, alerter
 Étape non bloquante en échec → continuer avec valeur par défaut, noter l'échec
 Étape parallèle en échec → attendre les autres, merger les résultats disponibles
 ```
 
-### Étape 6 — Produire le résultat consolidé
+### Étape 7 — Produire le résultat consolidé
 Fusionner les outputs de toutes les étapes en un résultat cohérent.
 
 ---

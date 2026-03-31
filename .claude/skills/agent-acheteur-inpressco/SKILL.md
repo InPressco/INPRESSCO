@@ -3,7 +3,7 @@ name: agent-acheteur-inpressco
 description: >
   Agent acheteur pour In'Pressco — génère des demandes de prix adaptées au métier de chaque sous-traitant récurrent.
   Déclencher SYSTÉMATIQUEMENT dès qu'une demande de tarification fournisseur est nécessaire : "demande de prix", "consulte le façonnier", "contacte le papetier", "on a besoin d'un tarif fournisseur", "demande un devis à", "envoie une consultation à", "on doit acheter du papier", "combien ça coûte chez le fournisseur", "lance une consultation", "RFQ", "appel d'offre sous-traitant".
-  Déclencher aussi automatiquement quand un devis Dolibarr est en cours et qu'une prestation externe est identifiée (façonnage, papier spécial, impression offset, dorure, sérigraphie).
+  Déclencher AUTOMATIQUEMENT et SANS ATTENDRE dès qu'un devis précis est établi dans Dolibarr (statut brouillon ou validé) et que le devis comporte une prestation externe identifiée (façonnage, papier spécial, impression offset, dorure, sérigraphie). Ne pas attendre une demande explicite de l'utilisateur — c'est un déclenchement systématique post-devis.
   Ce skill tire les informations du devis Dolibarr correspondant, identifie le(s) fournisseur(s) concerné(s), adapte le vocabulaire métier à chaque type de sous-traitant, et génère un email de demande de prix prêt à envoyer — avec toujours 2 à 3 variantes de quantité.
 ---
 
@@ -123,9 +123,25 @@ Cordialement,
 ## Étape 7 — Validation et envoi
 
 1. Afficher l'email généré à l'utilisateur pour relecture
-2. Demander confirmation : *"Voulez-vous que j'envoie cet email à [nom fournisseur] ?"*
-3. Si confirmé → utiliser **reponse-client-inpressco** pour l'envoi
-4. Logger l'envoi en note interne sur le devis Dolibarr via **dolibarr-query-inpressco** :
+2. Créer un événement ⏸ Dolibarr agenda pour validation :
+   ```json
+   { "label": "⏸ acheteur — consultation fournisseur — [ref devis]",
+     "note": "[corps email complet]\n\n---\nOUI pour envoyer · NON pour annuler",
+     "done": 0, "elementtype": "propal", "fk_element": [devis_id] }
+   ```
+3. Demander confirmation : *"Voulez-vous que j'envoie cet email à [nom fournisseur] ?"*
+4. Si confirmé → appeler `POST /api/send-email` :
+   ```json
+   {
+     "to_email": "fournisseur@exemple.fr",
+     "subject": "Demande de prix — [Type] — Réf. [devis_ref]",
+     "body_html": "<p>Corps HTML</p>",
+     "devis_folder_id": "[ctx.outlook_folder_id si connu]",
+     "agenda_event_id": [id_event_⏸]
+   }
+   ```
+   L'email fournisseur est ainsi classé dans le même dossier Outlook que le devis client.
+5. Logger l'envoi en note interne sur le devis Dolibarr via **dolibarr-query-inpressco** :
    `"Consultation fournisseur [type] envoyée à [nom fournisseur] le [date]"`
 
 ---
