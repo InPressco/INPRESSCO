@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+  <rect x="0" y="0" width="800" height="480" fill="#0f172a" rx="0" />
+  <rect x="0" y="0" width="800" height="60" fill="#1e293b" rx="0" />
+  <text x="24" y="26" fill="#C9A96E" font-size="13" font-family="Inter, -apple-system, sans-serif" font-weight="600" text-anchor="start">INPRESSCO</text>
+  <text x="24" y="44" fill="#f1f5f9" font-size="18" font-family="Inter, -apple-system, sans-serif" font-weight="700" text-anchor="start">SYSTEM REPORT</text>
+  <text x="780" y="26" fill="#94a3b8" font-size="13" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="end">Score 100/100</text>
+  <text x="780" y="44" fill="#22c55e" font-size="14" font-family="Inter, -apple-system, sans-serif" font-weight="700" text-anchor="end">HEALTHY</text>
+  <circle cx="400" cy="170" r="60" fill="none" stroke="#334155" stroke-width="12" />
+  <circle cx="400" cy="170" r="60" fill="none" stroke="#22c55e" stroke-width="12" stroke-dasharray="376 376" stroke-dashoffset="94" stroke-linecap="round" />
+  <text x="400" y="178" fill="#f1f5f9" font-size="28" font-family="Inter, -apple-system, sans-serif" font-weight="700" text-anchor="middle">100</text>
+  <text x="400" y="196" fill="#94a3b8" font-size="13" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="middle">/100</text>
+  <rect x="40" y="240" width="200" height="90" fill="#1e293b" rx="10" stroke="#22c55e" stroke-width="1" />
+  <text x="52" y="262" fill="#f1f5f9" font-size="13" font-family="Inter, -apple-system, sans-serif" font-weight="600" text-anchor="start">Dolibarr CRM</text>
+  <text x="52" y="282" fill="#22c55e" font-size="12" font-family="Inter, -apple-system, sans-serif" font-weight="700" text-anchor="start">OK</text>
+  <text x="52" y="300" fill="#94a3b8" font-size="11" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="start">HTTP 200 en 160ms</text>
+  <text x="52" y="316" fill="#94a3b8" font-size="11" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="start">160ms</text>
+  <rect x="300" y="240" width="200" height="90" fill="#1e293b" rx="10" stroke="#22c55e" stroke-width="1" />
+  <text x="312" y="262" fill="#f1f5f9" font-size="13" font-family="Inter, -apple-system, sans-serif" font-weight="600" text-anchor="start">Claude API</text>
+  <text x="312" y="282" fill="#22c55e" font-size="12" font-family="Inter, -apple-system, sans-serif" font-weight="700" text-anchor="start">OK</text>
+  <text x="312" y="300" fill="#94a3b8" font-size="11" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="start">HTTP 200 en 613ms</text>
+  <text x="312" y="316" fill="#94a3b8" font-size="11" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="start">613ms</text>
+  <rect x="560" y="240" width="200" height="90" fill="#1e293b" rx="10" stroke="#22c55e" stroke-width="1" />
+  <text x="572" y="262" fill="#f1f5f9" font-size="13" font-family="Inter, -apple-system, sans-serif" font-weight="600" text-anchor="start">Outlook 365</text>
+  <text x="572" y="282" fill="#22c55e" font-size="12" font-family="Inter, -apple-system, sans-serif" font-weight="700" text-anchor="start">OK</text>
+  <text x="572" y="300" fill="#94a3b8" font-size="11" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="start">Token Azure OK en 228ms</text>
+  <text x="572" y="316" fill="#94a3b8" font-size="11" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="start">228ms</text>
+  <rect x="40" y="360" width="720" height="50" fill="#1e293b" rx="8" stroke="#22c55e" stroke-width="1" />
+  <text x="60" y="382" fill="#22c55e" font-size="13" font-family="Inter, -apple-system, sans-serif" font-weight="600" text-anchor="start">🔗 Pipeline OK</text>
+  <text x="400" y="466" fill="#94a3b8" font-size="11" font-family="Inter, -apple-system, sans-serif" font-weight="normal" text-anchor="middle">Généré le 2026-03-31 11:23 UTC • tools/system_report_generator.py</text>
+</svg>

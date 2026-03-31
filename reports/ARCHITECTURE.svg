@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1280 2120">
+  <!-- Generator: Adobe Illustrator 29.1.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 142)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7, .st8, .st9, .st10, .st11 {
+        fill: #1a2235;
+      }
+
+      .st0, .st3, .st12 {
+        stroke: #a78bfa;
+      }
+
+      .st13, .st14, .st15, .st16, .st17, .st18, .st19, .st20, .st2, .st21, .st22, .st23, .st3, .st24, .st25, .st26, .st27, .st28, .st29, .st30, .st31, .st32, .st33, .st34, .st35, .st36, .st37, .st38, .st39, .st40, .st41, .st7, .st42, .st9, .st43, .st44, .st45, .st46, .st47, .st11, .st48, .st49, .st50, .st51, .st52, .st53, .st54, .st55, .st56, .st57, .st58, .st59, .st60, .st61, .st62, .st63, .st64, .st65, .st66, .st67, .st68, .st69, .st70 {
+        isolation: isolate;
+      }
+
+      .st13, .st18, .st26, .st34, .st38, .st54 {
+        opacity: .2;
+      }
+
+      .st13, .st32, .st37, .st46 {
+        fill: #f87171;
+      }
+
+      .st14, .st20, .st35, .st37 {
+        font-size: 8px;
+      }
+
+      .st14, .st35, .st36, .st44, .st64, .st65, .st71, .st68 {
+        fill: #6b7a99;
+      }
+
+      .st15, .st19, .st21, .st23, .st36, .st46, .st47, .st48, .st55, .st69 {
+        font-size: 10px;
+      }
+
+      .st15, .st19, .st21, .st24, .st32, .st43, .st45, .st46, .st47, .st48, .st49, .st50, .st55, .st72, .st59, .st60, .st61, .st62, .st63, .st66, .st67, .st69, .st70 {
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+
+      .st15, .st20, .st56, .st57, .st61 {
+        fill: #34d399;
+      }
+
+      .st1, .st11, .st73 {
+        stroke: #60a5fa;
+      }
+
+      .st74 {
+        fill: #0d0f1a;
+      }
+
+      .st75 {
+        letter-spacing: 0em;
+      }
+
+      .st75, .st76, .st77, .st78, .st79, .st80, .st81, .st25, .st82, .st35, .st44, .st64 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+      }
+
+      .st83 {
+        fill: #1c1528;
+      }
+
+      .st83, .st9, .st84 {
+        stroke: #f87171;
+      }
+
+      .st76 {
+        letter-spacing: 0em;
+      }
+
+      .st16, .st17, .st18, .st43, .st50, .st55, .st58 {
+        fill: #c9a96e;
+      }
+
+      .st16, .st22, .st27, .st30, .st39, .st52, .st56 {
+        opacity: .2;
+      }
+
+      .st17, .st29, .st31, .st41, .st53 {
+        opacity: .1;
+      }
+
+      .st77 {
+        letter-spacing: 0em;
+      }
+
+      .st19, .st22 {
+        fill: #f59e0b;
+      }
+
+      .st85 {
+        font-family: AppleBraille-Outline6Dot, 'Apple Braille';
+      }
+
+      .st2, .st3, .st7, .st9, .st11 {
+        opacity: .8;
+      }
+
+      .st2, .st86, .st8 {
+        stroke: #2dd4bf;
+      }
+
+      .st21, .st26, .st27, .st28, .st29, .st62 {
+        fill: #a78bfa;
+      }
+
+      .st87, .st88, .st89, .st86, .st90, .st12, .st73, .st84 {
+        fill: #131929;
+      }
+
+      .st87, .st91 {
+        stroke: #6b7a99;
+      }
+
+      .st78 {
+        letter-spacing: 0em;
+      }
+
+      .st79 {
+        letter-spacing: 0em;
+      }
+
+      .st80, .st43, .st49, .st61, .st62, .st63, .st64, .st66, .st67 {
+        font-size: 12px;
+      }
+
+      .st23 {
+        fill: #8a6d3b;
+      }
+
+      .st81 {
+        letter-spacing: 0em;
+      }
+
+      .st24, .st32, .st45, .st50, .st58, .st59, .st65, .st70 {
+        font-size: 11px;
+      }
+
+      .st24, .st48, .st51, .st52, .st53, .st54, .st63 {
+        fill: #fb923c;
+      }
+
+      .st91, .st92, .st93, .st94 {
+        fill: none;
+      }
+
+      .st91, .st93 {
+        stroke-width: 1.5px;
+      }
+
+      .st92 {
+        stroke: #8a6d3b;
+      }
+
+      .st89, .st5 {
+        stroke: #c9a96e;
+      }
+
+      .st25, .st42, .st44, .st68 {
+        font-size: 9px;
+      }
+
+      .st25, .st42, .st59, .st60, .st67 {
+        fill: #e8edf5;
+      }
+
+      .st95 {
+        fill: #253047;
+      }
+
+      .st4, .st90, .st7 {
+        stroke: #fb923c;
+      }
+
+      .st28, .st33, .st40, .st51, .st57 {
+        opacity: .2;
+      }
+
+      .st96 {
+        fill: #0f1c14;
+      }
+
+      .st96, .st10 {
+        stroke: #34d399;
+      }
+
+      .st30, .st31, .st33, .st34, .st47, .st49, .st70 {
+        fill: #2dd4bf;
+      }
+
+      .st6 {
+        stroke: #f59e0b;
+      }
+
+      .st38, .st39, .st40, .st41, .st45, .st66, .st69 {
+        fill: #60a5fa;
+      }
+
+      .st93, .st94 {
+        stroke: #253047;
+      }
+
+      .st60 {
+        font-size: 22px;
+      }
+    </style>
+  </defs>
+  <rect class="st74" x=".6" y="2.4" width="1280" height="2120"/>
+  <rect class="st88" y="0" width="1280" height="70"/>
+  <line class="st92" y1="70" x2="1280" y2="70"/>
+  <text class="st43" transform="translate(32 28)"><tspan x="0" y="0">INPRESSCO</tspan></text>
+  <text class="st60" transform="translate(32 50)"><tspan x="0" y="0">ARCHITECTURE MWP</tspan></text>
+  <text class="st65" transform="translate(1176.6 28)"><tspan class="st82" x="0" y="0">28</tspan><tspan class="st85" x="11.3" y="0"> </tspan><tspan class="st82" x="15" y="0">mars</tspan><tspan class="st85" x="37.5" y="0"> </tspan><tspan class="st82" x="41.2" y="0">2026</tspan><tspan class="st85" x="63.8" y="0"> </tspan><tspan class="st82" x="67.6" y="0">·</tspan><tspan class="st85" x="69.8" y="0"> </tspan><tspan class="st82" x="73.6" y="0">v1.0</tspan></text>
+  <text class="st64" transform="translate(1194.7 50)"><tspan x="0" y="0">inpressco-mwp</tspan></text>
+  <text class="st58" transform="translate(32 104)"><tspan class="st72" x="0" y="0">01 — PIPELINE FLUX A · email entrant </tspan><tspan class="st82" x="202.9" y="0">→</tspan><tspan class="st72" x="208.4" y="0" xml:space="preserve"> devis </tspan><tspan class="st82" x="242.7" y="0">→</tspan><tspan class="st72" x="248.2" y="0" xml:space="preserve"> réponse client</tspan></text>
+  <rect class="st87" x="32" y="120" width="80" height="34" rx="6" ry="6"/>
+  <text class="st44" transform="translate(64.3 132)"><tspan x="0" y="0">email</tspan></text>
+  <text class="st44" transform="translate(61.2 144)"><tspan x="0" y="0">entrant</tspan></text>
+  <line class="st91" x1="112" y1="136" x2="128" y2="136"/>
+  <polygon class="st71" points="128 136 120 132 120 140 128 136"/>
+  <rect class="st1" x="129" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st69" transform="translate(161.7 127)"><tspan x="0" y="0">s01</tspan></text>
+  <text class="st25" transform="translate(160.8 139)"><tspan x="0" y="0">Récup.</tspan></text>
+  <text class="st25" transform="translate(159.2 151)"><tspan x="0" y="0">Outlook</tspan></text>
+  <line class="st93" x1="212" y1="137" x2="218" y2="137"/>
+  <polygon class="st95" points="218 137 210 133 210 141 218 137"/>
+  <rect class="st0" x="215" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st21" transform="translate(247.7 127)"><tspan x="0" y="0">s02</tspan></text>
+  <text class="st25" transform="translate(240.6 139)"><tspan x="0" y="0">Extraction</tspan></text>
+  <text class="st42" transform="translate(248.3 151)"><tspan class="st82" x="0" y="0">IA</tspan><tspan class="st85" x="7.7" y="0"> </tspan><tspan class="st82" x="10.7" y="0">×3</tspan></text>
+  <line class="st93" x1="298" y1="137" x2="304" y2="137"/>
+  <polygon class="st95" points="304 137 296 133 296 141 304 137"/>
+  <rect class="st0" x="301" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st21" transform="translate(333.7 127)"><tspan x="0" y="0">s03</tspan></text>
+  <text class="st25" transform="translate(331.2 139)"><tspan x="0" y="0">Routing</tspan></text>
+  <text class="st25" transform="translate(325.1 151)"><tspan x="0" y="0">NEW_PROJECT</tspan></text>
+  <line class="st93" x1="384" y1="137" x2="390" y2="137"/>
+  <polygon class="st95" points="390 137 382 133 382 141 390 137"/>
+  <rect class="st8" x="387" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st47" transform="translate(419.7 127)"><tspan x="0" y="0">s04</tspan></text>
+  <text class="st25" transform="translate(420.3 139)"><tspan x="0" y="0">Tiers</tspan></text>
+  <text class="st25" transform="translate(415.7 151)"><tspan x="0" y="0">Dolibarr</tspan></text>
+  <line class="st93" x1="470" y1="137" x2="476" y2="137"/>
+  <polygon class="st95" points="476 137 468 133 468 141 476 137"/>
+  <rect class="st1" x="473" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st69" transform="translate(505.7 127)"><tspan x="0" y="0">s05</tspan></text>
+  <text class="st25" transform="translate(504.8 139)"><tspan x="0" y="0">Pièces</tspan></text>
+  <text class="st25" transform="translate(503.2 151)"><tspan x="0" y="0">jointes</tspan></text>
+  <line class="st93" x1="556" y1="137" x2="562" y2="137"/>
+  <polygon class="st95" points="562 137 554 133 554 141 562 137"/>
+  <rect class="st4" x="559" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st48" transform="translate(591.7 127)"><tspan x="0" y="0">s06</tspan></text>
+  <text class="st25" transform="translate(589.2 139)"><tspan x="0" y="0">Analyse</tspan></text>
+  <text class="st25" transform="translate(584.6 151)"><tspan x="0" y="0">impression</tspan></text>
+  <line class="st93" x1="642" y1="137" x2="648" y2="137"/>
+  <polygon class="st95" points="648 137 640 133 640 141 648 137"/>
+  <rect class="st5" x="645" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st55" transform="translate(677.7 127)"><tspan x="0" y="0">s07</tspan></text>
+  <text class="st25" transform="translate(676.8 139)"><tspan x="0" y="0">Lignes</tspan></text>
+  <text class="st25" transform="translate(678.3 151)"><tspan x="0" y="0">devis</tspan></text>
+  <line class="st93" x1="728" y1="137" x2="734" y2="137"/>
+  <polygon class="st95" points="734 137 726 133 726 141 734 137"/>
+  <rect class="st8" x="731" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st47" transform="translate(763.7 127)"><tspan x="0" y="0">s08</tspan></text>
+  <text class="st25" transform="translate(759.7 139)"><tspan x="0" y="0">Création</tspan></text>
+  <text class="st25" transform="translate(764.3 151)"><tspan x="0" y="0">devis</tspan></text>
+  <line class="st93" x1="814" y1="137" x2="820" y2="137"/>
+  <polygon class="st95" points="820 137 812 133 812 141 820 137"/>
+  <rect class="st8" x="817" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st47" transform="translate(849.7 127)"><tspan x="0" y="0">s09</tspan></text>
+  <text class="st25" transform="translate(848.8 139)"><tspan x="0" y="0">Upload</tspan></text>
+  <text class="st25" transform="translate(854.9 151)"><tspan x="0" y="0">PJ</tspan></text>
+  <line class="st93" x1="900" y1="137" x2="906" y2="137"/>
+  <polygon class="st95" points="906 137 898 133 898 141 906 137"/>
+  <rect class="st8" x="903" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st47" transform="translate(935.7 127)"><tspan x="0" y="0">s10</tspan></text>
+  <text class="st25" transform="translate(934.8 139)"><tspan x="0" y="0">Agenda</tspan></text>
+  <text class="st25" transform="translate(931.7 151)"><tspan x="0" y="0">Dolibarr</tspan></text>
+  <line class="st93" x1="986" y1="137" x2="992" y2="137"/>
+  <polygon class="st95" points="992 137 984 133 984 141 992 137"/>
+  <rect class="st1" x="989" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st69" transform="translate(1021.9 127)"><tspan x="0" y="0">s11</tspan></text>
+  <text class="st25" transform="translate(1016.2 139)"><tspan x="0" y="0">Archivage</tspan></text>
+  <text class="st25" transform="translate(1019.2 151)"><tspan x="0" y="0">Outlook</tspan></text>
+  <line class="st93" x1="1072" y1="137" x2="1078" y2="137"/>
+  <polygon class="st95" points="1078 137 1070 133 1070 141 1078 137"/>
+  <rect class="st10" x="1075" y="114" width="82" height="46" rx="7" ry="7"/>
+  <text class="st15" transform="translate(1107.7 127)"><tspan x="0" y="0">s12</tspan></text>
+  <text class="st25" transform="translate(1108.3 139)"><tspan x="0" y="0">Email</tspan></text>
+  <text class="st25" transform="translate(1105.2 151)"><tspan x="0" y="0">réponse</tspan></text>
+  <rect class="st83" x="303" y="164" width="78" height="16" rx="4" ry="4"/>
+  <text class="st37" transform="translate(317.4 174)"><tspan class="st82" x="0" y="0">gate</tspan><tspan class="st85" x="15" y="0"> </tspan><tspan class="st82" x="17.7" y="0">:</tspan><tspan class="st85" x="19.4" y="0"> </tspan><tspan class="st82" x="22.1" y="0">NEW_PROJECT</tspan></text>
+  <rect class="st96" x="733" y="164" width="78" height="16" rx="4" ry="4"/>
+  <text class="st20" transform="translate(746 174)"><tspan class="st82" x="0" y="0">anti-doublon</tspan><tspan class="st85" x="43.9" y="0"> </tspan><tspan class="st82" x="46.6" y="0">marker</tspan></text>
+  <text class="st58" transform="translate(32 214)"><tspan class="st72" x="0" y="0">02 — COUCHES CODE · L0 </tspan><tspan class="st82" x="144.3" y="0">→</tspan><tspan class="st72" x="149.8" y="0" xml:space="preserve"> L7</tspan></text>
+  <text class="st58" transform="translate(656 214)"><tspan class="st72" x="0" y="0">03 — COUCHES CONTEXTE MWP · L0 </tspan><tspan class="st82" x="202.3" y="0">→</tspan><tspan class="st72" x="207.8" y="0" xml:space="preserve"> L4</tspan></text>
+  <rect class="st5" x="32" y="224" width="592" height="36" rx="6" ry="6"/>
+  <rect class="st16" x="32" y="224" width="32" height="36" rx="6" ry="6"/>
+  <text class="st55" transform="translate(42.2 246)"><tspan x="0" y="0">L0</tspan></text>
+  <text class="st59" transform="translate(72 238)"><tspan x="0" y="0">Identité workspace</tspan></text>
+  <text class="st68" transform="translate(72 251)"><tspan class="st82" x="0" y="0">CLAUDE.md</tspan><tspan class="st85" x="45.7" y="0"> </tspan><tspan class="st77" x="48.7" y="0">·</tspan><tspan class="st85" x="50.6" y="0"> </tspan><tspan class="st82" x="53.7" y="0">CONTEXT.md</tspan><tspan class="st85" x="104" y="0"> </tspan><tspan class="st82" x="107.1" y="0">·</tspan><tspan class="st85" x="108.9" y="0"> </tspan><tspan class="st82" x="112" y="0">CARNET.md</tspan></text>
+  <rect class="st6" x="32" y="264" width="592" height="36" rx="6" ry="6"/>
+  <rect class="st22" x="32" y="264" width="32" height="36" rx="6" ry="6"/>
+  <text class="st19" transform="translate(42.2 286)"><tspan x="0" y="0">L1</tspan></text>
+  <text class="st59" transform="translate(72 278)"><tspan x="0" y="0">Config &amp; secrets</tspan></text>
+  <text class="st68" transform="translate(72 291)"><tspan class="st82" x="0" y="0">.env</tspan><tspan class="st85" x="15.7" y="0"> </tspan><tspan class="st82" x="18.8" y="0">·</tspan><tspan class="st85" x="20.6" y="0"> </tspan><tspan class="st82" x="23.7" y="0">_config/*.md</tspan><tspan class="st85" x="73.2" y="0"> </tspan><tspan class="st82" x="76.3" y="0">·</tspan><tspan class="st85" x="78.1" y="0"> </tspan><tspan class="st82" x="81.2" y="0">src/config.py</tspan></text>
+  <rect class="st0" x="32" y="304" width="592" height="36" rx="6" ry="6"/>
+  <rect class="st27" x="32" y="304" width="32" height="36" rx="6" ry="6"/>
+  <text class="st21" transform="translate(42.2 326)"><tspan x="0" y="0">L2</tspan></text>
+  <text class="st59" transform="translate(72 318)"><tspan x="0" y="0">Connecteurs externes</tspan></text>
+  <text class="st68" transform="translate(72 331)"><tspan class="st82" x="0" y="0">claude_client.py</tspan><tspan class="st85" x="61.5" y="0"> </tspan><tspan class="st82" x="64.6" y="0">·</tspan><tspan class="st85" x="66.4" y="0"> </tspan><tspan class="st82" x="69.5" y="0">dolibarr.py</tspan><tspan class="st85" x="110.3" y="0"> </tspan><tspan class="st82" x="113.4" y="0">·</tspan><tspan class="st85" x="115.3" y="0"> </tspan><tspan class="st82" x="118.3" y="0">outlook.py</tspan></text>
+  <rect class="st1" x="32" y="344" width="592" height="36" rx="6" ry="6"/>
+  <rect class="st39" x="32" y="344" width="32" height="36" rx="6" ry="6"/>
+  <text class="st69" transform="translate(42.2 366)"><tspan x="0" y="0">L3</tspan></text>
+  <text class="st59" transform="translate(72 358)"><tspan x="0" y="0">Middleware / Context</tspan></text>
+  <text class="st68" transform="translate(72 371)"><tspan class="st82" x="0" y="0">context.py</tspan><tspan class="st85" x="39.8" y="0"> </tspan><tspan class="st82" x="42.9" y="0">·</tspan><tspan class="st85" x="44.8" y="0"> </tspan><tspan class="st82" x="47.8" y="0">pipeline.py</tspan></text>
+  <rect class="st1" x="32" y="384" width="592" height="36" rx="6" ry="6"/>
+  <rect class="st39" x="32" y="384" width="32" height="36" rx="6" ry="6"/>
+  <text class="st69" transform="translate(42.2 406)"><tspan x="0" y="0">L4</tspan></text>
+  <text class="st59" transform="translate(72 398)"><tspan x="0" y="0">Steps pipeline</tspan></text>
+  <text class="st68" transform="translate(72 411)"><tspan class="st82" x="0" y="0">flux_a/steps.py</tspan><tspan class="st85" x="56.7" y="0"> </tspan><tspan class="st82" x="59.8" y="0">·</tspan><tspan class="st85" x="61.7" y="0"> </tspan><tspan class="st82" x="64.7" y="0">flux_b/steps.py</tspan></text>
+  <rect class="st8" x="32" y="424" width="592" height="36" rx="6" ry="6"/>
+  <rect class="st30" x="32" y="424" width="32" height="36" rx="6" ry="6"/>
+  <text class="st47" transform="translate(42.2 446)"><tspan x="0" y="0">L5</tspan></text>
+  <text class="st59" transform="translate(72 438)"><tspan x="0" y="0">Utils métier</tspan></text>
+  <text class="st68" transform="translate(72 451)"><tspan class="st82" x="0" y="0">imposition.py</tspan><tspan class="st85" x="51.6" y="0"> </tspan><tspan class="st77" x="54.7" y="0">·</tspan><tspan class="st85" x="56.5" y="0"> </tspan><tspan class="st81" x="59.6" y="0">devis_builder.py</tspan><tspan class="st85" x="121.7" y="0"> </tspan><tspan class="st82" x="124.8" y="0">·</tspan><tspan class="st85" x="126.7" y="0"> </tspan><tspan class="st82" x="129.8" y="0">html_cleaner.py</tspan></text>
+  <rect class="st4" x="32" y="464" width="592" height="36" rx="6" ry="6"/>
+  <rect class="st52" x="32" y="464" width="32" height="36" rx="6" ry="6"/>
+  <text class="st48" transform="translate(42.2 486)"><tspan x="0" y="0">L6</tspan></text>
+  <text class="st59" transform="translate(72 478)"><tspan x="0" y="0">Engine &amp; routing</tspan></text>
+  <text class="st68" transform="translate(72 491)"><tspan class="st82" x="0" y="0">dispatcher.py</tspan><tspan class="st85" x="50.9" y="0"> </tspan><tspan class="st82" x="54" y="0">·</tspan><tspan class="st85" x="55.8" y="0"> </tspan><tspan class="st82" x="58.9" y="0">main.py</tspan></text>
+  <rect class="st10" x="32" y="504" width="592" height="36" rx="6" ry="6"/>
+  <rect class="st56" x="32" y="504" width="32" height="36" rx="6" ry="6"/>
+  <text class="st15" transform="translate(42.2 526)"><tspan x="0" y="0">L7</tspan></text>
+  <text class="st59" transform="translate(72 518)"><tspan x="0" y="0">Dashboard &amp; API</tspan></text>
+  <text class="st68" transform="translate(72 531)"><tspan class="st82" x="0" y="0">dashboard/app.py</tspan><tspan class="st85" x="69.3" y="0"> </tspan><tspan class="st82" x="72.4" y="0">·</tspan><tspan class="st85" x="74.2" y="0"> </tspan><tspan class="st82" x="77.3" y="0">index.html</tspan></text>
+  <rect class="st5" x="656" y="224" width="592" height="56" rx="6" ry="6"/>
+  <rect class="st17" x="656" y="224" width="32" height="56" rx="6" ry="6"/>
+  <text class="st55" transform="translate(666.2 256)"><tspan x="0" y="0">L0</tspan></text>
+  <text class="st67" transform="translate(696 242)"><tspan x="0" y="0">Identité</tspan></text>
+  <text class="st36" transform="translate(696 258)"><tspan class="st82" x="0" y="0">Prompt</tspan><tspan class="st85" x="31.4" y="0"> </tspan><tspan class="st82" x="34.8" y="0">système</tspan><tspan class="st85" x="69.1" y="0"> </tspan><tspan class="st82" x="72.6" y="0">·</tspan><tspan class="st85" x="74.6" y="0"> </tspan><tspan class="st82" x="78" y="0">nom</tspan><tspan class="st85" x="97.4" y="0"> </tspan><tspan class="st82" x="100.8" y="0">du</tspan><tspan class="st85" x="112" y="0"> </tspan><tspan class="st82" x="115.4" y="0">skill</tspan><tspan class="st85" x="131.1" y="0"> </tspan><tspan class="st82" x="134.5" y="0">actif</tspan></text>
+  <rect class="st4" x="656" y="286" width="592" height="56" rx="6" ry="6"/>
+  <rect class="st53" x="656" y="286" width="32" height="56" rx="6" ry="6"/>
+  <text class="st48" transform="translate(666.2 318)"><tspan x="0" y="0">L1</tspan></text>
+  <text class="st67" transform="translate(696 304)"><tspan x="0" y="0">Routing tâches</tspan></text>
+  <text class="st36" transform="translate(696 320)"><tspan class="st82" x="0" y="0">Description</tspan><tspan class="st85" x="48.1" y="0"> </tspan><tspan class="st82" x="51.5" y="0">frontmatter</tspan><tspan class="st85" x="100.1" y="0"> </tspan><tspan class="st82" x="103.5" y="0">·</tspan><tspan class="st85" x="105.6" y="0"> </tspan><tspan class="st82" x="109" y="0">orchestrateur-inpressco</tspan></text>
+  <rect class="st0" x="656" y="348" width="592" height="56" rx="6" ry="6"/>
+  <rect class="st29" x="656" y="348" width="32" height="56" rx="6" ry="6"/>
+  <text class="st21" transform="translate(666.2 380)"><tspan x="0" y="0">L2</tspan></text>
+  <text class="st67" transform="translate(696 366)"><tspan x="0" y="0">Contrat d&apos;étape</tspan></text>
+  <text class="st36" transform="translate(696 382)"><tspan class="st82" x="0" y="0">Inputs</tspan><tspan class="st85" x="26.4" y="0"> </tspan><tspan class="st82" x="29.8" y="0">·</tspan><tspan class="st85" x="31.9" y="0"> </tspan><tspan class="st82" x="35.3" y="0">Process</tspan><tspan class="st85" x="66.8" y="0"> </tspan><tspan class="st82" x="70.2" y="0">·</tspan><tspan class="st85" x="72.3" y="0"> </tspan><tspan class="st82" x="75.7" y="0">Outputs</tspan><tspan class="st85" x="109.9" y="0"> </tspan><tspan class="st82" x="113.3" y="0">·</tspan><tspan class="st85" x="115.4" y="0"> </tspan><tspan class="st79" x="118.8" y="0">Verify</tspan><tspan class="st85" x="142.6" y="0"> </tspan><tspan class="st82" x="146" y="0">·</tspan><tspan class="st85" x="148.1" y="0"> </tspan><tspan class="st82" x="151.5" y="0">Gates</tspan></text>
+  <rect class="st1" x="656" y="410" width="592" height="56" rx="6" ry="6"/>
+  <rect class="st41" x="656" y="410" width="32" height="56" rx="6" ry="6"/>
+  <text class="st69" transform="translate(666.2 442)"><tspan x="0" y="0">L3</tspan></text>
+  <text class="st67" transform="translate(696 428)"><tspan x="0" y="0">Référentiels stables</tspan></text>
+  <text class="st36" transform="translate(696 444)"><tspan class="st82" x="0" y="0">references/*.md</tspan><tspan class="st85" x="67.1" y="0"> </tspan><tspan class="st82" x="70.5" y="0">·</tspan><tspan class="st85" x="72.6" y="0"> </tspan><tspan class="st82" x="76" y="0">conventions</tspan><tspan class="st85" x="127.6" y="0"> </tspan><tspan class="st76" x="131" y="0">Dolibarr</tspan><tspan class="st85" x="164.9" y="0"> </tspan><tspan class="st82" x="168.3" y="0">·</tspan><tspan class="st85" x="170.4" y="0"> </tspan><tspan class="st82" x="173.8" y="0">règles</tspan><tspan class="st85" x="199" y="0"> </tspan><tspan class="st82" x="202.4" y="0">métier</tspan></text>
+  <rect class="st8" x="656" y="472" width="592" height="56" rx="6" ry="6"/>
+  <rect class="st31" x="656" y="472" width="32" height="56" rx="6" ry="6"/>
+  <text class="st47" transform="translate(666.2 504)"><tspan x="0" y="0">L4</tspan></text>
+  <text class="st67" transform="translate(696 490)"><tspan x="0" y="0">Artefacts du run</tspan></text>
+  <text class="st36" transform="translate(696 506)"><tspan class="st82" x="0" y="0">Email</tspan><tspan class="st85" x="22.8" y="0"> </tspan><tspan class="st82" x="26.2" y="0">entrant</tspan><tspan class="st85" x="57" y="0"> </tspan><tspan class="st82" x="60.4" y="0">·</tspan><tspan class="st85" x="62.5" y="0"> </tspan><tspan class="st82" x="65.9" y="0">données</tspan><tspan class="st85" x="102.1" y="0"> </tspan><tspan class="st82" x="105.6" y="0">Dolibarr</tspan><tspan class="st85" x="139.4" y="0"> </tspan><tspan class="st76" x="142.9" y="0">live</tspan><tspan class="st85" x="157.4" y="0"> </tspan><tspan class="st82" x="160.8" y="0">·</tspan><tspan class="st85" x="162.9" y="0"> </tspan><tspan class="st82" x="166.3" y="0">ctx.*</tspan></text>
+  <text class="st50" transform="translate(32 590)"><tspan x="0" y="0">04 — SKILLS CLAUDE · 31 skills installés dans .claude/skills/</tspan></text>
+  <rect class="st84" x="32" y="600" width="230" height="216" rx="10" ry="10"/>
+  <rect class="st13" x="32" y="600" width="230" height="28" rx="10" ry="10"/>
+  <text class="st46" transform="translate(93.4 617)"><tspan x="0" y="0">SÉCURITÉ &amp; QUALITÉ</tspan></text>
+  <rect class="st9" x="40" y="638" width="214" height="38" rx="6" ry="6"/>
+  <text class="st46" transform="translate(48 652)"><tspan x="0" y="0">droits-profils</tspan></text>
+  <text class="st14" transform="translate(48 665)"><tspan class="st82" x="0" y="0">Porte</tspan><tspan class="st85" x="17.9" y="0"> </tspan><tspan class="st82" x="20.7" y="0">d&apos;entrée</tspan><tspan class="st85" x="48.4" y="0"> </tspan><tspan class="st82" x="51.1" y="0">—</tspan><tspan class="st85" x="59.1" y="0"> </tspan><tspan class="st75" x="61.9" y="0">profil</tspan></text>
+  <text class="st35" transform="translate(48 675)"><tspan x="0" y="0">CLIENT/TEAM/ADMIN</tspan></text>
+  <rect class="st9" x="40" y="681" width="214" height="38" rx="6" ry="6"/>
+  <text class="st46" transform="translate(48 695)"><tspan x="0" y="0">validation-qc</tspan></text>
+  <text class="st14" transform="translate(48 708)"><tspan class="st82" x="0" y="0">QC</tspan><tspan class="st85" x="10.2" y="0"> </tspan><tspan class="st82" x="12.9" y="0">avant</tspan><tspan class="st85" x="31.5" y="0"> </tspan><tspan class="st78" x="34.3" y="0">toute</tspan><tspan class="st85" x="52.4" y="0"> </tspan><tspan class="st82" x="55.1" y="0">action</tspan></text>
+  <text class="st35" transform="translate(48 718)"><tspan x="0" y="0">irréversible</tspan></text>
+  <rect class="st9" x="40" y="724" width="214" height="38" rx="6" ry="6"/>
+  <text class="st46" transform="translate(48 738)"><tspan x="0" y="0">gestion-erreurs</tspan></text>
+  <text class="st14" transform="translate(48 751)"><tspan class="st82" x="0" y="0">Filet</tspan><tspan class="st85" x="14.3" y="0"> </tspan><tspan class="st82" x="17" y="0">sécurité</tspan><tspan class="st85" x="43.4" y="0"> </tspan><tspan class="st82" x="46.1" y="0">—</tspan><tspan class="st85" x="54.1" y="0"> </tspan><tspan class="st82" x="56.8" y="0">retry,</tspan><tspan class="st85" x="74.1" y="0"> </tspan><tspan class="st82" x="76.9" y="0">mode</tspan></text>
+  <text class="st14" transform="translate(48 761)"><tspan class="st82" x="0" y="0">dégradé,</tspan><tspan class="st85" x="29.6" y="0"> </tspan><tspan class="st82" x="32.4" y="0">log</tspan></text>
+  <rect class="st9" x="40" y="767" width="214" height="38" rx="6" ry="6"/>
+  <text class="st46" transform="translate(48 781)"><tspan x="0" y="0">bdd-images-query</tspan></text>
+  <text class="st14" transform="translate(48 794)"><tspan class="st82" x="0" y="0">Anti-doublon</tspan><tspan class="st85" x="44.9" y="0"> </tspan><tspan class="st82" x="47.6" y="0">visuels</tspan><tspan class="st85" x="70" y="0"> </tspan><tspan class="st82" x="72.7" y="0">—</tspan><tspan class="st85" x="80.7" y="0"> </tspan><tspan class="st75" x="83.5" y="0">lecture</tspan></text>
+  <text class="st14" transform="translate(48 804)"><tspan class="st82" x="0" y="0">seule</tspan><tspan class="st85" x="17.5" y="0"> </tspan><tspan class="st75" x="20.2" y="0">assets</tspan></text>
+  <rect class="st90" x="278" y="600" width="230" height="302" rx="10" ry="10"/>
+  <rect class="st54" x="278" y="600" width="230" height="28" rx="10" ry="10"/>
+  <text class="st48" transform="translate(338.8 617)"><tspan x="0" y="0">COMMERCE &amp; CLIENT</tspan></text>
+  <rect class="st7" x="286" y="638" width="214" height="38" rx="6" ry="6"/>
+  <text class="st48" transform="translate(294 652)"><tspan x="0" y="0">inpressco-commerce</tspan></text>
+  <text class="st14" transform="translate(294 665)"><tspan class="st82" x="0" y="0">Expert</tspan><tspan class="st85" x="21.5" y="0"> </tspan><tspan class="st78" x="24.2" y="0">imprimeur</tspan><tspan class="st85" x="59.5" y="0"> </tspan><tspan class="st82" x="62.2" y="0">—</tspan><tspan class="st85" x="70.2" y="0"> </tspan><tspan class="st75" x="73" y="0">devis,</tspan></text>
+  <text class="st14" transform="translate(294 675)"><tspan class="st82" x="0" y="0">brief,</tspan><tspan class="st85" x="17" y="0"> </tspan><tspan class="st82" x="19.8" y="0">finitions</tspan></text>
+  <rect class="st7" x="286" y="681" width="214" height="38" rx="6" ry="6"/>
+  <text class="st48" transform="translate(294 695)"><tspan x="0" y="0">reponse-client</tspan></text>
+  <text class="st14" transform="translate(294 708)"><tspan class="st82" x="0" y="0">Rédaction</tspan><tspan class="st85" x="33.6" y="0"> </tspan><tspan class="st82" x="36.4" y="0">&amp;</tspan><tspan class="st85" x="41.2" y="0"> </tspan><tspan class="st82" x="43.9" y="0">envoi</tspan><tspan class="st85" x="62.5" y="0"> </tspan><tspan class="st75" x="65.2" y="0">emails</tspan><tspan class="st85" x="86.7" y="0"> </tspan><tspan class="st82" x="89.4" y="0">clients</tspan></text>
+  <rect class="st7" x="286" y="724" width="214" height="38" rx="6" ry="6"/>
+  <text class="st48" transform="translate(294 738)"><tspan x="0" y="0">mail-routing</tspan></text>
+  <text class="st14" transform="translate(294 751)"><tspan class="st82" x="0" y="0">8</tspan><tspan class="st85" x="4.1" y="0"> </tspan><tspan class="st82" x="6.8" y="0">catégories</tspan><tspan class="st85" x="41.5" y="0"> </tspan><tspan class="st82" x="44.2" y="0">—</tspan><tspan class="st85" x="52.2" y="0"> </tspan><tspan class="st82" x="54.9" y="0">NEW_PROJECT,</tspan></text>
+  <text class="st14" transform="translate(294 761)"><tspan class="st82" x="0" y="0">SUPPLIER,</tspan><tspan class="st85" x="33.2" y="0"> </tspan><tspan class="st82" x="35.9" y="0">...</tspan></text>
+  <rect class="st7" x="286" y="767" width="214" height="38" rx="6" ry="6"/>
+  <text class="st48" transform="translate(294 781)"><tspan x="0" y="0">analyse-sentiment</tspan></text>
+  <text class="st14" transform="translate(294 794)"><tspan class="st82" x="0" y="0">Profil</tspan><tspan class="st85" x="17.3" y="0"> </tspan><tspan class="st82" x="20.1" y="0">expéditeur</tspan><tspan class="st85" x="56.4" y="0"> </tspan><tspan class="st82" x="59.1" y="0">—</tspan><tspan class="st85" x="67.1" y="0"> </tspan><tspan class="st82" x="69.9" y="0">urgence,</tspan></text>
+  <text class="st35" transform="translate(294 804)"><tspan x="0" y="0">intention</tspan></text>
+  <rect class="st7" x="286" y="810" width="214" height="38" rx="6" ry="6"/>
+  <text class="st48" transform="translate(294 824)"><tspan x="0" y="0">memoire-client</tspan></text>
+  <text class="st14" transform="translate(294 837)"><tspan class="st82" x="0" y="0">CRM</tspan><tspan class="st85" x="15.4" y="0"> </tspan><tspan class="st82" x="18.1" y="0">live</tspan><tspan class="st85" x="29.7" y="0"> </tspan><tspan class="st82" x="32.5" y="0">—</tspan><tspan class="st85" x="40.5" y="0"> </tspan><tspan class="st75" x="43.2" y="0">historique,</tspan></text>
+  <text class="st14" transform="translate(294 847)"><tspan class="st82" x="0" y="0">préférences,</tspan><tspan class="st85" x="41" y="0"> </tspan><tspan class="st75" x="43.7" y="0">alerts</tspan></text>
+  <rect class="st7" x="286" y="853" width="214" height="38" rx="6" ry="6"/>
+  <text class="st48" transform="translate(294 867)"><tspan x="0" y="0">suivi-commande</tspan></text>
+  <text class="st14" transform="translate(294 880)"><tspan class="st82" x="0" y="0">Statut</tspan><tspan class="st85" x="20.2" y="0"> </tspan><tspan class="st82" x="22.9" y="0">commande</tspan><tspan class="st85" x="61" y="0"> </tspan><tspan class="st82" x="63.8" y="0">—</tspan><tspan class="st85" x="71.8" y="0"> </tspan><tspan class="st82" x="74.5" y="0">mise</tspan><tspan class="st85" x="90.2" y="0"> </tspan><tspan class="st82" x="92.9" y="0">à</tspan><tspan class="st85" x="96.8" y="0"> </tspan><tspan class="st82" x="99.5" y="0">jour</tspan><tspan class="st85" x="112.9" y="0"> </tspan><tspan class="st82" x="115.6" y="0">&amp;</tspan></text>
+  <text class="st35" transform="translate(294 890)"><tspan x="0" y="0">relance</tspan></text>
+  <rect class="st86" x="524" y="600" width="230" height="259" rx="10" ry="10"/>
+  <rect class="st34" x="524" y="600" width="230" height="28" rx="10" ry="10"/>
+  <text class="st47" transform="translate(593.1 617)"><tspan x="0" y="0">DOLIBARR &amp; DATA</tspan></text>
+  <rect class="st2" x="532" y="638" width="214" height="38" rx="6" ry="6"/>
+  <text class="st47" transform="translate(540 652)"><tspan x="0" y="0">dolibarr-query</tspan></text>
+  <text class="st14" transform="translate(540 665)"><tspan class="st82" x="0" y="0">CRUD</tspan><tspan class="st85" x="19.4" y="0"> </tspan><tspan class="st82" x="22.2" y="0">Dolibarr</tspan><tspan class="st85" x="49.3" y="0"> </tspan><tspan class="st82" x="52" y="0">—</tspan><tspan class="st85" x="60" y="0"> </tspan><tspan class="st78" x="62.8" y="0">tiers,</tspan><tspan class="st85" x="78.7" y="0"> </tspan><tspan class="st82" x="81.5" y="0">devis,</tspan></text>
+  <text class="st14" transform="translate(540 675)"><tspan class="st82" x="0" y="0">factures,</tspan><tspan class="st85" x="28.3" y="0"> </tspan><tspan class="st75" x="31" y="0">PJ</tspan></text>
+  <rect class="st2" x="532" y="681" width="214" height="38" rx="6" ry="6"/>
+  <text class="st47" transform="translate(540 695)"><tspan x="0" y="0">controleur-gestion</tspan></text>
+  <text class="st14" transform="translate(540 708)"><tspan class="st82" x="0" y="0">DAF</tspan><tspan class="st85" x="14.1" y="0"> </tspan><tspan class="st82" x="16.9" y="0">—</tspan><tspan class="st85" x="24.9" y="0"> </tspan><tspan class="st82" x="27.6" y="0">CA,</tspan><tspan class="st85" x="38.8" y="0"> </tspan><tspan class="st82" x="41.5" y="0">tréso,</tspan><tspan class="st85" x="60" y="0"> </tspan><tspan class="st82" x="62.7" y="0">impayés,</tspan></text>
+  <text class="st14" transform="translate(540 718)"><tspan class="st82" x="0" y="0">marges,</tspan><tspan class="st85" x="26.4" y="0"> </tspan><tspan class="st82" x="29.2" y="0">DSO</tspan></text>
+  <rect class="st2" x="532" y="724" width="214" height="38" rx="6" ry="6"/>
+  <text class="st47" transform="translate(540 738)"><tspan x="0" y="0">analyse-transversale</tspan></text>
+  <text class="st14" transform="translate(540 751)"><tspan class="st82" x="0" y="0">RFM,</tspan><tspan class="st85" x="16.3" y="0"> </tspan><tspan class="st82" x="19" y="0">tendances,</tspan><tspan class="st85" x="55.3" y="0"> </tspan><tspan class="st78" x="58.1" y="0">anomalies,</tspan><tspan class="st85" x="93.9" y="0"> </tspan><tspan class="st75" x="96.6" y="0">mix</tspan></text>
+  <text class="st35" transform="translate(540 761)"><tspan x="0" y="0">produit</tspan></text>
+  <rect class="st2" x="532" y="767" width="214" height="38" rx="6" ry="6"/>
+  <text class="st47" transform="translate(540 781)"><tspan x="0" y="0">chat-to-db</tspan></text>
+  <text class="st14" transform="translate(540 794)"><tspan class="st82" x="0" y="0">Persistance</tspan><tspan class="st85" x="37.6" y="0"> </tspan><tspan class="st82" x="40.4" y="0">conversations</tspan><tspan class="st85" x="86.8" y="0"> </tspan><tspan class="st82" x="89.5" y="0">→</tspan></text>
+  <text class="st35" transform="translate(540 804)"><tspan x="0" y="0">Dolibarr</tspan></text>
+  <rect class="st2" x="532" y="810" width="214" height="38" rx="6" ry="6"/>
+  <text class="st47" transform="translate(540 824)"><tspan x="0" y="0">agenda</tspan></text>
+  <text class="st14" transform="translate(540 837)"><tspan class="st82" x="0" y="0">RDV,</tspan><tspan class="st85" x="15.8" y="0"> </tspan><tspan class="st78" x="18.5" y="0">relances</tspan><tspan class="st85" x="46.1" y="0"> </tspan><tspan class="st82" x="48.8" y="0">—</tspan><tspan class="st85" x="56.8" y="0"> </tspan><tspan class="st82" x="59.5" y="0">Dolibarr</tspan><tspan class="st85" x="86.6" y="0"> </tspan><tspan class="st82" x="89.4" y="0">↔</tspan></text>
+  <text class="st14" transform="translate(540 847)"><tspan class="st82" x="0" y="0">Outlook</tspan><tspan class="st85" x="27" y="0"> </tspan><tspan class="st82" x="29.7" y="0">365</tspan></text>
+  <rect class="st73" x="770" y="600" width="230" height="216" rx="10" ry="10"/>
+  <rect class="st38" x="770" y="600" width="230" height="28" rx="10" ry="10"/>
+  <text class="st69" transform="translate(830.6 617)"><tspan x="0" y="0">PRODUCTION &amp; DOCS</tspan></text>
+  <rect class="st11" x="778" y="638" width="214" height="38" rx="6" ry="6"/>
+  <text class="st69" transform="translate(786 652)"><tspan x="0" y="0">archiveur</tspan></text>
+  <text class="st14" transform="translate(786 665)"><tspan class="st82" x="0" y="0">Nommage</tspan><tspan class="st85" x="35.3" y="0"> </tspan><tspan class="st82" x="38.1" y="0">&amp;</tspan><tspan class="st85" x="42.9" y="0"> </tspan><tspan class="st82" x="45.6" y="0">dépôt</tspan><tspan class="st85" x="65.8" y="0"> </tspan><tspan class="st82" x="68.5" y="0">—</tspan><tspan class="st85" x="76.5" y="0"> </tspan><tspan class="st82" x="79.2" y="0">BAT,</tspan><tspan class="st85" x="94.1" y="0"> </tspan><tspan class="st82" x="96.8" y="0">PJ,</tspan></text>
+  <text class="st14" transform="translate(786 675)"><tspan class="st82" x="0" y="0">visuels,</tspan><tspan class="st85" x="24" y="0"> </tspan><tspan class="st82" x="26.8" y="0">PDF</tspan></text>
+  <rect class="st11" x="778" y="681" width="214" height="38" rx="6" ry="6"/>
+  <text class="st69" transform="translate(786 695)"><tspan x="0" y="0">generation-pdf</tspan></text>
+  <text class="st14" transform="translate(786 708)"><tspan class="st82" x="0" y="0">PDF</tspan><tspan class="st85" x="13.5" y="0"> </tspan><tspan class="st78" x="16.2" y="0">devis/factures</tspan><tspan class="st85" x="63" y="0"> </tspan><tspan class="st82" x="65.7" y="0">—</tspan><tspan class="st85" x="73.7" y="0"> </tspan><tspan class="st75" x="76.5" y="0">API</tspan></text>
+  <text class="st14" transform="translate(786 718)"><tspan class="st82" x="0" y="0">Dolibarr</tspan><tspan class="st85" x="27.1" y="0"> </tspan><tspan class="st82" x="29.9" y="0">+</tspan><tspan class="st85" x="34.6" y="0"> </tspan><tspan class="st78" x="37.4" y="0">reportlab</tspan></text>
+  <rect class="st11" x="778" y="724" width="214" height="38" rx="6" ry="6"/>
+  <text class="st69" transform="translate(786 738)"><tspan x="0" y="0">projets-artefacts</tspan></text>
+  <text class="st14" transform="translate(786 751)"><tspan class="st82" x="0" y="0">Mémoire</tspan><tspan class="st85" x="30" y="0"> </tspan><tspan class="st82" x="32.7" y="0">cross-sessions</tspan><tspan class="st85" x="79.5" y="0"> </tspan><tspan class="st82" x="82.2" y="0">des</tspan></text>
+  <text class="st35" transform="translate(786 761)"><tspan x="0" y="0">productions</tspan></text>
+  <rect class="st11" x="778" y="767" width="214" height="38" rx="6" ry="6"/>
+  <text class="st69" transform="translate(786 781)"><tspan x="0" y="0">charte-graphique</tspan></text>
+  <text class="st14" transform="translate(786 794)"><tspan class="st82" x="0" y="0">Extraction</tspan><tspan class="st85" x="33.7" y="0"> </tspan><tspan class="st75" x="36.4" y="0">&amp;</tspan><tspan class="st85" x="41.3" y="0"> </tspan><tspan class="st82" x="44" y="0">mémo</tspan><tspan class="st85" x="65.7" y="0"> </tspan><tspan class="st82" x="68.5" y="0">charte</tspan><tspan class="st85" x="89.6" y="0"> </tspan><tspan class="st82" x="92.4" y="0">client</tspan></text>
+  <rect class="st12" x="1016" y="600" width="230" height="302" rx="10" ry="10"/>
+  <rect class="st26" x="1016" y="600" width="230" height="28" rx="10" ry="10"/>
+  <text class="st21" transform="translate(1080.5 617)"><tspan x="0" y="0">IA &amp; ARCHITECTURE</tspan></text>
+  <rect class="st3" x="1024" y="638" width="214" height="38" rx="6" ry="6"/>
+  <text class="st21" transform="translate(1032 652)"><tspan x="0" y="0">orchestrateur</tspan></text>
+  <text class="st14" transform="translate(1032 665)"><tspan class="st82" x="0" y="0">Chef</tspan><tspan class="st85" x="15.4" y="0"> </tspan><tspan class="st82" x="18.2" y="0">d&apos;orchestre</tspan><tspan class="st85" x="55.7" y="0"> </tspan><tspan class="st75" x="58.4" y="0">multi-skills</tspan></text>
+  <rect class="st3" x="1024" y="681" width="214" height="38" rx="6" ry="6"/>
+  <text class="st21" transform="translate(1032 695)"><tspan x="0" y="0">architecte-ia</tspan></text>
+  <text class="st14" transform="translate(1032 708)"><tspan class="st82" x="0" y="0">CTO</tspan><tspan class="st85" x="14.1" y="0"> </tspan><tspan class="st82" x="16.9" y="0">virtuel</tspan><tspan class="st85" x="38.1" y="0"> </tspan><tspan class="st82" x="40.9" y="0">—</tspan><tspan class="st85" x="48.9" y="0"> </tspan><tspan class="st82" x="51.6" y="0">review</tspan><tspan class="st85" x="73.9" y="0"> </tspan><tspan class="st78" x="76.6" y="0">L0-L7</tspan><tspan class="st85" x="94.8" y="0"> </tspan><tspan class="st82" x="97.5" y="0">+</tspan></text>
+  <text class="st14" transform="translate(1032 718)"><tspan class="st82" x="0" y="0">MWP,</tspan><tspan class="st85" x="19.1" y="0"> </tspan><tspan class="st82" x="21.8" y="0">correctifs</tspan></text>
+  <rect class="st3" x="1024" y="724" width="214" height="38" rx="6" ry="6"/>
+  <text class="st21" transform="translate(1032 738)"><tspan x="0" y="0">ux-inpressco</tspan></text>
+  <text class="st14" transform="translate(1032 751)"><tspan class="st82" x="0" y="0">Composants</tspan><tspan class="st85" x="41.9" y="0"> </tspan><tspan class="st82" x="44.7" y="0">React/HTML</tspan><tspan class="st85" x="85.2" y="0"> </tspan><tspan class="st75" x="87.9" y="0">dashboard</tspan></text>
+  <rect class="st3" x="1024" y="767" width="214" height="38" rx="6" ry="6"/>
+  <text class="st21" transform="translate(1032 781)"><tspan x="0" y="0">planche-archi</tspan></text>
+  <text class="st14" transform="translate(1032 794)"><tspan class="st82" x="0" y="0">Prompts</tspan><tspan class="st85" x="28.3" y="0"> </tspan><tspan class="st82" x="31" y="0">Nanobanana</tspan><tspan class="st85" x="74" y="0"> </tspan><tspan class="st82" x="76.7" y="0">—</tspan><tspan class="st85" x="84.7" y="0"> </tspan><tspan class="st75" x="87.5" y="0">planches</tspan></text>
+  <text class="st35" transform="translate(1032 804)"><tspan x="0" y="0">produit</tspan></text>
+  <rect class="st3" x="1024" y="810" width="214" height="38" rx="6" ry="6"/>
+  <text class="st21" transform="translate(1032 824)"><tspan x="0" y="0">agent-acheteur</tspan></text>
+  <text class="st14" transform="translate(1032 837)"><tspan class="st82" x="0" y="0">RFQ</tspan><tspan class="st85" x="13.7" y="0"> </tspan><tspan class="st82" x="16.4" y="0">fournisseurs</tspan><tspan class="st85" x="57" y="0"> </tspan><tspan class="st82" x="59.8" y="0">—</tspan><tspan class="st85" x="67.8" y="0"> </tspan><tspan class="st82" x="70.5" y="0">email</tspan><tspan class="st85" x="88.8" y="0"> </tspan><tspan class="st82" x="91.5" y="0">par</tspan></text>
+  <text class="st35" transform="translate(1032 847)"><tspan x="0" y="0">métier</tspan></text>
+  <rect class="st3" x="1024" y="853" width="214" height="38" rx="6" ry="6"/>
+  <text class="st21" transform="translate(1032 867)"><tspan x="0" y="0">veille-prix</tspan></text>
+  <text class="st14" transform="translate(1032 880)"><tspan class="st82" x="0" y="0">Benchmark</tspan><tspan class="st85" x="37.7" y="0"> </tspan><tspan class="st82" x="40.4" y="0">Exaprint</tspan><tspan class="st85" x="68.1" y="0"> </tspan><tspan class="st82" x="70.8" y="0">/</tspan></text>
+  <text class="st35" transform="translate(1032 890)"><tspan x="0" y="0">Pixartprinting</tspan></text>
+  <text class="st50" transform="translate(32 948)"><tspan x="0" y="0">05 — INTÉGRATIONS EXTERNES</tspan></text>
+  <rect class="st8" x="32" y="958" width="233" height="90" rx="8" ry="8"/>
+  <rect class="st33" x="32" y="958" width="233" height="26" rx="8" ry="8"/>
+  <text class="st49" transform="translate(109.7 974)"><tspan x="0" y="0">Dolibarr CRM</tspan></text>
+  <text class="st68" transform="translate(42 996)"><tspan class="st82" x="0" y="0">API</tspan><tspan class="st85" x="12.4" y="0"> </tspan><tspan class="st77" x="15.5" y="0">REST</tspan><tspan class="st85" x="33.7" y="0"> </tspan><tspan class="st82" x="36.8" y="0">·</tspan><tspan class="st85" x="38.6" y="0"> </tspan><tspan class="st81" x="41.7" y="0">prod.in-pressco.com</tspan></text>
+  <text class="st42" transform="translate(42 1012)"><tspan class="st82" x="0" y="0">Tiers</tspan><tspan class="st85" x="17.6" y="0"> </tspan><tspan class="st82" x="20.7" y="0">·</tspan><tspan class="st85" x="22.5" y="0"> </tspan><tspan class="st77" x="25.6" y="0">Devis</tspan></text>
+  <text class="st42" transform="translate(42 1025)"><tspan class="st82" x="0" y="0">Commandes</tspan><tspan class="st85" x="47.7" y="0"> </tspan><tspan class="st82" x="50.7" y="0">·</tspan><tspan class="st85" x="52.6" y="0"> </tspan><tspan class="st82" x="55.7" y="0">Factures</tspan><tspan class="st85" x="87.4" y="0"> </tspan><tspan class="st82" x="90.5" y="0">·</tspan><tspan class="st85" x="92.3" y="0"> </tspan><tspan class="st77" x="95.4" y="0">Agenda</tspan><tspan class="st85" x="124.8" y="0"> </tspan><tspan class="st77" x="127.9" y="0">·</tspan><tspan class="st85" x="129.8" y="0"> </tspan><tspan class="st81" x="132.9" y="0">PJ</tspan></text>
+  <rect class="st0" x="277" y="958" width="233" height="90" rx="8" ry="8"/>
+  <rect class="st28" x="277" y="958" width="233" height="26" rx="8" ry="8"/>
+  <text class="st62" transform="translate(361.5 974)"><tspan x="0" y="0">Claude API</tspan></text>
+  <text class="st68" transform="translate(287 996)"><tspan class="st82" x="0" y="0">Anthropic</tspan><tspan class="st85" x="37.6" y="0"> </tspan><tspan class="st82" x="40.7" y="0">·</tspan><tspan class="st85" x="42.6" y="0"> </tspan><tspan class="st81" x="45.6" y="0">claude-opus-4-6</tspan><tspan class="st85" x="106.8" y="0"> </tspan><tspan class="st82" x="109.9" y="0">/</tspan><tspan class="st85" x="112.9" y="0"> </tspan><tspan class="st81" x="116" y="0">haiku-4-5</tspan></text>
+  <text class="st42" transform="translate(287 1012)"><tspan class="st82" x="0" y="0">Extraction</tspan><tspan class="st85" x="37.9" y="0"> </tspan><tspan class="st82" x="41" y="0">·</tspan><tspan class="st85" x="42.8" y="0"> </tspan><tspan class="st82" x="45.9" y="0">Routing</tspan></text>
+  <text class="st42" transform="translate(287 1025)"><tspan class="st82" x="0" y="0">Sentiment</tspan><tspan class="st85" x="39" y="0"> </tspan><tspan class="st82" x="42.1" y="0">·</tspan><tspan class="st85" x="44" y="0"> </tspan><tspan class="st82" x="47" y="0">Emails</tspan><tspan class="st85" x="71.1" y="0"> </tspan><tspan class="st77" x="74.2" y="0">·</tspan><tspan class="st85" x="76" y="0"> </tspan><tspan class="st81" x="79.1" y="0">Synthèses</tspan></text>
+  <rect class="st1" x="522" y="958" width="233" height="90" rx="8" ry="8"/>
+  <rect class="st40" x="522" y="958" width="233" height="26" rx="8" ry="8"/>
+  <text class="st66" transform="translate(603.7 974)"><tspan x="0" y="0">Outlook 365</tspan></text>
+  <text class="st68" transform="translate(532 996)"><tspan class="st82" x="0" y="0">Microsoft</tspan><tspan class="st85" x="35.4" y="0"> </tspan><tspan class="st82" x="38.4" y="0">Graph</tspan><tspan class="st85" x="61.7" y="0"> </tspan><tspan class="st77" x="64.7" y="0">API</tspan><tspan class="st85" x="77.2" y="0"> </tspan><tspan class="st82" x="80.3" y="0">·</tspan><tspan class="st85" x="82.1" y="0"> </tspan><tspan class="st82" x="85.2" y="0">Azure</tspan><tspan class="st85" x="107" y="0"> </tspan><tspan class="st77" x="110" y="0">AD</tspan></text>
+  <text class="st42" transform="translate(532 1012)"><tspan class="st82" x="0" y="0">Lecture</tspan><tspan class="st85" x="28.2" y="0"> </tspan><tspan class="st82" x="31.3" y="0">emails</tspan><tspan class="st85" x="55.4" y="0"> </tspan><tspan class="st82" x="58.5" y="0">·</tspan><tspan class="st85" x="60.3" y="0"> </tspan><tspan class="st77" x="63.4" y="0">Envoi</tspan></text>
+  <text class="st42" transform="translate(532 1025)"><tspan class="st82" x="0" y="0">Archivage</tspan><tspan class="st85" x="37.8" y="0"> </tspan><tspan class="st82" x="40.9" y="0">·</tspan><tspan class="st85" x="42.7" y="0"> </tspan><tspan class="st77" x="45.8" y="0">Dossiers</tspan><tspan class="st85" x="77" y="0"> </tspan><tspan class="st82" x="80.1" y="0">Outlook</tspan></text>
+  <rect class="st4" x="767" y="958" width="233" height="90" rx="8" ry="8"/>
+  <rect class="st51" x="767" y="958" width="233" height="26" rx="8" ry="8"/>
+  <text class="st63" transform="translate(840.4 974)"><tspan x="0" y="0">n8n Workflows</tspan></text>
+  <text class="st68" transform="translate(777 996)"><tspan class="st82" x="0" y="0">srv1196537.hstgr.cloud</tspan><tspan class="st85" x="87.5" y="0"> </tspan><tspan class="st77" x="90.6" y="0">·</tspan><tspan class="st85" x="92.5" y="0"> </tspan><tspan class="st82" x="95.5" y="0">10</tspan><tspan class="st85" x="104.8" y="0"> </tspan><tspan class="st82" x="107.8" y="0">workflows</tspan></text>
+  <text class="st42" transform="translate(777 1012)"><tspan class="st82" x="0" y="0">WF3</tspan><tspan class="st85" x="16.6" y="0"> </tspan><tspan class="st82" x="19.7" y="0">SOLARIS</tspan><tspan class="st85" x="51.5" y="0"> </tspan><tspan class="st82" x="54.6" y="0">·</tspan><tspan class="st85" x="56.5" y="0"> </tspan><tspan class="st82" x="59.5" y="0">WF5</tspan><tspan class="st85" x="76.1" y="0"> </tspan><tspan class="st82" x="79.2" y="0">Tiers</tspan></text>
+  <text class="st42" transform="translate(777 1025)"><tspan class="st82" x="0" y="0">WF7</tspan><tspan class="st85" x="16.6" y="0"> </tspan><tspan class="st82" x="19.7" y="0">Synchro</tspan><tspan class="st85" x="50.3" y="0"> </tspan><tspan class="st77" x="53.3" y="0">·</tspan><tspan class="st85" x="55.2" y="0"> </tspan><tspan class="st82" x="58.3" y="0">WF_DOLI</tspan><tspan class="st85" x="93.4" y="0"> </tspan><tspan class="st82" x="96.5" y="0">Devis</tspan></text>
+  <rect class="st10" x="1012" y="958" width="233" height="90" rx="8" ry="8"/>
+  <rect class="st57" x="1012" y="958" width="233" height="26" rx="8" ry="8"/>
+  <text class="st61" transform="translate(1096.7 974)"><tspan x="0" y="0">Dashboard</tspan></text>
+  <text class="st68" transform="translate(1022 996)"><tspan class="st82" x="0" y="0">FastAPI</tspan><tspan class="st85" x="27.7" y="0"> </tspan><tspan class="st82" x="30.8" y="0">·</tspan><tspan class="st85" x="32.6" y="0"> </tspan><tspan class="st82" x="35.7" y="0">uvicorn</tspan><tspan class="st85" x="64" y="0"> </tspan><tspan class="st82" x="67.1" y="0">·</tspan><tspan class="st85" x="69" y="0"> </tspan><tspan class="st81" x="72" y="0">port</tspan><tspan class="st85" x="88" y="0"> </tspan><tspan class="st82" x="91.1" y="0">8080</tspan></text>
+  <text class="st42" transform="translate(1022 1012)"><tspan class="st82" x="0" y="0">14</tspan><tspan class="st85" x="9.2" y="0"> </tspan><tspan class="st82" x="12.3" y="0">endpoints</tspan><tspan class="st85" x="50.6" y="0"> </tspan><tspan class="st82" x="53.7" y="0">·</tspan><tspan class="st85" x="55.5" y="0"> </tspan><tspan class="st82" x="58.6" y="0">KPIs</tspan><tspan class="st85" x="74" y="0"> </tspan><tspan class="st82" x="77.1" y="0">live</tspan></text>
+  <text class="st42" transform="translate(1022 1025)"><tspan class="st82" x="0" y="0">Chat</tspan><tspan class="st85" x="17.5" y="0"> </tspan><tspan class="st82" x="20.6" y="0">IA</tspan><tspan class="st85" x="28.3" y="0"> </tspan><tspan class="st82" x="31.3" y="0">·</tspan><tspan class="st85" x="33.2" y="0"> </tspan><tspan class="st82" x="36.3" y="0">Upload</tspan><tspan class="st85" x="63.7" y="0"> </tspan><tspan class="st82" x="66.8" y="0">assets</tspan></text>
+  <text class="st50" transform="translate(32 1094)"><tspan x="0" y="0">06 — PRINCIPES NON NÉGOCIABLES</tspan></text>
+  <rect class="st73" x="32" y="1104" width="233" height="72" rx="8" ry="8"/>
+  <rect class="st38" x="32" y="1104" width="233" height="22" rx="8" ry="8"/>
+  <text class="st45" transform="translate(112.2 1118)"><tspan x="0" y="0">Transparence</tspan></text>
+  <text class="st68" transform="translate(111.1 1140)"><tspan class="st82" x="0" y="0">Chaque</tspan><tspan class="st85" x="29.1" y="0"> </tspan><tspan class="st82" x="32.2" y="0">action</tspan><tspan class="st85" x="55.6" y="0"> </tspan><tspan class="st82" x="58.6" y="0">du</tspan><tspan class="st85" x="68.7" y="0"> </tspan><tspan class="st82" x="71.7" y="0">système</tspan></text>
+  <text class="st68" transform="translate(112.6 1154)"><tspan class="st82" x="0" y="0">est</tspan><tspan class="st85" x="11.1" y="0"> </tspan><tspan class="st82" x="14.1" y="0">lisible</tspan><tspan class="st85" x="35.8" y="0"> </tspan><tspan class="st82" x="38.9" y="0">et</tspan><tspan class="st85" x="46.3" y="0"> </tspan><tspan class="st82" x="49.4" y="0">traçable</tspan></text>
+  <rect class="st86" x="277" y="1104" width="233" height="72" rx="8" ry="8"/>
+  <rect class="st34" x="277" y="1104" width="233" height="22" rx="8" ry="8"/>
+  <text class="st70" transform="translate(371 1118)"><tspan x="0" y="0">Sobriété</tspan></text>
+  <text class="st68" transform="translate(374.5 1140)"><tspan class="st82" x="0" y="0">Faire</tspan><tspan class="st85" x="18.3" y="0"> </tspan><tspan class="st82" x="21.4" y="0">moins,</tspan></text>
+  <text class="st68" transform="translate(351.5 1154)"><tspan class="st82" x="0" y="0">mais</tspan><tspan class="st85" x="17.5" y="0"> </tspan><tspan class="st82" x="20.6" y="0">le</tspan><tspan class="st85" x="27.2" y="0"> </tspan><tspan class="st82" x="30.3" y="0">faire</tspan><tspan class="st85" x="46.8" y="0"> </tspan><tspan class="st82" x="49.9" y="0">vraiment</tspan><tspan class="st85" x="83.6" y="0"> </tspan><tspan class="st81" x="86.7" y="0">bien</tspan></text>
+  <rect class="st89" x="522" y="1104" width="233" height="72" rx="8" ry="8"/>
+  <rect class="st18" x="522" y="1104" width="233" height="22" rx="8" ry="8"/>
+  <text class="st50" transform="translate(612.9 1118)"><tspan x="0" y="0">Humanité</tspan></text>
+  <text class="st68" transform="translate(618 1140)"><tspan class="st82" x="0" y="0">L&apos;IA</tspan><tspan class="st85" x="13.6" y="0"> </tspan><tspan class="st82" x="16.7" y="0">exécute.</tspan></text>
+  <text class="st68" transform="translate(598 1154)"><tspan class="st82" x="0" y="0">L&apos;humain</tspan><tspan class="st85" x="34.8" y="0"> </tspan><tspan class="st82" x="37.9" y="0">décide</tspan><tspan class="st85" x="63.2" y="0"> </tspan><tspan class="st77" x="66.3" y="0">et</tspan><tspan class="st85" x="73.8" y="0"> </tspan><tspan class="st82" x="76.9" y="0">pilote.</tspan></text>
+  <rect class="st84" x="767" y="1104" width="233" height="72" rx="8" ry="8"/>
+  <rect class="st13" x="767" y="1104" width="233" height="22" rx="8" ry="8"/>
+  <text class="st32" transform="translate(847.5 1118)"><tspan x="0" y="0">Sécurité prod</tspan></text>
+  <text class="st68" transform="translate(844.5 1140)"><tspan class="st82" x="0" y="0">Dolibarr</tspan><tspan class="st85" x="30.5" y="0"> </tspan><tspan class="st77" x="33.6" y="0">en</tspan><tspan class="st85" x="43.1" y="0"> </tspan><tspan class="st82" x="46.2" y="0">prod</tspan><tspan class="st85" x="64.2" y="0"> </tspan><tspan class="st82" x="67.3" y="0">—</tspan><tspan class="st85" x="76.3" y="0"> </tspan><tspan class="st82" x="79.4" y="0">jamais</tspan></text>
+  <text class="st68" transform="translate(839.9 1154)"><tspan class="st82" x="0" y="0">de</tspan><tspan class="st85" x="9.6" y="0"> </tspan><tspan class="st81" x="12.7" y="0">données</tspan><tspan class="st85" x="45.2" y="0"> </tspan><tspan class="st82" x="48.3" y="0">test</tspan><tspan class="st85" x="62.4" y="0"> </tspan><tspan class="st82" x="65.4" y="0">sans</tspan><tspan class="st85" x="81.9" y="0"> </tspan><tspan class="st82" x="85" y="0">cleanup</tspan></text>
+  <rect class="st90" x="1012" y="1104" width="233" height="72" rx="8" ry="8"/>
+  <rect class="st54" x="1012" y="1104" width="233" height="22" rx="8" ry="8"/>
+  <text class="st24" transform="translate(1099 1118)"><tspan x="0" y="0">Python pur</tspan></text>
+  <text class="st68" transform="translate(1081.9 1140)"><tspan class="st82" x="0" y="0">Imposition</tspan><tspan class="st85" x="40.4" y="0"> </tspan><tspan class="st82" x="43.5" y="0">calculée</tspan><tspan class="st85" x="74.1" y="0"> </tspan><tspan class="st82" x="77.2" y="0">en</tspan><tspan class="st85" x="86.7" y="0"> </tspan><tspan class="st82" x="89.8" y="0">Python,</tspan></text>
+  <text class="st68" transform="translate(1091.1 1154)"><tspan class="st82" x="0" y="0">jamais</tspan><tspan class="st85" x="24" y="0"> </tspan><tspan class="st82" x="27.1" y="0">dans</tspan><tspan class="st85" x="45.1" y="0"> </tspan><tspan class="st82" x="48.2" y="0">un</tspan><tspan class="st85" x="58.1" y="0"> </tspan><tspan class="st82" x="61.2" y="0">prompt</tspan><tspan class="st85" x="89.8" y="0"> </tspan><tspan class="st82" x="92.9" y="0">IA</tspan></text>
+  <line class="st94" y1="1200" x2="1280" y2="1200"/>
+  <text class="st36" transform="translate(32 1228)"><tspan class="st82" x="0" y="0">InPressco</tspan><tspan class="st85" x="39.4" y="0"> </tspan><tspan class="st82" x="42.8" y="0">MWP</tspan><tspan class="st85" x="64.7" y="0"> </tspan><tspan class="st82" x="68.1" y="0">—</tspan><tspan class="st85" x="78.1" y="0"> </tspan><tspan class="st79" x="81.5" y="0">Architecture</tspan><tspan class="st85" x="133.2" y="0"> </tspan><tspan class="st82" x="136.6" y="0">v1.0</tspan><tspan class="st85" x="153.7" y="0"> </tspan><tspan class="st82" x="157.1" y="0">—</tspan><tspan class="st85" x="167.1" y="0"> </tspan><tspan class="st82" x="170.6" y="0">Généré</tspan><tspan class="st85" x="200.9" y="0"> </tspan><tspan class="st82" x="204.3" y="0">le</tspan><tspan class="st85" x="211.7" y="0"> </tspan><tspan class="st82" x="215.1" y="0">28/03/2026</tspan><tspan class="st85" x="263" y="0"> </tspan><tspan class="st76" x="266.4" y="0">·</tspan><tspan class="st85" x="268.5" y="0"> </tspan><tspan class="st79" x="271.9" y="0">tools/architecture_visual.py</tspan></text>
+  <text class="st23" transform="translate(1131.8 1228)"><tspan class="st82" x="0" y="0">Transparence</tspan><tspan class="st85" x="56.4" y="0"> </tspan><tspan class="st82" x="59.8" y="0">·</tspan><tspan class="st85" x="61.9" y="0"> </tspan><tspan class="st79" x="65.3" y="0">Sobriété</tspan><tspan class="st85" x="100.4" y="0"> </tspan><tspan class="st82" x="103.8" y="0">·</tspan><tspan class="st85" x="105.8" y="0"> </tspan><tspan class="st82" x="109.3" y="0">Humanité</tspan></text>
+  <text class="st80" transform="translate(557.2 738.3)"><tspan x="0" y="0">python tools/architecture_visual.py</tspan></text>
+</svg>

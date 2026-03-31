@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  LaunchAgent — Agent Sentinelle InPressco MWP
+  Démarre automatiquement au login macOS et surveille les modifications de fichiers.
+
+  Installation :
+    cp _config/com.inpressco.sentinel.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.inpressco.sentinel.plist
+
+  Vérification :
+    launchctl list | grep inpressco.sentinel
+
+  Arrêt temporaire :
+    launchctl unload ~/Library/LaunchAgents/com.inpressco.sentinel.plist
+
+  Logs :
+    tail -f /tmp/inpressco-sentinel.log
+    tail -f /tmp/inpressco-sentinel-error.log
+-->
+<plist version="1.0">
+<dict>
+  <!-- Identifiant unique du service -->
+  <key>Label</key>
+  <string>com.inpressco.sentinel</string>
+
+  <!-- Commande à exécuter — adapter le chemin Python si venv différent -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/nicolasbompois/Desktop/Bureau - MacBook Pro de nicolas/inpressco-mwp/tools/sentinel.py</string>
+    <string>--interval</string>
+    <string>600</string>
+  </array>
+
+  <!-- Répertoire de travail -->
+  <key>WorkingDirectory</key>
+  <string>/Users/nicolasbompois/Desktop/Bureau - MacBook Pro de nicolas/inpressco-mwp</string>
+
+  <!-- Démarrage automatique au chargement du LaunchAgent -->
+  <key>RunAtLoad</key>
+  <true/>
+
+  <!-- Redémarrage automatique si le processus se termine (crash ou exit 1) -->
+  <key>KeepAlive</key>
+  <true/>
+
+  <!-- Logs stdout et stderr -->
+  <key>StandardOutPath</key>
+  <string>/tmp/inpressco-sentinel.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/inpressco-sentinel-error.log</string>
+
+  <!-- Variables d'environnement — le .env est chargé par Python automatiquement -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+</dict>
+</plist>

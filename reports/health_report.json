@@ -1,0 +1,65 @@
+{
+  "generated_at": "2026-03-31T22:02:36.069385+00:00",
+  "overall": "healthy",
+  "score": 100,
+  "checks": [
+    {
+      "name": "dolibarr",
+      "status": "ok",
+      "detail": "HTTP 200 en 129ms",
+      "latency_ms": 129.23712498741224
+    },
+    {
+      "name": "claude_api",
+      "status": "ok",
+      "detail": "HTTP 200 en 620ms",
+      "latency_ms": 620.2855830197223
+    },
+    {
+      "name": "outlook",
+      "status": "ok",
+      "detail": "Token Azure OK en 209ms",
+      "latency_ms": 208.88908300548792
+    }
+  ],
+  "skill_coverage": {
+    "total": 28,
+    "implemented": 0,
+    "missing": [
+      "agenda-inpressco",
+      "agent-acheteur-inpressco",
+      "analyse-sentiment-email",
+      "analyse-transversale-inpressco",
+      "architecte-ia-inpressco",
+      "archiveur-inpressco",
+      "bdd-images-query-inpressco",
+      "calcul-tarif-inpressco",
+      "charte-graphique-inpressco",
+      "chat-to-db-inpressco",
+      "controleur-gestion-inpressco",
+      "dolibarr-query-inpressco",
+      "droits-profils-inpressco",
+      "extraction-tiers",
+      "generation-pdf-inpressco",
+      "gestion-erreurs-inpressco",
+      "inpressco-commerce",
+      "mail-routing-inpressco",
+      "memoire-client-inpressco",
+      "notification-interne-inpressco",
+      "orchestrateur-inpressco",
+      "planche-archi-inpressco",
+      "projets-artefacts-inpressco",
+      "reponse-client-inpressco",
+      "suivi-commande-inpressco",
+      "ux-inpressco",
+      "validation-qc-inpressco",
+      "veille-prix-inpressco"
+    ],
+    "source": "/Users/nicolasbompois/.claude/settings.json"
+  },
+  "pipeline_integrity": {
+    "ok": true,
+    "violations": []
+  },
+  "anti_pattern_violations": []
+}

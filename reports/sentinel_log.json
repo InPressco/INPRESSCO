@@ -1,0 +1,1521 @@
+[
+  {
+    "timestamp": "2026-03-28T22:10:58.292432+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-28T22:10:58.292432+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-28T22:32:29.047762+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-28T22:32:29.047762+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-28T22:32:35.027238+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-28T22:32:35.027238+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-28T22:32:43.776378+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-28T22:32:43.776378+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-28T22:53:56.276499+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-28T22:53:56.276499+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-28T22:54:12.209218+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-28T22:54:12.209218+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "connector_wiring",
+    "detail": "Connector 'claude_client' correctement importé"
+  },
+  {
+    "timestamp": "2026-03-28T23:43:16.247460+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-28T23:43:33.771329+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-28T23:44:01.906432+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-28T23:44:07.845060+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-28T23:44:16.385828+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-28T23:44:16.385828+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-28T23:44:32.073487+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-28T23:44:32.073487+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:07.755373+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:07.755373+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:14.731338+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:14.731338+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:33.217403+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:33.217403+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:43.593845+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:43.593845+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:48.875693+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:01:48.875693+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:02:02.716643+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:02:02.716643+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:02:12.882272+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:02:12.882272+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:11:40.174348+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:11:40.174348+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:11:53.686711+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:11:53.686711+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:12:09.200838+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:12:32.598632+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:12:52.656062+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:13:00.469355+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:13:07.348770+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:13:14.896923+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:13:33.702891+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:17:09.151824+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:17:09.151824+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:17:13.925945+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:17:13.925945+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:17:28.881691+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:17:28.881691+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:17:40.179434+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:17:40.179434+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:19:49.367858+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:52:20.033869+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:52:20.033869+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:52:38.209277+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:52:38.209277+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:53:02.611315+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:53:02.611315+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T00:59:52.760393+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T00:59:52.760393+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:00:03.328142+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:00:03.328142+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:01:40.108924+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:01:40.108924+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:06:56.103517+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:06:56.103517+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:13:46.351872+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:13:46.351872+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:15:47.860130+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:15:47.860130+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:17:56.569470+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:17:56.569470+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:18:01.865824+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:23:29.548095+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:23:29.548095+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:38:11.493178+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:38:11.493178+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:38:14.318298+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:38:14.318298+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:38:36.769500+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:38:36.769500+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:00.224862+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:00.224862+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "connector_wiring",
+    "detail": "Connector 'claude_client' correctement importé"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:05.409813+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:05.409813+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "connector_wiring",
+    "detail": "Connector 'claude_client' correctement importé"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:10.775795+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:10.775795+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:18.247223+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:18.247223+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "connector_wiring",
+    "detail": "Connector 'claude_client' correctement importé"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:37.272170+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:37.272170+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:57.252904+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T01:39:57.252904+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-29T10:53:25.532214+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T10:53:25.532214+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T10:53:37.878543+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T10:53:37.878543+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T10:54:11.940846+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T10:54:11.940846+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T10:54:27.539406+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T10:54:36.188452+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T10:54:36.188452+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T10:54:39.706266+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T10:54:56.333010+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T10:54:56.333010+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T10:55:00.032629+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T11:20:50.598416+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T11:20:50.598416+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T11:21:24.208399+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T11:21:24.208399+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-29T23:59:47.524185+00:00",
+    "level": "ok",
+    "trigger": "src/middleware/context.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T23:59:50.508193+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/__init__.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T23:59:50.577223+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/__init__.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-29T23:59:55.712023+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/__init__.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:00:40.621484+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:00:40.621484+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-30T00:00:40.671110+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:00:40.671110+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-30T00:00:44.098741+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:00:44.098741+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-30T00:01:05.632611+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:01:05.632611+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-30T00:01:11.597492+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:01:11.597492+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-30T00:01:20.552771+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:01:20.552771+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-30T00:01:29.196880+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:01:29.196880+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-30T00:16:49.694027+00:00",
+    "level": "ok",
+    "trigger": "src/config.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:17:02.009092+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:17:02.009092+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-30T00:18:08.289483+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:18:08.289483+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-30T00:18:16.502945+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-30T00:18:31.490669+00:00",
+    "level": "warn",
+    "trigger": "dashboard/index.html",
+    "check": "dashboard_wiring_needed",
+    "detail": "index.html dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-30T00:28:46.553242+00:00",
+    "level": "ok",
+    "trigger": "src/config.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:29:09.070705+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:29:09.070705+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "connector_wiring",
+    "detail": "Connector 'claude_client' correctement importé"
+  },
+  {
+    "timestamp": "2026-03-30T00:29:31.784739+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:29:31.784739+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-30T00:29:48.855450+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:29:48.855450+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_c/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-30T00:30:07.827974+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:30:07.827974+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-30T00:30:15.127454+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:30:15.127454+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-30T00:30:23.860048+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:30:23.860048+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-30T00:30:34.867780+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:30:34.867780+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-03-30T00:31:03.933386+00:00",
+    "level": "ok",
+    "trigger": ".claude/skills/mail-routing-inpressco/SKILL.md",
+    "check": "skill_wiring",
+    "detail": "Skill 'mail-routing-inpressco' correctement référencé"
+  },
+  {
+    "timestamp": "2026-03-30T00:31:07.166008+00:00",
+    "level": "ok",
+    "trigger": ".claude/skills/mail-routing-inpressco/SKILL.md",
+    "check": "skill_wiring",
+    "detail": "Skill 'mail-routing-inpressco' correctement référencé"
+  },
+  {
+    "timestamp": "2026-03-30T00:31:12.583890+00:00",
+    "level": "ok",
+    "trigger": ".claude/skills/mail-routing-inpressco/SKILL.md",
+    "check": "skill_wiring",
+    "detail": "Skill 'mail-routing-inpressco' correctement référencé"
+  },
+  {
+    "timestamp": "2026-03-30T00:31:14.856663+00:00",
+    "level": "ok",
+    "trigger": ".claude/skills/mail-routing-inpressco/SKILL.md",
+    "check": "skill_wiring",
+    "detail": "Skill 'mail-routing-inpressco' correctement référencé"
+  },
+  {
+    "timestamp": "2026-03-30T00:39:29.632166+00:00",
+    "level": "ok",
+    "trigger": "src/config.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:39:45.542107+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-30T00:39:45.542107+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-30T05:59:07.542037+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "full_verify",
+    "detail": "Système DEGRADED — score 40/100"
+  },
+  {
+    "timestamp": "2026-03-30T05:59:07.542037+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "dolibarr",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-03-30T05:59:07.542037+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "claude_api",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-03-30T05:59:07.542037+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "outlook",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-03-30T06:10:41.084630+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "full_verify",
+    "detail": "Système DEGRADED — score 40/100"
+  },
+  {
+    "timestamp": "2026-03-30T06:10:41.084630+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "dolibarr",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-03-30T06:10:41.084630+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "claude_api",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-03-30T06:10:41.084630+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "outlook",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-03-31T11:00:02.328814+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T11:00:02.328814+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/claude_client.py",
+    "check": "connector_wiring",
+    "detail": "Connector 'claude_client' correctement importé"
+  },
+  {
+    "timestamp": "2026-03-31T11:00:54.467041+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T11:00:54.467041+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-03-31T19:11:45.289765+00:00",
+    "level": "ok",
+    "trigger": "dashboard/app.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:11:45.289765+00:00",
+    "level": "warn",
+    "trigger": "dashboard/app.py",
+    "check": "dashboard_wiring_needed",
+    "detail": "app.py dashboard modifié → vérifier les contrats widgets : python tools/sentinel.py --check-dashboard ou --once"
+  },
+  {
+    "timestamp": "2026-03-31T19:23:29.508992+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s01_get_email.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:23:29.599782+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s01_get_email.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:23:35.956165+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s01_get_email.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:23:52.004599+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s02_extract_client_ai.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:23:52.036503+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s02_extract_client_ai.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:23:55.548864+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s02_extract_client_ai.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:24:20.434814+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/routing.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:24:20.487026+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/routing.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:24:23.861348+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/routing.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:24:46.825293+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s03_clean_data.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:24:46.867731+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s03_clean_data.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:24:50.218836+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s03_clean_data.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:24:58.456836+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s04_find_or_create_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:24:58.485030+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s04_find_or_create_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:02.054594+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s04_find_or_create_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:04.350486+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s05_get_attachments.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:04.382831+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s05_get_attachments.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:07.973683+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s05_get_attachments.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:14.269571+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s06_analyse_besoin.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:14.299954+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s06_analyse_besoin.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:17.824628+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s06_analyse_besoin.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:20.949055+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s07_build_devis_lines.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:20.978623+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s07_build_devis_lines.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:25:24.202554+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s07_build_devis_lines.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:27:34.710798+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:27:34.767212+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:27:38.304602+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:27:41.419378+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s09_upload_attachments.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:27:41.442102+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s09_upload_attachments.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:27:44.572445+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s09_upload_attachments.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:28:49.071499+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s10_log_email.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:28:49.111435+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s10_log_email.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:28:52.486089+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s10_log_email.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:29:00.344653+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s11_archive_outlook.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:29:00.381897+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s11_archive_outlook.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:29:03.595426+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s11_archive_outlook.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:29:34.729952+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s12_notify_team.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:29:34.766443+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s12_notify_team.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:29:38.199327+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s12_notify_team.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:30:09.196515+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s13_send_email_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:30:09.236495+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s13_send_email_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:30:12.447342+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s13_send_email_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:30:25.476490+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-03-31T19:30:25.476490+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  }
+]

@@ -1,0 +1,167 @@
+{
+  "generated_at": "2026-03-28T15:23:05.884636+00:00",
+  "base_url": "http://127.0.0.1:8080",
+  "dashboard_running": true,
+  "overall": "healthy",
+  "score": 88,
+  "results": [
+    {
+      "path": "/api/status",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 77.2,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'summary': {'status': 'never_run', 'last_run': None}, 'stages': {'stage_01': {'has_output': False, ",
+      "critical": true
+    },
+    {
+      "path": "/api/log",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 60.7,
+      "issues": [],
+      "fixes": [
+        "Endpoint Dolibarr retourne 503 — souvent un sqlfilters invalide"
+      ],
+      "data_preview": "{'lines': [\"2026-03-28 04:31:58  INFO      __main__ — Catégorie 'UNKNOWN' → aucun pipeline Python dé",
+      "critical": false
+    },
+    {
+      "path": "/api/runs",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 45.9,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'runs': []}",
+      "critical": false
+    },
+    {
+      "path": "/api/kpis",
+      "status": "warn",
+      "http_code": 200,
+      "latency_ms": 14089.9,
+      "issues": [
+        "kpis: nb devis semaine négatif — problème de parsing date",
+        "Latence élevée : 14090ms (seuil 8000ms)"
+      ],
+      "fixes": [
+        "Endpoint Dolibarr retourne 503 — souvent un sqlfilters invalide"
+      ],
+      "data_preview": "{'ca': {'mois_en_cours_ht': 56824.71, 'mois_precedent_ht': 65893.83, 'evolution_pct': -13.8}, 'taux_",
+      "critical": true
+    },
+    {
+      "path": "/api/stats",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 1246.8,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'devis_semaine': {'nb': 0, 'total_ht': 0}, 'devis_brouillon': {'nb': 0, 'total_ht': 0}, 'cmds_semai",
+      "critical": true
+    },
+    {
+      "path": "/api/daf",
+      "status": "warn",
+      "http_code": 200,
+      "latency_ms": 6200.7,
+      "issues": [
+        "Latence élevée : 6201ms (seuil 5000ms)"
+      ],
+      "fixes": [],
+      "data_preview": "{'ca_annee_ht': 184969.27, 'dso_jours': 41, 'encours': {'courant': 16384.48, 'retard_30j': 53745.11,",
+      "critical": true
+    },
+    {
+      "path": "/api/ca-chart",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 2827.6,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'years': {'2026': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0, '10': 0,",
+      "critical": false
+    },
+    {
+      "path": "/api/clients",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 1335.8,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'clients': [{'id': '17', 'nom': \"ERABLO (L')\", 'email': 'wendlingsa@wanadoo.fr', 'nb_devis': 2, 'ca",
+      "critical": false
+    },
+    {
+      "path": "/api/devis-suivre",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 1382.7,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'devis': [], 'nb': 0, 'doli_web': 'https://in-pressco.crm.freshprocess.eu', 'generated_at': '2026-0",
+      "critical": false
+    },
+    {
+      "path": "/api/proposals-orders",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 1543.5,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'devis': [], 'commandes': []}",
+      "critical": false
+    },
+    {
+      "path": "/api/config",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 57.3,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'dolibarr_url': 'https://in-pressco.crm.freshprocess.eu', 'n8n_url': 'https://srv1196537.hstgr.clou",
+      "critical": false
+    },
+    {
+      "path": "/api/health",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 43.0,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'generated_at': '2026-03-28T15:22:16.765765+00:00', 'overall': 'healthy', 'score': 100, 'checks': [",
+      "critical": true
+    },
+    {
+      "path": "/api/synthesis",
+      "status": "warn",
+      "http_code": 200,
+      "latency_ms": 4338.8,
+      "issues": [
+        "⚠️  Impayés élevés : 77,751 € HT"
+      ],
+      "fixes": [],
+      "data_preview": "{'generated_at': '2026-03-28T15:23:05.882477+00:00', 'mode': 'live', 'ca_mois_ht': 56824.71, 'ca_moi",
+      "critical": false
+    },
+    {
+      "path": "/api/n8n/workflows",
+      "status": "ok",
+      "http_code": 200,
+      "latency_ms": 23.5,
+      "issues": [],
+      "fixes": [],
+      "data_preview": "{'workflows': [{'id': None, 'name': 'WF1 · Pipeline devis', 'role': 'pipeline', 'active': None, 'has",
+      "critical": false
+    }
+  ],
+  "summary": {
+    "ok": 11,
+    "warn": 3,
+    "error": 0,
+    "skip": 0
+  },
+  "auto_fixes_applied": []
+}

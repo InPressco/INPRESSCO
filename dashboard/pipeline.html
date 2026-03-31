@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InPressco — Pilotage Pipeline</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Josefin+Sans:wght@100;200;300&family=Syne:wght@400;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg0: #141414; --bg1: #1a1a1a; --bg2: #1e1e1e; --bg3: #242424; --bg4: #2a2a2a;
+      --amber: #C99E67; --amber-dim: #A07840; --amber-faint: #2a1e10;
+      --amber-glow: rgba(201,158,103,0.08); --amber-border: rgba(201,158,103,0.2);
+      --text-primary: #f0e8dd; --text-secondary: #a09080; --text-muted: #585044;
+      --green: #97C459; --green-bg: #0a2e14; --green-border: #3B6D11;
+      --red: #F09595; --red-bg: #2e0a0a; --red-border: #A32D2D;
+      --blue: #7BB0E0; --blue-bg: #0a1a2e; --blue-border: #1F5080;
+      --mono: 'IBM Plex Mono', monospace; --display: 'Syne', sans-serif;
+      --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+    }
+
+    body { background: var(--bg0); color: var(--text-primary); font-family: var(--mono); font-size: 13px; line-height: 1.5; min-height: 100vh; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      height: 48px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(20,20,20,0.95); backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid rgba(90,80,64,0.3);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 16px; }
+    .topbar-back {
+      font-size: 11px; color: var(--text-muted); text-decoration: none;
+      font-family: var(--mono); display: flex; align-items: center; gap: 6px;
+      transition: color 0.15s;
+    }
+    .topbar-back:hover { color: var(--amber); }
+    .topbar-title {
+      font-family: var(--display); font-size: 14px; font-weight: 700;
+      color: var(--text-primary); letter-spacing: 0.04em;
+    }
+    .topbar-pill {
+      font-size: 10px; padding: 2px 8px; border-radius: 99px;
+      background: var(--amber-faint); color: var(--amber); border: 0.5px solid var(--amber-border);
+      letter-spacing: 0.06em;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+
+    /* ── AUTOPILOT TOGGLE ── */
+    .autopilot-wrap { display: flex; align-items: center; gap: 8px; }
+    .autopilot-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.04em; }
+    .toggle-switch {
+      position: relative; width: 36px; height: 20px; cursor: pointer;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+      position: absolute; inset: 0; border-radius: 99px;
+      background: var(--bg4); border: 0.5px solid rgba(90,80,64,0.4);
+      transition: all 0.2s;
+    }
+    .toggle-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--text-muted); transition: all 0.2s;
+    }
+    .toggle-switch.on .toggle-track { background: #1a3a10; border-color: var(--green-border); }
+    .toggle-switch.on .toggle-thumb { background: var(--green); left: 19px; }
+
+    /* ── BTN ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: var(--radius-sm);
+      font-size: 11px; font-family: var(--mono); cursor: pointer;
+      border: 0.5px solid; transition: all 0.15s; background: none;
+    }
+    .btn-run { color: var(--amber); border-color: var(--amber-dim); background: var(--amber-faint); }
+    .btn-run:hover { background: #3a2a10; border-color: var(--amber); }
+    .btn-run:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-sm { padding: 3px 9px; font-size: 10px; }
+    .btn-approve { color: var(--green); border-color: var(--green-border); background: var(--green-bg); }
+    .btn-approve:hover { background: #0f3a18; }
+    .btn-reject  { color: var(--red); border-color: var(--red-border); background: var(--red-bg); }
+    .btn-reject:hover  { background: #3a1010; }
+    .btn-ghost   { color: var(--text-muted); border-color: rgba(90,80,64,0.35); }
+    .btn-ghost:hover   { color: var(--text-secondary); border-color: rgba(90,80,64,0.7); }
+    .btn-doli    { color: var(--blue); border-color: var(--blue-border); background: var(--blue-bg); }
+    .btn-doli:hover    { background: #0f2240; }
+
+    /* ── SHELL ── */
+    .shell { max-width: 1600px; margin: 0 auto; padding: 20px 24px 40px; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .stat-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg2); border: 0.5px solid rgba(90,80,64,0.35);
+      border-radius: var(--radius-md); padding: 8px 14px;
+    }
+    .stat-chip-label { font-size: 10px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+    .stat-chip-value { font-family: var(--display); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-left: 4px; }
+    .stat-chip.warn .stat-chip-value { color: var(--amber); }
+    .stat-chip.ok   .stat-chip-value { color: var(--green); }
+    .stat-chip.err  .stat-chip-value { color: var(--red); }
+
+    /* ── LAYOUT 3 cols ── */
+    .pilot-grid {
+      display: grid;
+      grid-template-columns: 320px minmax(0,1fr) 300px;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 1300px) {
+      .pilot-grid { grid-template-columns: 280px minmax(0,1fr) 260px; }
+    }
+    @media (max-width: 1000px) {
+      .pilot-grid { grid-template-columns: 1fr; }
+      .inspector-col { display: none; }
+    }
+
+    /* ── PANEL ── */
+    .panel {
+      background: var(--bg2); border: 0.5px solid rgba(90,80,64,0.35);
+      border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 12px;
+    }
+    .panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; border-bottom: 0.5px solid rgba(90,80,64,0.2);
+      background: var(--bg3);
+    }
+    .panel-title {
+      font-family: var(--display); font-size: 11px; font-weight: 600;
+      color: var(--text-secondary); letter-spacing: 0.07em; text-transform: uppercase;
+    }
+    .panel-count {
+      font-size: 10px; color: var(--amber); padding: 1px 6px;
+      background: var(--amber-faint); border-radius: 99px;
+      border: 0.5px solid var(--amber-border);
+    }
+    .panel-body { padding: 12px; }
+    .panel-empty { padding: 24px; text-align: center; color: var(--text-muted); font-size: 11px; letter-spacing: 0.05em; }
+
+    /* ── QUEUE ITEMS ── */
+    .queue-item {
+      padding: 10px 12px;
+      border: 0.5px solid rgba(90,80,64,0.25);
+      border-radius: var(--radius-md); margin-bottom: 8px;
+      background: var(--bg1); cursor: pointer; transition: border-color 0.15s;
+    }
+    .queue-item:hover { border-color: var(--amber-border); }
+    .queue-item:last-child { margin-bottom: 0; }
+    .queue-subject { font-size: 12px; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 4px; }
+    .queue-meta { font-size: 10px; color: var(--text-muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .queue-preview { font-size: 10px; color: var(--text-muted); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .queue-actions { display: flex; gap: 6px; margin-top: 8px; }
+    .att-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; color: var(--blue); }
+
+    /* ── GATES ── */
+    .gate-item {
+      padding: 10px 12px; border-radius: var(--radius-md); margin-bottom: 8px;
+      border: 0.5px solid rgba(201,158,103,0.3); background: var(--amber-faint);
+    }
+    .gate-item:last-child { margin-bottom: 0; }
+    .gate-label { font-size: 11px; color: var(--amber); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .gate-note  { font-size: 10px; color: var(--text-muted); margin-bottom: 8px; }
+    .gate-actions { display: flex; gap: 6px; align-items: center; }
+    .gate-modify-wrap { margin-top: 8px; display: none; }
+    .gate-modify-wrap.open { display: block; }
+    .gate-input {
+      width: 100%; padding: 5px 8px; background: var(--bg3); border: 0.5px solid rgba(90,80,64,0.4);
+      border-radius: var(--radius-sm); color: var(--text-primary); font-family: var(--mono); font-size: 11px;
+      outline: none; margin-bottom: 6px;
+    }
+    .gate-input:focus { border-color: var(--amber-border); }
+
+    /* ── RUN CARDS ── */
+    .run-card {
+      border: 0.5px solid rgba(90,80,64,0.3); border-radius: var(--radius-md);
+      margin-bottom: 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      overflow: hidden;
+    }
+    .run-card:hover { border-color: var(--amber-border); }
+    .run-card.selected { border-color: var(--amber); background: var(--amber-glow); }
+    .run-card.status-error { border-color: rgba(163,45,45,0.5); }
+    .run-card.status-devis_created { border-color: rgba(59,109,17,0.5); }
+    .run-card.status-running { border-color: rgba(201,158,103,0.5); animation: pulse-border 2s infinite; }
+    @keyframes pulse-border { 0%,100%{border-color:rgba(201,158,103,0.35)} 50%{border-color:rgba(201,158,103,0.7)} }
+    .run-card-head { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
+    .run-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .run-card-subject { flex: 1; font-size: 12px; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .run-card-time { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+    .run-card-meta { padding: 0 12px 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ── PIPELINE DIAGRAM ── */
+    .pipeline-diagram {
+      background: var(--bg2); border: 0.5px solid rgba(90,80,64,0.35);
+      border-radius: var(--radius-lg); padding: 20px; margin-bottom: 12px;
+    }
+    .pipeline-diagram-title {
+      font-family: var(--display); font-size: 12px; font-weight: 600;
+      color: var(--text-secondary); letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;
+    }
+    /* Horizontal scrollable stepper */
+    .stepper-wrap { overflow-x: auto; padding-bottom: 8px; }
+    .stepper {
+      display: flex; align-items: flex-start; gap: 0; min-width: max-content;
+    }
+    .step-node {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      width: 64px; flex-shrink: 0; cursor: pointer;
+    }
+    .step-node:hover .step-dot { transform: scale(1.15); }
+    .step-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; border: 1.5px solid; transition: all 0.25s; position: relative;
+    }
+    .step-dot.pending { background: var(--bg3); border-color: rgba(90,80,64,0.35); color: var(--text-muted); }
+    .step-dot.active  { background: var(--amber-faint); border-color: var(--amber); color: var(--amber); animation: pulse-dot 1.5s infinite; }
+    .step-dot.done    { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+    .step-dot.error   { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+    .step-dot.skip    { background: var(--bg1); border-color: rgba(90,80,64,0.2); color: rgba(90,80,64,0.4); }
+    .step-dot.gate    { background: #2a1e08; border-color: var(--amber); color: var(--amber); animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 0 rgba(201,158,103,0)} 50%{box-shadow:0 0 0 4px rgba(201,158,103,0.3)} }
+    .step-label { font-size: 9px; color: var(--text-muted); text-align: center; line-height: 1.2; max-width: 60px; }
+    .step-label.active { color: var(--amber); }
+    .step-label.done   { color: var(--text-secondary); }
+    .step-connector {
+      flex: 1; height: 1.5px; background: rgba(90,80,64,0.3);
+      margin-top: 13px; min-width: 16px; max-width: 32px; transition: background 0.3s;
+    }
+    .step-connector.done { background: var(--green-border); }
+    .step-connector.active { background: var(--amber-border); }
+
+    /* ── ACTIONS LOG ── */
+    .actions-log { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 12px; }
+    .action-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 3px; font-size: 10px;
+      color: var(--text-secondary); background: var(--bg3); border: 0.5px solid rgba(90,80,64,0.3);
+    }
+
+    /* ── RUN DETAIL ── */
+    .run-detail { background: var(--bg2); border: 0.5px solid rgba(90,80,64,0.35); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 12px; }
+    .run-detail-title { font-family: var(--display); font-size: 12px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .run-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .run-meta-item { }
+    .run-meta-key { font-size: 10px; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 2px; }
+    .run-meta-val { font-size: 12px; color: var(--text-primary); }
+    .run-meta-val a { color: var(--blue); text-decoration: none; }
+    .run-meta-val a:hover { text-decoration: underline; }
+
+    /* ── INSPECTOR ── */
+    .inspector-panel {
+      background: var(--bg2); border: 0.5px solid rgba(90,80,64,0.35);
+      border-radius: var(--radius-lg); position: sticky; top: 64px;
+    }
+    .inspector-head {
+      padding: 10px 14px; border-bottom: 0.5px solid rgba(90,80,64,0.2);
+      background: var(--bg3); border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .inspector-title { font-family: var(--display); font-size: 11px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.07em; text-transform: uppercase; }
+    .inspector-body { padding: 14px; max-height: calc(100vh - 160px); overflow-y: auto; }
+    .inspector-empty { padding: 32px 14px; text-align: center; color: var(--text-muted); font-size: 11px; }
+    .inspector-step-name { font-size: 12px; color: var(--amber); margin-bottom: 10px; font-family: var(--display); font-weight: 600; }
+    .inspector-field { margin-bottom: 10px; }
+    .inspector-field-key { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+    .inspector-field-val {
+      font-size: 11px; color: var(--text-primary);
+      background: var(--bg3); padding: 6px 8px; border-radius: var(--radius-sm);
+      border: 0.5px solid rgba(90,80,64,0.25); word-break: break-all;
+    }
+    .inspector-json {
+      font-size: 10px; color: #9ECBFF; background: var(--bg0);
+      padding: 8px; border-radius: var(--radius-sm); overflow-x: auto;
+      border: 0.5px solid rgba(90,80,64,0.2); white-space: pre-wrap; word-break: break-word;
+      max-height: 300px; overflow-y: auto;
+    }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 7px; border-radius: 99px; font-size: 10px;
+      font-weight: 500; letter-spacing: 0.04em; white-space: nowrap;
+    }
+    .badge-ok    { background: var(--green-bg); color: var(--green); border: 0.5px solid var(--green-border); }
+    .badge-err   { background: var(--red-bg);   color: var(--red);   border: 0.5px solid var(--red-border); }
+    .badge-warn  { background: #2e1a0a; color: #FAC775; border: 0.5px solid #854F0B; }
+    .badge-idle  { background: var(--bg3); color: var(--text-muted); border: 0.5px solid var(--text-muted); }
+    .badge-run   { background: var(--amber-faint); color: var(--amber); border: 0.5px solid var(--amber-border); animation: pulse-dot 1.5s infinite; }
+    .badge-stop  { background: var(--bg3); color: var(--text-muted); border: 0.5px solid rgba(90,80,64,0.3); }
+    .badge-NEW_PROJECT { background: #2a1e08; color: #FAC775; border: 0.5px solid #7A5218; }
+    .badge-OTHER       { background: var(--bg3); color: var(--text-muted); border: 0.5px solid rgba(90,80,64,0.3); }
+
+    /* ── DOT ── */
+    .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .dot-ok   { background: #639922; box-shadow: 0 0 0 2px rgba(99,153,34,0.25); }
+    .dot-err  { background: #E24B4A; box-shadow: 0 0 0 2px rgba(226,75,74,0.25); }
+    .dot-warn { background: var(--amber); box-shadow: 0 0 0 2px rgba(201,158,103,0.25); animation: pulse-dot 2s infinite; }
+    .dot-idle { background: var(--text-muted); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200;
+      display: none; align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--bg1); border: 0.5px solid rgba(90,80,64,0.4);
+      border-radius: var(--radius-lg); padding: 0; width: 90%; max-width: 640px;
+      max-height: 80vh; display: flex; flex-direction: column;
+    }
+    .modal-head {
+      padding: 14px 18px; border-bottom: 0.5px solid rgba(90,80,64,0.2);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--bg3); border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+    .modal-title { font-family: var(--display); font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .modal-close { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; line-height: 1; }
+    .modal-close:hover { color: var(--text-primary); }
+    .modal-body { padding: 18px; overflow-y: auto; flex: 1; }
+
+    /* ── REFRESH INDICATOR ── */
+    .refresh-ts { font-size: 10px; color: var(--text-muted); }
+
+    /* ── SECTION SEPARATOR ── */
+    .section-sep { height: 0.5px; background: rgba(90,80,64,0.2); margin: 16px 0; }
+
+    /* ── GATE modify note form ── */
+    .gate-note-input {
+      width: 100%; padding: 5px 8px; background: var(--bg3);
+      border: 0.5px solid rgba(90,80,64,0.4); border-radius: var(--radius-sm);
+      color: var(--text-primary); font-family: var(--mono); font-size: 10px;
+      resize: none; outline: none; margin-bottom: 6px;
+    }
+    .gate-note-input:focus { border-color: var(--amber-border); }
+
+    /* ── TOAST ── */
+    .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 300; display: flex; flex-direction: column; gap: 8px; }
+    .toast {
+      padding: 10px 16px; border-radius: var(--radius-md); font-size: 12px;
+      border: 0.5px solid; animation: toast-in 0.2s ease;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .toast-ok  { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+    .toast-err { background: var(--red-bg);   color: var(--red);   border-color: var(--red-border); }
+    @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    /* ── BIG VALIDATION BUTTONS ── */
+    .btn-xl {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 16px 20px; border-radius: var(--radius-md);
+      font-size: 14px; font-family: var(--display); font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+      border: 1.5px solid; transition: all 0.15s;
+    }
+    .btn-xl-approve { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+    .btn-xl-approve:hover { background: #0f3a18; box-shadow: 0 0 0 3px rgba(99,153,34,0.15); }
+    .btn-xl-reject { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
+    .btn-xl-reject:hover { background: #3a1010; box-shadow: 0 0 0 3px rgba(226,75,74,0.15); }
+
+    /* ── INSPECTOR INLINE (sous le diagram) ── */
+    .inspector-panel { position: static; }
+    .inspector-body { padding: 16px; max-height: none; overflow-y: visible; }
+    .section-label-ins {
+      font-size: 9px; font-weight: 700; color: var(--amber-dim);
+      letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px;
+    }
+    .email-preview {
+      background: var(--bg0); border: 0.5px solid rgba(90,80,64,0.3);
+      border-radius: var(--radius-sm); padding: 12px 14px; font-size: 11px;
+      color: var(--text-secondary); white-space: pre-wrap; word-break: break-word;
+      max-height: 220px; overflow-y: auto; line-height: 1.65; font-family: var(--mono);
+    }
+
+    /* ── MODIFY ZONE (large) ── */
+    .modify-zone {
+      background: var(--bg1); border: 1px solid rgba(201,158,103,0.2);
+      border-radius: var(--radius-md); padding: 14px; margin-top: 16px;
+    }
+    .modify-textarea-xl {
+      width: 100%; min-height: 100px; background: var(--bg3);
+      border: 0.5px solid rgba(90,80,64,0.4); border-radius: var(--radius-sm);
+      color: var(--text-primary); font-family: var(--mono); font-size: 12px;
+      padding: 12px 14px; resize: vertical; line-height: 1.6; outline: none;
+    }
+    .modify-textarea-xl:focus { border-color: var(--amber-border); }
+
+    /* ── N8N SECTION ── */
+    .n8n-section {
+      background: rgba(27,196,125,0.04); border: 0.5px solid rgba(27,196,125,0.2);
+      border-radius: var(--radius-md); padding: 12px 14px; margin-top: 14px;
+    }
+    .n8n-label {
+      font-size: 9px; font-weight: 700; color: #1bc47d;
+      letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 8px;
+    }
+    .btn-n8n {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      padding: 8px 12px; border-radius: var(--radius-sm);
+      font-size: 11px; font-family: var(--mono); cursor: pointer;
+      background: rgba(27,196,125,0.07); border: 0.5px solid rgba(27,196,125,0.25);
+      color: #1bc47d; transition: all 0.15s; text-align: left;
+    }
+    .btn-n8n:hover { background: rgba(27,196,125,0.14); border-color: rgba(27,196,125,0.5); }
+
+    /* ── RUN HISTORY sticky right ── */
+    .runs-panel { position: sticky; top: 64px; }
+  </style>
+</head>
+<body>
+
+<!-- ── TOPBAR ── -->
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="/" class="topbar-back">← Dashboard</a>
+    <span class="topbar-title">Pipeline MWP</span>
+    <span class="topbar-pill">POSTE DE PILOTAGE</span>
+  </div>
+  <div class="topbar-right">
+    <div class="autopilot-wrap">
+      <span class="autopilot-label">AUTOPILOT</span>
+      <label class="toggle-switch" id="autopilot-toggle" title="Valider automatiquement toutes les gates">
+        <input type="checkbox" id="autopilot-checkbox">
+        <span class="toggle-track"></span>
+        <span class="toggle-thumb"></span>
+      </label>
+    </div>
+    <button class="btn btn-run" id="btn-run" onclick="triggerRun()">
+      ▶ Lancer le pipeline
+    </button>
+    <span class="refresh-ts" id="refresh-ts">—</span>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- ── STATS BAR ── -->
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-chip" id="chip-queue">
+      <span class="stat-chip-label">En attente</span>
+      <span class="stat-chip-value" id="val-queue">—</span>
+    </div>
+    <div class="stat-chip" id="chip-gates">
+      <span class="stat-chip-label">Gates ⏸</span>
+      <span class="stat-chip-value" id="val-gates">—</span>
+    </div>
+    <div class="stat-chip" id="chip-runs">
+      <span class="stat-chip-label">Runs aujourd'hui</span>
+      <span class="stat-chip-value" id="val-runs">—</span>
+    </div>
+    <div class="stat-chip" id="chip-autopilot" style="margin-left: auto;">
+      <span class="stat-chip-label">Mode</span>
+      <span class="stat-chip-value" id="val-autopilot">MANUEL</span>
+    </div>
+  </div>
+
+  <!-- ── 3-COL GRID ── -->
+  <div class="pilot-grid">
+
+    <!-- COL 1 : Queue + Gates -->
+    <div class="left-col">
+
+      <!-- Queue -->
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">File d'attente</span>
+          <span class="panel-count" id="queue-count">0</span>
+        </div>
+        <div class="panel-body" id="queue-body">
+          <div class="panel-empty">Chargement…</div>
+        </div>
+      </div>
+
+      <!-- Gates -->
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">⏸ Validations en attente</span>
+          <span class="panel-count" id="gates-count">0</span>
+        </div>
+        <div class="panel-body" id="gates-body">
+          <div class="panel-empty">Aucune gate en attente</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COL 2 : Diagram + Inspecteur (inline, en dessous) -->
+    <div class="center-col">
+
+      <!-- Pipeline diagram (selected run) — EN PREMIER pour être visible directement -->
+      <div id="pipeline-detail" style="display:none;">
+
+        <!-- Run metadata -->
+        <div class="run-detail" id="run-meta-panel"></div>
+
+        <!-- Step diagram -->
+        <div class="pipeline-diagram">
+          <div class="pipeline-diagram-title">
+            <span>Flux d'exécution</span>
+            <span id="diagram-flux-label" class="badge badge-idle"></span>
+          </div>
+          <div class="stepper-wrap">
+            <div class="stepper" id="stepper-nodes"></div>
+          </div>
+          <div class="actions-log" id="actions-log"></div>
+        </div>
+
+      </div>
+
+      <!-- Empty state -->
+      <div id="diagram-empty" class="pipeline-diagram" style="text-align:center; padding: 32px;">
+        <div style="color:var(--text-muted); font-size:12px; letter-spacing:0.05em;">
+          Sélectionnez un run dans la liste à droite, puis cliquez sur un nœud pour l'inspecter
+        </div>
+      </div>
+
+      <!-- Inspecteur de nœud — inline, sous le fil d'exécution -->
+      <div class="panel" id="inspector-panel" style="display:none;">
+        <div class="panel-head" style="background:var(--bg3);">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block;flex-shrink:0"></span>
+            <span class="panel-title">Inspecteur de nœud</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="clearInspector()">✕ Fermer</button>
+        </div>
+        <div class="inspector-body" id="inspector-body">
+          <div class="inspector-empty">Cliquez sur un nœud pour inspecter son output</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COL 3 : Historique des runs (déplacé depuis le centre) -->
+    <div class="inspector-col">
+      <div class="panel runs-panel">
+        <div class="panel-head">
+          <span class="panel-title">Historique des runs</span>
+          <button class="btn btn-ghost btn-sm" onclick="loadRuns()">↺ Actualiser</button>
+        </div>
+        <div class="panel-body" id="runs-body" style="max-height:calc(100vh - 140px);overflow-y:auto;">
+          <div class="panel-empty">Chargement…</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ── MODAL output complet ── -->
+<div class="modal-overlay" id="output-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title" id="modal-title">Output</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ── TOASTS ── -->
+<div class="toast-container" id="toasts"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+let _runs     = [];
+let _queue    = [];
+let _gates    = [];
+let _autopilot = false;
+let _selectedRun = null;
+let _selectedStep = null;
+
+// ═══════════════════════════════════════════════════════════════
+//  STEP DEFINITIONS
+// ═══════════════════════════════════════════════════════════════
+const STEPS_FLUX_A = [
+  { key: 's01_get_email',            icon: '📧', label: 'Email',       desc: 'Récupération email Outlook' },
+  { key: 's02_extract_client_ai',    icon: '🤖', label: 'IA x3',       desc: 'Extraction client + sentiment + routing' },
+  { key: 's03_clean_data',           icon: '🔀', label: 'Route',       desc: 'Validation routing NEW_PROJECT' },
+  { key: 's04_find_or_create_client',icon: '👤', label: 'Tiers',       desc: 'Trouver/créer client Dolibarr' },
+  { key: 's05_get_attachments',      icon: '📎', label: 'PJ',          desc: 'Pièces jointes email' },
+  { key: 's06_analyse_besoin',       icon: '🔍', label: 'Besoin',      desc: 'Analyse besoin impression (IA)' },
+  { key: 's07_build_devis_lines',    icon: '📐', label: 'Lignes',      desc: 'Construction lignes devis (Python)' },
+  { key: 's08_create_devis',         icon: '📄', label: 'Devis',       desc: 'Création devis Dolibarr' },
+  { key: 's09_upload_attachments',   icon: '⬆', label: 'Upload',      desc: 'Upload PJ dans Dolibarr' },
+  { key: 's10_log_email',            icon: '📅', label: 'Agenda',      desc: 'Log email agenda Dolibarr' },
+  { key: 's11_archive_outlook',      icon: '🗂', label: 'Archive',     desc: 'Archivage Outlook' },
+  { key: 's12_notify_team',          icon: '🔔', label: 'Notif',       desc: 'Notification équipe (gate GO)' },
+  { key: '__gate_go__',              icon: '⏸', label: 'GO ?',        desc: 'Validation humaine avant envoi client', isGate: true },
+  { key: 's13_send_email_client',    icon: '✉', label: 'Envoi',       desc: 'Email réponse client' },
+];
+
+const STEPS_NON_DEVIS = [
+  { key: 's01_get_email',         icon: '📧', label: 'Email',  desc: 'Récupération email Outlook' },
+  { key: 's02_extract_client_ai', icon: '🤖', label: 'IA x3',  desc: 'Extraction client + sentiment + routing' },
+  { key: 's_mark_non_devis',      icon: '🔀', label: 'Route',  desc: 'Marque email non-devis' },
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+async function init() {
+  await Promise.all([loadAutopilot(), loadRuns(), loadQueue(), loadGates()]);
+  setInterval(loadRuns, 15000);
+  setInterval(loadQueue, 30000);
+  setInterval(loadGates, 20000);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  AUTOPILOT
+// ═══════════════════════════════════════════════════════════════
+async function loadAutopilot() {
+  try {
+    const r = await fetch('/api/pipeline/autopilot');
+    const d = await r.json();
+    _autopilot = d.enabled;
+    updateAutopilotUI();
+  } catch(e) {}
+}
+
+function updateAutopilotUI() {
+  const toggle = document.getElementById('autopilot-toggle');
+  const cb     = document.getElementById('autopilot-checkbox');
+  const val    = document.getElementById('val-autopilot');
+  const chip   = document.getElementById('chip-autopilot');
+  cb.checked = _autopilot;
+  toggle.classList.toggle('on', _autopilot);
+  val.textContent = _autopilot ? 'AUTO' : 'MANUEL';
+  chip.className = 'stat-chip' + (_autopilot ? ' ok' : '');
+}
+
+document.getElementById('autopilot-checkbox').addEventListener('change', async function() {
+  _autopilot = this.checked;
+  updateAutopilotUI();
+  try {
+    await fetch('/api/pipeline/autopilot', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({enabled: _autopilot})
+    });
+    toast(_autopilot ? 'Autopilot activé — gates auto-validées' : 'Autopilot désactivé — mode manuel', _autopilot ? 'ok' : 'warn');
+  } catch(e) { toast('Erreur sauvegarde autopilot', 'err'); }
+});
+
+// ═══════════════════════════════════════════════════════════════
+//  QUEUE
+// ═══════════════════════════════════════════════════════════════
+async function loadQueue() {
+  const body = document.getElementById('queue-body');
+  try {
+    const r = await fetch('/api/pipeline/queue');
+    const d = await r.json();
+    _queue = d.queue || [];
+    document.getElementById('queue-count').textContent = _queue.length;
+    document.getElementById('val-queue').textContent   = _queue.length;
+    const chip = document.getElementById('chip-queue');
+    chip.className = 'stat-chip' + (_queue.length > 0 ? ' warn' : ' ok');
+
+    if (!_queue.length) {
+      body.innerHTML = '<div class="panel-empty">Aucun email en attente</div>';
+      if (d.error) body.innerHTML = `<div class="panel-empty" style="color:var(--red)">${esc(d.error)}</div>`;
+      return;
+    }
+    body.innerHTML = _queue.map(q => `
+      <div class="queue-item">
+        <div class="queue-subject">${esc(q.subject || '(sans objet)')}</div>
+        <div class="queue-meta">
+          <span>${esc(q.sender_name || q.sender_address)}</span>
+          ${q.has_attachments ? '<span class="att-badge">📎 PJ</span>' : ''}
+          <span>${fmtRecv(q.received_at)}</span>
+        </div>
+        ${q.preview ? `<div class="queue-preview">${esc(q.preview)}</div>` : ''}
+        <div class="queue-actions">
+          <button class="btn btn-run btn-sm" onclick="triggerRun()">▶ Traiter</button>
+          <button class="btn btn-ghost btn-sm" onclick="archiveEmail(${JSON.stringify(q.subject)}, ${JSON.stringify(q.sender_address)}, this)">⊘ Archiver</button>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    body.innerHTML = `<div class="panel-empty" style="color:var(--red)">Erreur chargement queue</div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  GATES
+// ═══════════════════════════════════════════════════════════════
+async function loadGates() {
+  const body = document.getElementById('gates-body');
+  try {
+    const r = await fetch('/api/pipeline/gates');
+    const d = await r.json();
+    _gates = d.gates || [];
+    document.getElementById('gates-count').textContent = _gates.length;
+    document.getElementById('val-gates').textContent   = _gates.length;
+    const chip = document.getElementById('chip-gates');
+    chip.className = 'stat-chip' + (_gates.length > 0 ? ' warn' : '');
+
+    if (!_gates.length) {
+      body.innerHTML = '<div class="panel-empty">Aucune gate en attente</div>';
+      return;
+    }
+    body.innerHTML = _gates.map(g => `
+      <div class="gate-item" id="gate-${g.id}">
+        <div class="gate-label" title="${esc(g.label)}">${esc(g.label)}</div>
+        ${g.note ? `<div class="gate-note">${esc(g.note.substring(0,120))}</div>` : ''}
+        <div class="gate-actions">
+          <button class="btn btn-approve btn-sm" onclick="approveGate(${g.id})">✓ Valider</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleGateNote(${g.id})">✎ Modifier</button>
+          <button class="btn btn-reject btn-sm" onclick="rejectGatePrompt(${g.id})">✕ Refuser</button>
+          ${g.doli_url ? `<a href="${esc(g.doli_url)}" target="_blank" class="btn btn-doli btn-sm">Dolibarr ↗</a>` : ''}
+        </div>
+        <div class="gate-modify-wrap" id="gate-note-${g.id}">
+          <textarea class="gate-note-input" id="gate-note-input-${g.id}" rows="2" placeholder="Note de modification…"></textarea>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-approve btn-sm" onclick="approveGateWithNote(${g.id})">✓ Valider avec note</button>
+            <button class="btn btn-reject btn-sm" onclick="rejectGateWithNote(${g.id})">✕ Refuser avec note</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    body.innerHTML = `<div class="panel-empty" style="color:var(--red)">Erreur chargement gates</div>`;
+  }
+}
+
+function toggleGateNote(id) {
+  const wrap = document.getElementById(`gate-note-${id}`);
+  wrap.classList.toggle('open');
+}
+
+async function approveGate(id) {
+  await callGate(id, 'approve', null);
+}
+async function approveGateWithNote(id) {
+  const note = document.getElementById(`gate-note-input-${id}`)?.value || '';
+  await callGate(id, 'approve', note);
+}
+async function rejectGatePrompt(id) {
+  await callGate(id, 'reject', null);
+}
+async function rejectGateWithNote(id) {
+  const note = document.getElementById(`gate-note-input-${id}`)?.value || '';
+  await callGate(id, 'reject', note);
+}
+
+async function callGate(id, action, note) {
+  try {
+    const body = note ? {note} : {};
+    const r = await fetch(`/api/pipeline/gate/${id}/${action}`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) throw new Error(await r.text());
+    toast(action === 'approve' ? 'Gate validée ✓' : 'Gate refusée ✕', action === 'approve' ? 'ok' : 'err');
+    const el = document.getElementById(`gate-${id}`);
+    if (el) el.remove();
+    _gates = _gates.filter(g => g.id != id);
+    document.getElementById('gates-count').textContent = _gates.length;
+    document.getElementById('val-gates').textContent   = _gates.length;
+    if (!_gates.length) document.getElementById('gates-body').innerHTML = '<div class="panel-empty">Aucune gate en attente</div>';
+  } catch(e) {
+    toast('Erreur : ' + e.message, 'err');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RUNS
+// ═══════════════════════════════════════════════════════════════
+async function loadRuns() {
+  const body = document.getElementById('runs-body');
+  try {
+    const r = await fetch('/api/pipeline-runs?limit=15');
+    const d = await r.json();
+    _runs = d.runs || [];
+    updateRefreshTs();
+
+    // Compte aujourd'hui
+    const today = new Date().toISOString().slice(0,10);
+    const todayCount = _runs.filter(r => (r.started_at||'').startsWith(today)).length;
+    document.getElementById('val-runs').textContent = todayCount;
+
+    if (!_runs.length) {
+      body.innerHTML = '<div class="panel-empty">Aucun run dans les logs</div>';
+      return;
+    }
+    body.innerHTML = _runs.map((run, idx) => `
+      <div class="run-card ${statusClass(run.status)}" id="run-card-${idx}" onclick="selectRun(${idx})">
+        <div class="run-card-head">
+          <span class="dot ${dotClass(run.status)}"></span>
+          <span class="run-card-subject">${esc(run.email_subject || '(pas de sujet)')}</span>
+          <span class="run-card-time">${fmtTs(run.started_at)}</span>
+        </div>
+        <div class="run-card-meta">
+          <span class="badge ${routingBadgeClass(run.routing_category)}">${esc(run.routing_category || '—')}</span>
+          <span class="badge ${statusBadge(run.status)}">${esc(run.status || 'unknown')}</span>
+          ${run.devis_ref ? `<span class="badge badge-ok">${esc(run.devis_ref)}</span>` : ''}
+          ${run.duration_s != null ? `<span style="font-size:10px;color:var(--text-muted)">${run.duration_s}s</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    // Re-sélectionner le run courant si toujours présent
+    if (_selectedRun !== null && _selectedRun < _runs.length) {
+      renderRunDetail(_selectedRun);
+    }
+  } catch(e) {
+    body.innerHTML = `<div class="panel-empty" style="color:var(--red)">Erreur chargement runs</div>`;
+  }
+}
+
+function selectRun(idx) {
+  _selectedRun = idx;
+  document.querySelectorAll('.run-card').forEach(el => el.classList.remove('selected'));
+  const card = document.getElementById(`run-card-${idx}`);
+  if (card) card.classList.add('selected');
+  renderRunDetail(idx);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RUN DETAIL + DIAGRAM
+// ═══════════════════════════════════════════════════════════════
+function renderRunDetail(idx) {
+  const run = _runs[idx];
+  if (!run) return;
+
+  document.getElementById('pipeline-detail').style.display = 'block';
+  document.getElementById('diagram-empty').style.display   = 'none';
+
+  // Meta panel
+  const isNewProject = run.routing_category === 'NEW_PROJECT';
+  const doliUrl = run.devis_ref
+    ? `<a href="#" onclick="return false" style="color:var(--blue)">Dolibarr ↗</a>`
+    : '—';
+  document.getElementById('run-meta-panel').innerHTML = `
+    <div class="run-detail-title">Détails du run</div>
+    <div class="run-meta-grid">
+      <div class="run-meta-item">
+        <div class="run-meta-key">Expéditeur</div>
+        <div class="run-meta-val">${esc(run.email_sender || '—')}</div>
+      </div>
+      <div class="run-meta-item">
+        <div class="run-meta-key">Client extrait</div>
+        <div class="run-meta-val">${esc(run.soc_nom || run.client_email || '—')}</div>
+      </div>
+      <div class="run-meta-item">
+        <div class="run-meta-key">Routing</div>
+        <div class="run-meta-val">
+          <span class="badge ${routingBadgeClass(run.routing_category)}">${esc(run.routing_category || '—')}</span>
+          ${run.routing_confidence ? `<span style="font-size:10px;color:var(--text-muted);margin-left:4px">${esc(run.routing_confidence)}</span>` : ''}
+        </div>
+      </div>
+      <div class="run-meta-item">
+        <div class="run-meta-key">Devis</div>
+        <div class="run-meta-val">${run.devis_ref ? `<span class="badge badge-ok">${esc(run.devis_ref)}</span>` : '—'}</div>
+      </div>
+      <div class="run-meta-item">
+        <div class="run-meta-key">Démarré</div>
+        <div class="run-meta-val">${esc(run.started_at || '—')}</div>
+      </div>
+      <div class="run-meta-item">
+        <div class="run-meta-key">Durée</div>
+        <div class="run-meta-val">${run.duration_s != null ? run.duration_s + 's' : '—'}</div>
+      </div>
+      ${run.stop_reason ? `
+        <div class="run-meta-item" style="grid-column:1/-1">
+          <div class="run-meta-key">Arrêt</div>
+          <div class="run-meta-val" style="color:var(--text-muted)">${esc(run.stop_reason)}</div>
+        </div>` : ''}
+    </div>
+  `;
+
+  // Flux label
+  const fluxLabel = document.getElementById('diagram-flux-label');
+  fluxLabel.textContent = isNewProject ? 'FLUX A — Nouveau devis' : 'NON-DEVIS — Routage';
+  fluxLabel.className = `badge ${isNewProject ? 'badge-NEW_PROJECT' : 'badge-OTHER'}`;
+
+  // Build step statuses
+  const steps = isNewProject ? STEPS_FLUX_A : STEPS_NON_DEVIS;
+  const stepStatus = buildStepStatuses(run, steps, isNewProject);
+  run._cachedStatus = stepStatus;  // pour que l'inspecteur puisse lire le statut par step
+
+  // Render stepper
+  renderStepper(steps, stepStatus, run, idx);
+
+  // Actions log
+  const actionsEl = document.getElementById('actions-log');
+  if (run.actions && run.actions.length) {
+    actionsEl.innerHTML = run.actions.map(a =>
+      `<span class="action-chip">${a.icon} ${esc(a.text)}</span>`
+    ).join('');
+  } else {
+    actionsEl.innerHTML = '';
+  }
+}
+
+function buildStepStatuses(run, steps, isNewProject) {
+  const s = run.steps || {};
+  const status = {};
+
+  // Mapping simplifié depuis les données de run
+  for (const step of steps) {
+    const k = step.key;
+    if (k === '__gate_go__') {
+      // Gate GO : pending si devis créé, done si s13 done, skip si pas de devis
+      status[k] = run.devis_ref ? (s['s13'] === 'done' ? 'done' : 'gate') : 'skip';
+      continue;
+    }
+    const short = k.split('_')[0]; // s01, s02, s03…
+    if (s[short]) {
+      status[k] = s[short];
+      continue;
+    }
+    // Groupes
+    if (['s03_clean_data','s04_find_or_create_client','s05_get_attachments'].includes(k)) {
+      status[k] = s['tiers'] || 'pending';
+    } else if (['s06_analyse_besoin','s07_build_devis_lines'].includes(k)) {
+      // Intermédiaires : done si tiers=done && devis=done, active sinon
+      status[k] = (s['tiers'] === 'done' && s['devis']) ? (s['devis'] === 'done' ? 'done' : 'active') : (s['tiers'] === 'done' ? 'active' : 'pending');
+    } else if (['s08_create_devis','s09_upload_attachments','s10_log_email','s11_archive_outlook','s12_notify_team','s13_send_email_client'].includes(k)) {
+      status[k] = s['devis'] || 'pending';
+    } else if (k === 's_mark_non_devis') {
+      status[k] = run.routing_category && run.routing_category !== 'NEW_PROJECT' ? 'done' : 'skip';
+    } else {
+      status[k] = 'pending';
+    }
+
+    // Propagation : si stop/error, tout ce qui suit est skip
+    if (run.status === 'stopped' || run.status === 'routed') {
+      if (k.startsWith('s0') && parseInt(k.replace('s0','').split('_')[0]) > 3) {
+        if (!isNewProject || run.routing_category !== 'NEW_PROJECT') status[k] = 'skip';
+      }
+    }
+  }
+
+  // Overlay error
+  if (run.status === 'error') {
+    // Marquer le dernier step actif comme error
+    let lastActive = null;
+    for (const step of steps) {
+      if (status[step.key] === 'active') lastActive = step.key;
+    }
+    if (lastActive) status[lastActive] = 'error';
+  }
+
+  return status;
+}
+
+function renderStepper(steps, stepStatus, run, runIdx) {
+  const container = document.getElementById('stepper-nodes');
+  let html = '';
+  steps.forEach((step, i) => {
+    const st = stepStatus[step.key] || 'pending';
+    const isLast = i === steps.length - 1;
+    html += `
+      <div class="step-node" onclick="inspectStep(${runIdx}, '${step.key}', ${JSON.stringify(step).replace(/"/g,'&quot;')})">
+        <div class="step-dot ${st}" title="${esc(step.desc)}">
+          ${st === 'done' ? '✓' : st === 'error' ? '✗' : st === 'skip' ? '—' : st === 'gate' ? '⏸' : step.icon}
+        </div>
+        <div class="step-label ${st}">${esc(step.label)}</div>
+      </div>
+      ${!isLast ? `<div class="step-connector ${st === 'done' ? 'done' : st === 'active' ? 'active' : ''}"></div>` : ''}
+    `;
+  });
+  container.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  INSPECTOR + ACTIONS PAR ÉTAPE
+// ═══════════════════════════════════════════════════════════════
+
+// Actions disponibles selon le type de step
+const STEP_ACTIONS = {
+  's01_get_email':             ['view'],
+  's02_extract_client_ai':     ['view', 'validate', 'flag', 'modal'],
+  's03_clean_data':            ['view', 'validate', 'flag'],
+  's04_find_or_create_client': ['view', 'validate', 'flag', 'doli_tiers'],
+  's05_get_attachments':       ['view'],
+  's06_analyse_besoin':        ['view', 'validate', 'flag', 'modify', 'modal'],
+  's07_build_devis_lines':     ['view', 'validate', 'flag', 'modal'],
+  's08_create_devis':          ['view', 'validate', 'flag', 'doli_devis'],
+  's09_upload_attachments':    ['view'],
+  's10_log_email':             ['view'],
+  's11_archive_outlook':       ['view'],
+  's12_notify_team':           ['view', 'validate'],
+  '__gate_go__':               ['view', 'gate_approve', 'gate_reject'],
+  's13_send_email_client':     ['view'],
+  's_mark_non_devis':          ['view'],
+};
+
+function inspectStep(runIdx, stepKey, stepDef) {
+  _selectedStep = stepKey;
+  const run = _runs[runIdx];
+  if (!run) return;
+
+  // Afficher le panel inspecteur
+  const inspPanel = document.getElementById('inspector-panel');
+  if (inspPanel) inspPanel.style.display = 'block';
+
+  const body = document.getElementById('inspector-body');
+  const step = typeof stepDef === 'string' ? JSON.parse(stepDef) : stepDef;
+  const stepStatus = run._cachedStatus ? run._cachedStatus[stepKey] : null;
+  const fields = extractStepFields(run, stepKey);
+  const actions = STEP_ACTIONS[stepKey] || ['view'];
+  const stBadgeClass = {done:'badge-ok',error:'badge-err',active:'badge-run',pending:'badge-idle',skip:'badge-stop',gate:'badge-warn'}[stepStatus] || 'badge-idle';
+  const stLabel = {done:'✓ Exécuté',active:'⌛ En cours',error:'✗ Erreur',pending:'⌀ En attente',skip:'— Ignoré',gate:'⏸ Attente GO'}[stepStatus] || (stepStatus||'');
+
+  // ── HEADER ──
+  let html = `
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:0.5px solid rgba(90,80,64,.25)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px;line-height:1;flex-shrink:0">${step.icon}</span>
+        <div>
+          <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--amber);margin-bottom:3px">${esc(step.label)}</div>
+          <div style="font-size:11px;color:var(--text-muted);line-height:1.4">${esc(step.desc)}</div>
+        </div>
+      </div>
+      ${stepStatus ? `<span class="badge ${stBadgeClass}" style="flex-shrink:0;margin-top:3px;font-size:11px;padding:4px 10px">${stLabel}</span>` : ''}
+    </div>`;
+
+  // ── RÉSUMÉ ──
+  const summary = buildStepSummary(run, stepKey, stepStatus);
+  if (summary) {
+    html += `
+      <div style="background:var(--bg1);border-radius:var(--radius-sm);padding:11px 14px;margin-bottom:16px;border-left:2px solid var(--amber-border)">
+        <span class="section-label-ins">Résumé</span>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.65">${esc(summary)}</div>
+      </div>`;
+  }
+
+  // ── OUTPUT DÉTAILLÉ ──
+  if (fields.length > 0) {
+    html += `<span class="section-label-ins" style="margin-bottom:10px">Output détaillé</span>`;
+    fields.forEach(f => {
+      html += `<div class="inspector-field">
+        <div class="inspector-field-key">${esc(f.key)}</div>`;
+      if (f.type === 'json') {
+        html += `<pre class="inspector-json">${esc(JSON.stringify(f.value, null, 2))}</pre>`;
+      } else if (f.type === 'email') {
+        html += `<div class="email-preview">${esc(String(f.value))}</div>`;
+      } else {
+        html += `<div class="inspector-field-val" style="font-size:12px">${esc(String(f.value))}</div>`;
+      }
+      html += `</div>`;
+    });
+  } else if (stepStatus !== 'pending' && stepStatus !== 'skip') {
+    html += `<div style="color:var(--text-muted);font-size:11px;padding:6px 0 14px">Aucune donnée de détail disponible pour ce nœud dans les logs.</div>`;
+  }
+
+  // ── ACTIONS À LA VALIDATION ──
+  const pendingActions = getValidationActions(run, stepKey).filter(Boolean);
+  if (pendingActions.length) {
+    html += `
+      <div style="margin-top:16px;margin-bottom:16px">
+        <span class="section-label-ins" style="margin-bottom:8px">Actions à la validation</span>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          ${pendingActions.map(a => `
+            <div style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text-secondary);padding:5px 0;border-bottom:0.5px solid rgba(90,80,64,.1)">
+              <span style="color:var(--amber);flex-shrink:0;font-size:14px;margin-top:-1px">→</span>${esc(a)}
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  // ── N8N WORKFLOWS ──
+  const n8nWorkflows = getN8NWorkflows(stepKey);
+  if (n8nWorkflows.length) {
+    html += `
+      <div class="n8n-section">
+        <span class="n8n-label">⚡ Workflows N8N</span>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          ${n8nWorkflows.map(wf => `
+            <button class="btn-n8n" onclick="triggerN8NWorkflow('${esc(wf.id)}', '${esc(wf.name)}', ${runIdx})">
+              <span>⚡</span>
+              <span style="flex:1">${esc(wf.name)}</span>
+              <span style="font-size:9px;opacity:${wf.id ? '0.6' : '0.4'}">${wf.id ? esc(wf.id) : 'ID à configurer'}</span>
+            </button>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  // ── GROS BOUTONS DE VALIDATION ──
+  const hasGateActions = actions.includes('gate_approve') || actions.includes('gate_reject');
+  const hasValidate = actions.includes('validate') && stepStatus === 'done';
+  const hasFlag = actions.includes('flag');
+  const hasDoli = (actions.includes('doli_tiers') && run.soc_nom) || (actions.includes('doli_devis') && run.devis_ref);
+
+  if (hasGateActions || hasValidate || hasDoli) {
+    html += `<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;margin-bottom:4px">`;
+
+    if (hasGateActions) {
+      const matchingGate = _gates.find(g => run.devis_ref && g.label && g.label.includes(run.devis_ref));
+      if (matchingGate) {
+        html += `<button class="btn-xl btn-xl-approve" onclick="approveGate(${matchingGate.id})">✓ VALIDER — Déclencher l'envoi client</button>`;
+        html += `<button class="btn-xl btn-xl-reject" onclick="rejectGatePrompt(${matchingGate.id})">✕ REFUSER — Ne pas envoyer</button>`;
+      } else {
+        html += `<div style="font-size:11px;color:var(--text-muted);padding:10px;background:var(--bg1);border-radius:var(--radius-sm);text-align:center">Gate Dolibarr non trouvée — déjà validée ou non créée.</div>`;
+      }
+    } else if (hasValidate) {
+      html += `<button class="btn-xl btn-xl-approve" onclick="stepAction('validate', '${stepKey}', ${runIdx})">✓ VALIDER CETTE ÉTAPE</button>`;
+    }
+
+    if (hasFlag && !hasGateActions) {
+      html += `<button class="btn-xl btn-xl-reject" onclick="stepAction('flag','${stepKey}',${runIdx})">⚑ SIGNALER UN PROBLÈME</button>`;
+    }
+
+    if (actions.includes('doli_tiers') && run.soc_nom) {
+      html += `<button class="btn btn-doli" style="width:100%;justify-content:center;padding:12px;font-size:12px" onclick="searchDoliTiers(${JSON.stringify(run.soc_nom||'')})">↗ Ouvrir tiers dans Dolibarr</button>`;
+    }
+    if (actions.includes('doli_devis') && run.devis_ref) {
+      html += `<button class="btn btn-doli" style="width:100%;justify-content:center;padding:12px;font-size:12px" onclick="openDoliDevis(${JSON.stringify(run.devis_ref||'')})">↗ Ouvrir devis ${esc(run.devis_ref)} dans Dolibarr</button>`;
+    }
+    html += `</div>`;
+  }
+
+  // ── ZONE MODIFICATION (toujours visible, grande) ──
+  html += `
+    <div class="modify-zone">
+      <span class="section-label-ins" style="margin-bottom:10px">Modifier / Ajouter une note</span>
+      <textarea class="modify-textarea-xl" id="step-note-input-${stepKey}" placeholder="Note de modification, instruction complémentaire, correction sur ce nœud…"></textarea>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        ${(hasGateActions || hasValidate) ? `<button class="btn btn-approve" style="flex:1;min-width:130px;padding:11px 8px;font-size:12px;justify-content:center" onclick="submitNoteAndValidate('${stepKey}', ${runIdx})">✓ Valider avec note</button>` : ''}
+        ${hasFlag ? `<button class="btn btn-reject" style="flex:1;min-width:110px;padding:11px 8px;font-size:12px;justify-content:center" onclick="stepActionWithNote('flag','${stepKey}',${runIdx})">⚑ Signaler</button>` : ''}
+        ${actions.includes('modal') ? `<button class="btn btn-ghost" style="padding:11px 14px;font-size:12px" onclick="openStepModal(${runIdx}, '${stepKey}')">⊞ JSON complet</button>` : ''}
+      </div>
+    </div>`;
+
+  body.innerHTML = html;
+}
+
+async function stepAction(action, stepKey, runIdx, note) {
+  const run = _runs[runIdx];
+  if (!run) return;
+  try {
+    const r = await fetch('/api/pipeline/step-action', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        action,
+        step: stepKey,
+        ref: run.devis_ref || '',
+        note: note || '',
+      })
+    });
+    if (!r.ok) throw new Error(await r.text());
+    const label = action === 'validate' ? 'Étape validée ✓' : 'Problème signalé ⚑';
+    toast(label, action === 'validate' ? 'ok' : 'err');
+  } catch(e) {
+    toast('Erreur : ' + e.message, 'err');
+  }
+}
+
+async function stepActionWithNote(action, stepKey, runIdx) {
+  const noteEl = document.getElementById(`step-note-input-${stepKey}`);
+  const note = noteEl ? noteEl.value : '';
+  await stepAction(action, stepKey, runIdx, note);
+}
+
+function searchDoliTiers(nom) {
+  fetch('/api/config').then(r => r.json()).then(d => {
+    if (d.dolibarr_url) window.open(`${d.dolibarr_url}/societe/list.php?search_nom=${encodeURIComponent(nom)}`, '_blank');
+    else toast('URL Dolibarr non configurée', 'err');
+  });
+}
+
+function openDoliDevis(ref) {
+  fetch('/api/config').then(r => r.json()).then(d => {
+    if (d.dolibarr_url) window.open(`${d.dolibarr_url}/comm/propal/list.php?search_ref=${encodeURIComponent(ref)}`, '_blank');
+    else toast('URL Dolibarr non configurée', 'err');
+  });
+}
+
+function extractStepFields(run, stepKey) {
+  const fields = [];
+  switch(stepKey) {
+    case 's01_get_email':
+      if (run.email_subject)  fields.push({key:'Objet', value: run.email_subject});
+      if (run.email_sender)   fields.push({key:'Expéditeur', value: run.email_sender});
+      if (run.started_at)     fields.push({key:'Démarré à', value: run.started_at});
+      break;
+    case 's02_extract_client_ai':
+      if (run.client_email || run.soc_nom) fields.push({key:'Client extrait', value: {soc_nom: run.soc_nom, email: run.client_email}, type:'json'});
+      if (run.routing_category) fields.push({key:'Routing', value: run.routing_category + (run.routing_confidence ? ' ('+run.routing_confidence+')' : '')});
+      break;
+    case 's03_clean_data':
+      fields.push({key:'Catégorie', value: run.routing_category || 'UNKNOWN'});
+      fields.push({key:'Résultat', value: run.routing_category === 'NEW_PROJECT' ? 'Autorisé — pipeline continue' : 'Arrêt — email non-devis'});
+      break;
+    case 's04_find_or_create_client': {
+      if (run.soc_nom) fields.push({key:'Tiers', value: run.soc_nom});
+      if (run.client_email) fields.push({key:'Email', value: run.client_email});
+      const tiersAction = (run.actions||[]).find(a => a.text && (a.text.includes('Tiers') || a.icon === '👤'));
+      if (tiersAction) fields.push({key:'Action Dolibarr', value: tiersAction.text});
+      break;
+    }
+    case 's08_create_devis':
+      if (run.devis_ref) fields.push({key:'Référence devis', value: run.devis_ref});
+      break;
+    case 's11_archive_outlook':
+      fields.push({key:'Email', value: run.email_subject || '—'});
+      fields.push({key:'Archivé dans', value: run.devis_ref ? `Dossier ${run.devis_ref}` : 'Dossier DEVIS'});
+      break;
+    case 's12_notify_team':
+      fields.push({key:'Statut', value: run.devis_ref ? 'Notification envoyée — en attente GO' : 'Non atteint'});
+      if (run.devis_ref) fields.push({key:'Devis', value: run.devis_ref});
+      break;
+    case '__gate_go__': {
+      fields.push({key:'Type', value: 'Gate validation humaine'});
+      fields.push({key:'Action requise', value: 'Approuver pour déclencher l\'envoi email client (s13)'});
+      if (run.devis_ref) fields.push({key:'Devis concerné', value: run.devis_ref});
+      const matchingGate = _gates.find(g => run.devis_ref && g.label && g.label.includes(run.devis_ref));
+      if (matchingGate) fields.push({key:'Gate Dolibarr', value: matchingGate.label});
+      break;
+    }
+    default: {
+      const acts = (run.actions||[]).filter(a => a.text && a.text.length > 2);
+      if (acts.length) fields.push({key:'Actions log', value: acts.map(a => a.icon+' '+a.text).join('\n')});
+    }
+  }
+  return fields;
+}
+
+function clearInspector() {
+  _selectedStep = null;
+  const inspPanel = document.getElementById('inspector-panel');
+  if (inspPanel) inspPanel.style.display = 'none';
+  document.getElementById('inspector-body').innerHTML = '<div class="inspector-empty">Cliquez sur un nœud pour inspecter son output</div>';
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  INSPECTOR HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+function buildStepSummary(run, stepKey, stepStatus) {
+  if (stepStatus === 'pending') return 'Étape non encore atteinte dans ce run.';
+  if (stepStatus === 'skip')    return 'Étape ignorée — non applicable à ce flux de traitement.';
+  if (stepStatus === 'error')   return 'Une erreur est survenue lors de l\'exécution de cette étape. Vérifiez les logs pour le détail.';
+  switch(stepKey) {
+    case 's01_get_email':
+      return `Email récupéré depuis Outlook. Expéditeur : ${run.email_sender || '—'}. Objet : ${run.email_subject || '—'}`;
+    case 's02_extract_client_ai':
+      return `L'IA (GPT-4.1-mini) a effectué 3 appels en parallèle : extraction client, analyse sentiment, routing. Résultat routing : ${run.routing_category || '—'} (confiance : ${run.routing_confidence || '—'}).`;
+    case 's03_clean_data':
+      return run.routing_category === 'NEW_PROJECT'
+        ? 'Email catégorisé NEW_PROJECT — le pipeline Flux A est autorisé à continuer vers la création de devis.'
+        : `Email routé vers la catégorie ${run.routing_category || 'inconnue'} — pipeline arrêté proprement. Pas de devis à créer.`;
+    case 's04_find_or_create_client':
+      return `Recherche et traitement du tiers ${run.soc_nom || 'inconnu'} dans Dolibarr. Vérification doublon, création si nécessaire.`;
+    case 's05_get_attachments':
+      return `Récupération des pièces jointes depuis l'email entrant pour transmission sur le devis Dolibarr.`;
+    case 's06_analyse_besoin':
+      return `Analyse IA du besoin d'impression : format, grammage, quantité, finitions. Résultat injecté dans la construction des lignes de devis.`;
+    case 's07_build_devis_lines':
+      return `Calcul Python des lignes de devis : imposition, grammage, format, prix. Aucun appel IA dans cette étape.`;
+    case 's08_create_devis':
+      return run.devis_ref
+        ? `Devis ${run.devis_ref} créé avec succès dans Dolibarr. Statut brouillon, en attente de validation.`
+        : 'Création du devis Dolibarr en cours ou non encore effectuée.';
+    case 's09_upload_attachments':
+      return `Upload des pièces jointes de l'email sur le devis Dolibarr ${run.devis_ref || ''}.`;
+    case 's10_log_email':
+      return `Email logué comme événement dans l'agenda Dolibarr pour traçabilité.`;
+    case 's11_archive_outlook':
+      return `Email archivé dans Outlook, déplacé dans le dossier ${run.devis_ref ? 'DEVIS/' + run.devis_ref : 'DEVIS'}.`;
+    case 's12_notify_team':
+      return `Équipe notifiée de la création du devis. Gate GO créée dans Dolibarr — validation humaine requise avant envoi client.`;
+    case '__gate_go__':
+      return `Gate de validation humaine. En approuvant, vous déclenchez l'envoi de l'email de réponse CONFIG_CLIENT au client. En refusant, aucun email n'est envoyé.`;
+    case 's13_send_email_client':
+      return `Email de réponse CONFIG_CLIENT_v2026 envoyé au client via Outlook. Pipeline terminé avec succès.`;
+    default: return '';
+  }
+}
+
+function getValidationActions(run, stepKey) {
+  switch(stepKey) {
+    case 's02_extract_client_ai':
+      return [
+        `Confirmer le routing : ${run.routing_category || '—'} (confiance ${run.routing_confidence || '—'})`,
+        `Enregistrer les données client extraites dans le contexte du run`,
+      ];
+    case 's03_clean_data':
+      return run.routing_category === 'NEW_PROJECT'
+        ? ['Autoriser le pipeline à continuer vers s04 (recherche tiers Dolibarr)']
+        : ['Arrêter proprement le pipeline — email non-devis routé'];
+    case 's04_find_or_create_client':
+      return [
+        run.soc_nom ? `Confirmer le tiers Dolibarr : ${run.soc_nom}` : 'Vérifier la création du tiers',
+        'Passer à la récupération des pièces jointes (s05)',
+      ];
+    case 's06_analyse_besoin':
+      return [
+        'Valider l\'analyse technique du besoin impression',
+        'Passer au calcul Python des lignes de devis (s07)',
+      ];
+    case 's07_build_devis_lines':
+      return [
+        'Valider le calcul d\'imposition et les lignes de devis',
+        'Passer à la création du devis dans Dolibarr (s08)',
+      ];
+    case 's08_create_devis':
+      return run.devis_ref
+        ? [`Vérifier le devis ${run.devis_ref} dans Dolibarr`, 'Passer à l\'upload des PJ et au log agenda']
+        : [];
+    case 's12_notify_team':
+      return [
+        'Créer la gate GO dans l\'agenda Dolibarr (done=0)',
+        'Attendre la validation humaine avant déclenchement de l\'envoi',
+      ];
+    case '__gate_go__':
+      return [
+        `Déclencher l'envoi de l'email CONFIG_CLIENT_v2026 au client (s13)`,
+        `Marquer la gate comme validée dans Dolibarr (done=1)`,
+        run.devis_ref ? `Référence devis concernée : ${run.devis_ref}` : '',
+      ];
+    default: return [];
+  }
+}
+
+function getN8NWorkflows(stepKey) {
+  const wfMap = {
+    's02_extract_client_ai':     [{id:'', name:'Analyse email entrant — extraction IA'}],
+    's04_find_or_create_client': [{id:'', name:'Sync CRM — Dolibarr tiers'}],
+    's06_analyse_besoin':        [{id:'', name:'Enrichissement brief impression'}],
+    's08_create_devis':          [{id:'', name:'Notification devis créé — équipe'}],
+    's12_notify_team':           [{id:'', name:'Alerte équipe — Gate GO en attente'}],
+    '__gate_go__':               [{id:'', name:'Email réponse client CONFIG_CLIENT_v2026'}],
+    's13_send_email_client':     [{id:'', name:'Confirmation envoi — archivage final'}],
+  };
+  return wfMap[stepKey] || [];
+}
+
+async function triggerN8NWorkflow(workflowId, name, runIdx) {
+  const run = _runs[runIdx];
+  if (!workflowId) {
+    toast(`Workflow "${name}" — ID N8N non configuré (à renseigner dans getN8NWorkflows)`, 'warn');
+    return;
+  }
+  try {
+    const r = await fetch('/api/n8n/trigger', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({workflow_id: workflowId, run_id: run?.id, ref: run?.devis_ref || ''})
+    });
+    if (!r.ok) throw new Error(await r.text());
+    toast(`Workflow "${name}" déclenché ✓`, 'ok');
+  } catch(e) {
+    toast(`N8N erreur : ${e.message}`, 'err');
+  }
+}
+
+async function submitNoteAndValidate(stepKey, runIdx) {
+  const note = document.getElementById(`step-note-input-${stepKey}`)?.value || '';
+  const run = _runs[runIdx];
+  if (!run) return;
+  const actions = STEP_ACTIONS[stepKey] || [];
+  if (actions.includes('gate_approve')) {
+    const matchingGate = _gates.find(g => run.devis_ref && g.label && g.label.includes(run.devis_ref));
+    if (matchingGate) {
+      await callGate(matchingGate.id, 'approve', note || null);
+      return;
+    }
+  }
+  await stepAction('validate', stepKey, runIdx, note);
+}
+
+function openStepModal(runIdx, stepKey) {
+  const run = _runs[runIdx];
+  if (!run) return;
+  const step = STEPS_FLUX_A.find(s => s.key === stepKey) || STEPS_NON_DEVIS.find(s => s.key === stepKey) || {label: stepKey, icon: ''};
+  const fields = extractStepFields(run, stepKey);
+  document.getElementById('modal-title').textContent = `${step.icon} ${step.label} — Output complet`;
+  let html = '';
+  if (!fields.length) {
+    html = '<p style="color:var(--text-muted)">Aucune donnée disponible.</p>';
+  } else {
+    fields.forEach(f => {
+      html += `<div style="margin-bottom:14px">
+        <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">${esc(f.key)}</div>`;
+      if (f.type === 'json') {
+        html += `<pre class="inspector-json" style="max-height:none">${esc(JSON.stringify(f.value, null, 2))}</pre>`;
+      } else {
+        html += `<pre class="inspector-json">${esc(String(f.value))}</pre>`;
+      }
+      html += '</div>';
+    });
+    html += `<div style="margin-top:16px;padding-top:12px;border-top:0.5px solid rgba(90,80,64,.2)">
+      <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Run complet</div>
+      <pre class="inspector-json">${esc(JSON.stringify(run, null, 2))}</pre>
+    </div>`;
+  }
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('output-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('output-modal').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ACTIONS
+// ═══════════════════════════════════════════════════════════════
+async function triggerRun() {
+  const btn = document.getElementById('btn-run');
+  btn.disabled = true;
+  btn.textContent = '⌛ Lancement…';
+  try {
+    const r = await fetch('/api/run', {method: 'POST'});
+    const d = await r.json();
+    toast('Pipeline lancé (PID ' + d.pid + ')', 'ok');
+    setTimeout(loadRuns, 4000);
+  } catch(e) {
+    toast('Erreur lancement pipeline', 'err');
+  } finally {
+    setTimeout(() => { btn.disabled = false; btn.innerHTML = '▶ Lancer le pipeline'; }, 3000);
+  }
+}
+
+async function archiveEmail(subject, sender, btn) {
+  btn.disabled = true;
+  try {
+    const r = await fetch('/api/pipeline/archive-email', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({subject, sender})
+    });
+    if (!r.ok) throw new Error(await r.text());
+    toast('Email archivé', 'ok');
+    loadQueue();
+  } catch(e) {
+    toast('Erreur archivage : ' + e.message, 'err');
+    btn.disabled = false;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════════
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtTs(ts) {
+  if (!ts) return '—';
+  try { return new Date(ts.replace(' ','T')).toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}); }
+  catch(e) { return ts.slice(11,16) || ts; }
+}
+
+function fmtRecv(ts) {
+  if (!ts) return '';
+  try {
+    const d = new Date(ts);
+    const now = new Date();
+    const diffH = (now - d) / 3600000;
+    if (diffH < 24) return `il y a ${Math.round(diffH)}h`;
+    return d.toLocaleDateString('fr-FR', {day:'numeric', month:'short'});
+  } catch(e) { return ''; }
+}
+
+function statusClass(status) {
+  const map = {ok:'', error:'status-error', devis_created:'status-devis_created', running:'status-running', stopped:'', routed:''};
+  return map[status] || '';
+}
+
+function dotClass(status) {
+  const map = {ok:'dot-ok', error:'dot-err', devis_created:'dot-ok', running:'dot-warn', stopped:'dot-idle', routed:'dot-idle', never_run:'dot-idle'};
+  return map[status] || 'dot-idle';
+}
+
+function statusBadge(status) {
+  const map = {ok:'badge-ok', error:'badge-err', devis_created:'badge-ok', running:'badge-run', stopped:'badge-stop', routed:'badge-idle'};
+  return map[status] || 'badge-idle';
+}
+
+function routingBadgeClass(cat) {
+  if (!cat) return 'badge-idle';
+  if (cat === 'NEW_PROJECT') return 'badge-NEW_PROJECT';
+  return 'badge-OTHER';
+}
+
+function updateRefreshTs() {
+  const el = document.getElementById('refresh-ts');
+  el.textContent = 'Actualisé ' + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+}
+
+function toast(msg, type='ok') {
+  const c = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.innerHTML = `${type === 'ok' ? '✓' : type === 'err' ? '✗' : '⚠'} ${esc(msg)}`;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

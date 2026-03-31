@@ -1,0 +1,157 @@
+[
+  {
+    "id": "51b94592-53f2-41ed-86df-33466b0599fd",
+    "timestamp": "2026-03-28T14:00:19.967075+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "stratégique",
+    "action": "synthesis_generated",
+    "description": "Synthèse stratégique — score 60/100 — attention",
+    "context": {
+      "score": 60,
+      "mode": "live",
+      "ca_mois": 0
+    },
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "49a6eac2-7ec1-4499-87f3-3b50f406786b",
+    "timestamp": "2026-03-28T14:00:26.785555+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "stratégique",
+    "action": "synthesis_generated",
+    "description": "Synthèse stratégique — score 60/100 — attention",
+    "context": {
+      "score": 60,
+      "mode": "live",
+      "ca_mois": 0
+    },
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "8aa57d4a-89e1-4e84-af72-8be9b0e9f235",
+    "timestamp": "2026-03-28T14:07:23.812369+00:00",
+    "session_id": "",
+    "actor": "user",
+    "category": "vision",
+    "action": "system_integration_complete",
+    "description": "Intégration system_reference.py + outils système (verify, report, intent_tracker, strategic_synthesis) — score 100/100 — données Dolibarr live opérationnelles",
+    "context": {},
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "da86309e-59ba-451d-8901-e7a1cb2a4ca9",
+    "timestamp": "2026-03-28T14:07:23.851160+00:00",
+    "session_id": "",
+    "actor": "user",
+    "category": "stratégique",
+    "action": "synthesis_live_dolibarr",
+    "description": "CA mars 56825 EUR, impayés 77751 EUR (64 factures), DSO 29.4j, 1569 factures analysées",
+    "context": {},
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "ff94ac9a-5fd4-4dcc-93d4-21685150faf6",
+    "timestamp": "2026-03-28T14:25:54.177923+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "technique",
+    "action": "dashboard_verified",
+    "description": "Autotest dashboard — score 52/100 (degraded) — 6 OK / 5 warn / 3 erreurs",
+    "context": {},
+    "outcome": "partial",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "f6368811-c19d-447d-bc5c-f74629ee4612",
+    "timestamp": "2026-03-28T14:28:43.080092+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "technique",
+    "action": "dashboard_verified",
+    "description": "Autotest dashboard — score 56/100 (degraded) — 8 OK / 3 warn / 3 erreurs",
+    "context": {},
+    "outcome": "partial",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "047f46bd-3ce8-450b-8d58-1cad22557e47",
+    "timestamp": "2026-03-28T14:31:31.249778+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "technique",
+    "action": "dashboard_verified",
+    "description": "Autotest dashboard — score 76/100 (healthy) — 10 OK / 3 warn / 1 erreurs",
+    "context": {},
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "3261b25c-d359-4dd7-a022-144fb955fcac",
+    "timestamp": "2026-03-28T14:34:54.817016+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "technique",
+    "action": "dashboard_verified",
+    "description": "Autotest dashboard — score 81/100 (healthy) — 9 OK / 5 warn / 0 erreurs",
+    "context": {},
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "6bdf29d8-b0e5-4922-a6c5-0631582ecd11",
+    "timestamp": "2026-03-28T14:40:09.791980+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "technique",
+    "action": "dashboard_verified",
+    "description": "Autotest dashboard — score 93/100 (healthy) — 12 OK / 2 warn / 0 erreurs",
+    "context": {},
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "883c6554-ccde-4067-aba5-6f7d7e87a4da",
+    "timestamp": "2026-03-28T15:22:32.508423+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "stratégique",
+    "action": "synthesis_generated",
+    "description": "Synthèse stratégique — score 25/100 — vigilance",
+    "context": {
+      "score": 25,
+      "mode": "live",
+      "ca_mois": 56824.71
+    },
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  },
+  {
+    "id": "369deac0-40f8-4171-bdec-4e285386e7c8",
+    "timestamp": "2026-03-28T15:23:05.889499+00:00",
+    "session_id": "",
+    "actor": "tools",
+    "category": "technique",
+    "action": "dashboard_verified",
+    "description": "Autotest dashboard — score 88/100 (healthy) — 11 OK / 3 warn / 0 erreurs",
+    "context": {},
+    "outcome": "success",
+    "linked_dolibarr_ref": null,
+    "tags": []
+  }
+]
