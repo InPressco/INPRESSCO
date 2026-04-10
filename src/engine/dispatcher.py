@@ -19,6 +19,8 @@ import logging
 from src.middleware.context import Context
 from src.middleware.pipeline import Pipeline
 from src.steps.flux_a.steps import (
+    gate1_disqualify,
+    gate3_qualify_dolibarr,
     s03_clean_data,
     s04_find_or_create_client,
     s05_get_attachments,
@@ -63,20 +65,30 @@ _CATEGORIES_ADMIN = {"ADMINISTRATIF_GENERALE"}
 
 
 def build_flux_a() -> Pipeline:
-    """Construit le Pipeline Flux A : s03→s12 (création devis + notification interne GO).
-    L'envoi client (s13) est déclenché manuellement via le bouton GO dans l'email interne.
+    """Construit le Pipeline Flux A : gate1 → s03 → gate3 → s08 → s12.
+    L'envoi client (s13) est déclenché manuellement via le bouton GO.
+
+    Ordre des gates :
+      gate1 — filtre disqualification (contenu email, sans API)
+      s03   — validation routing + nettoyage données
+      s04   — find_or_create_client (socid requis pour gate3)
+      s05-s07 — attachements + analyse besoin + lignes devis
+      gate3 — qualification Dolibarr (avant create_proposal)
+      s08   — create_proposal (seulement si gate1 + gate3 passées)
     """
     p = Pipeline("flux_a")
+    p.add(gate1_disqualify)       # Gate 1 — filtre email non-actionnable
     p.add(s03_clean_data)
     p.add(s04_find_or_create_client)
     p.add(s05_get_attachments)
     p.add(s06_analyse_besoin)
     p.add(s07_build_devis_lines)
+    p.add(gate3_qualify_dolibarr)  # Gate 3 — qualification avant create_proposal
     p.add(s08_create_devis)
     p.add(s09_upload_attachments)
     p.add(s10_log_email)
     p.add(s11_archive_outlook)
-    p.add(s12_notify_team)   # STOP — attend le GO humain avant d'envoyer au client
+    p.add(s12_notify_team)         # STOP — attend le GO humain avant envoi client
     return p
 
 

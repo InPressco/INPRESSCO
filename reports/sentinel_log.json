@@ -1517,5 +1517,446 @@
     "trigger": "src/steps/flux_a/steps.py",
     "check": "step_wiring",
     "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-04-02T23:45:51.884516+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/gate1_disqualify.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:45:51.914283+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/gate1_disqualify.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:45:55.333897+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/gate1_disqualify.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:46:20.645501+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/dolibarr.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:46:20.645501+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/dolibarr.py",
+    "check": "connector_wiring",
+    "detail": "Connector 'dolibarr' correctement importé"
+  },
+  {
+    "timestamp": "2026-04-02T23:46:56.799274+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/gate3_qualify_dolibarr.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:46:56.845567+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/gate3_qualify_dolibarr.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:47:00.314290+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/gate3_qualify_dolibarr.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:47:38.077825+00:00",
+    "level": "ok",
+    "trigger": "src/utils/devis_builder.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:47:45.878280+00:00",
+    "level": "ok",
+    "trigger": "src/utils/devis_builder.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:48:07.491559+00:00",
+    "level": "ok",
+    "trigger": "src/utils/devis_builder.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:48:29.231807+00:00",
+    "level": "ok",
+    "trigger": "src/middleware/context.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:48:37.723026+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s07_build_devis_lines.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:49:15.161221+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:50:15.239938+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s13_send_email_client.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:50:35.585632+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:50:35.585632+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-04-02T23:50:48.221423+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:50:48.221423+00:00",
+    "level": "ok",
+    "trigger": "src/engine/dispatcher.py",
+    "check": "dispatcher_wiring",
+    "detail": "Dispatcher couvre toutes les catégories"
+  },
+  {
+    "timestamp": "2026-04-02T23:50:58.117490+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:50:58.117490+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-04-02T23:51:03.411885+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-02T23:51:03.411885+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/steps.py",
+    "check": "step_wiring",
+    "detail": "Tous les steps sont déclarés"
+  },
+  {
+    "timestamp": "2026-04-02T23:53:16.033000+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/gate1_disqualify.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:06:40.597939+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/dolibarr.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:06:40.597939+00:00",
+    "level": "ok",
+    "trigger": "src/connectors/dolibarr.py",
+    "check": "connector_wiring",
+    "detail": "Connector 'dolibarr' correctement importé"
+  },
+  {
+    "timestamp": "2026-04-03T00:07:09.864175+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:07:17.481711+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:07:22.512323+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:07:27.830672+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:07:32.475457+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:09:09.279329+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s07_build_devis_lines.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:09:11.936466+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s06_analyse_besoin.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T00:09:11.950879+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s02_extract_client_ai.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T07:44:46.536463+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "full_verify",
+    "detail": "Système DEGRADED — score 40/100"
+  },
+  {
+    "timestamp": "2026-04-03T07:44:46.536463+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "dolibarr",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-03T07:44:46.536463+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "claude_api",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-03T07:44:46.536463+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "outlook",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-03T15:47:26.619073+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T15:48:51.741896+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T15:49:14.613116+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T15:49:19.705665+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T15:49:24.662450+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-03T15:49:29.759421+00:00",
+    "level": "ok",
+    "trigger": "src/steps/flux_a/s08_create_devis.py",
+    "check": "anti_pattern",
+    "detail": "Aucun anti-pattern détecté"
+  },
+  {
+    "timestamp": "2026-04-05T16:24:43.858249+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "full_verify",
+    "detail": "Système DEGRADED — score 40/100"
+  },
+  {
+    "timestamp": "2026-04-05T16:24:43.858249+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "dolibarr",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-05T16:24:43.858249+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "claude_api",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-05T16:24:43.858249+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "outlook",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-06T19:55:01.278118+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "full_verify",
+    "detail": "Système DEGRADED — score 40/100"
+  },
+  {
+    "timestamp": "2026-04-06T19:55:01.278118+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "dolibarr",
+    "detail": ""
+  },
+  {
+    "timestamp": "2026-04-06T19:55:01.278118+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "claude_api",
+    "detail": ""
+  },
+  {
+    "timestamp": "2026-04-06T19:55:01.278118+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "outlook",
+    "detail": ""
+  },
+  {
+    "timestamp": "2026-04-07T11:42:54.907007+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "full_verify",
+    "detail": "Système DEGRADED — score 40/100"
+  },
+  {
+    "timestamp": "2026-04-07T11:42:54.907007+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "dolibarr",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-07T11:42:54.907007+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "claude_api",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-07T11:42:54.907007+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "outlook",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-09T06:41:50.693814+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "full_verify",
+    "detail": "Système DEGRADED — score 40/100"
+  },
+  {
+    "timestamp": "2026-04-09T06:41:50.693814+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "dolibarr",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-09T06:41:50.693814+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "claude_api",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-09T06:41:50.693814+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "outlook",
+    "detail": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  {
+    "timestamp": "2026-04-09T16:28:41.175248+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "full_verify",
+    "detail": "Système DEGRADED — score 60/100"
+  },
+  {
+    "timestamp": "2026-04-09T16:28:41.175248+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "claude_api",
+    "detail": ""
+  },
+  {
+    "timestamp": "2026-04-09T16:28:41.175248+00:00",
+    "level": "error",
+    "trigger": "periodic",
+    "check": "outlook",
+    "detail": ""
   }
 ]

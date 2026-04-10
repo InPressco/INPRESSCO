@@ -1,25 +1,25 @@
 {
-  "generated_at": "2026-03-31T22:02:36.069385+00:00",
+  "generated_at": "2026-04-10T10:45:08.934770+00:00",
   "overall": "healthy",
   "score": 100,
   "checks": [
     {
       "name": "dolibarr",
       "status": "ok",
-      "detail": "HTTP 200 en 129ms",
-      "latency_ms": 129.23712498741224
+      "detail": "HTTP 200 en 3263ms",
+      "latency_ms": 3263.37887509726
     },
     {
       "name": "claude_api",
       "status": "ok",
-      "detail": "HTTP 200 en 620ms",
-      "latency_ms": 620.2855830197223
+      "detail": "HTTP 200 en 3733ms",
+      "latency_ms": 3732.9674591310322
     },
     {
       "name": "outlook",
       "status": "ok",
-      "detail": "Token Azure OK en 209ms",
-      "latency_ms": 208.88908300548792
+      "detail": "Token Azure OK en 3335ms",
+      "latency_ms": 3335.303874919191
     }
   ],
   "skill_coverage": {

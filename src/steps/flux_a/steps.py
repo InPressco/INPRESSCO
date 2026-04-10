@@ -4,6 +4,8 @@ Chaque step vit dans son propre fichier (s01_*.py … s13_*.py + routing.py).
 Ce fichier existe uniquement pour la compatibilité des imports existants
 (dispatcher.py, engine/main.py, dashboard/app.py).
 """
+from src.steps.flux_a.gate1_disqualify import gate1_disqualify
+from src.steps.flux_a.gate3_qualify_dolibarr import gate3_qualify_dolibarr
 from src.steps.flux_a.s01_get_email import s01_get_email
 from src.steps.flux_a.s02_extract_client_ai import s02_extract_client_ai
 from src.steps.flux_a.s03_clean_data import s03_clean_data
@@ -24,6 +26,8 @@ from src.steps.flux_a.routing import (
 )
 
 __all__ = [
+    "gate1_disqualify",
+    "gate3_qualify_dolibarr",
     "s01_get_email",
     "s02_extract_client_ai",
     "s03_clean_data",

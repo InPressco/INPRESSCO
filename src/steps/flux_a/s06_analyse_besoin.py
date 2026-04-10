@@ -4,8 +4,8 @@ import logging
 
 from src.connectors.claude_client import ClaudeClient
 from src.middleware.context import Context
-from src.utils.html_cleaner import prepare_email_for_ai
-from src.utils.imposition import post_process_composants
+from shared_lib.html_cleaner import prepare_email_for_ai
+from shared_lib.imposition import post_process_composants
 
 logger = logging.getLogger(__name__)
 

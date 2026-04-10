@@ -135,6 +135,64 @@ class DolibarrClient:
             resp.raise_for_status()
             return resp.json()
 
+    async def list_proposals_by_socid(
+        self,
+        socid: int,
+        limit: int = 5,
+        statuts: set[int] | None = None,
+    ) -> list[dict]:
+        """Liste les devis d'un tiers, filtrés par statuts si fournis.
+        statuts = {0} → brouillons · {0, 1} → brouillons + ouverts
+        """
+        params = {
+            "sqlfilters": f"(t.fk_soc:=:{int(socid)})",
+            "limit": limit,
+            "sortfield": "t.datec",
+            "sortorder": "DESC",
+        }
+        async with httpx.AsyncClient(timeout=30) as client:
+            resp = await client.get(
+                f"{self.base}/proposals",
+                headers=self.headers,
+                params=params,
+            )
+            if resp.status_code != 200:
+                return []
+            results = resp.json()
+            if not isinstance(results, list):
+                return []
+            if statuts is not None:
+                results = [r for r in results if int(r.get("statut", -1)) in statuts]
+            return results
+
+    async def get_thirdparty_by_id(self, socid: int) -> dict | None:
+        """Récupère un tiers complet par son ID Dolibarr."""
+        async with httpx.AsyncClient(timeout=30) as client:
+            resp = await client.get(
+                f"{self.base}/thirdparties/{int(socid)}",
+                headers=self.headers,
+            )
+            if resp.status_code == 200:
+                return resp.json()
+            return None
+
+    async def count_orders_by_socid(self, socid: int) -> int:
+        """Compte les commandes passées par un tiers (pour détecter les récurrents)."""
+        params = {
+            "sqlfilters": f"(t.fk_soc:=:{int(socid)})",
+            "limit": 20,
+        }
+        async with httpx.AsyncClient(timeout=30) as client:
+            resp = await client.get(
+                f"{self.base}/orders",
+                headers=self.headers,
+                params=params,
+            )
+            if resp.status_code != 200:
+                return 0
+            results = resp.json()
+            return len(results) if isinstance(results, list) else 0
+
     # ── Documents ──────────────────────────────────────────────────────────
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=5))

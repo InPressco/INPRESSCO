@@ -41,6 +41,7 @@ class Context:
 
     # ── Devis construit ────────────────────────────────────────────────────
     devis_lines: list[dict] = field(default_factory=list)
+    autonotes_private: str = ""   # HTML options_autonotes_private — imposition+score+alertes
 
     # ── Skills IA enrichis (s02) ───────────────────────────────────────────
     email_sentiment: dict = field(default_factory=dict)
